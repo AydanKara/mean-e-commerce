@@ -1,10 +1,20 @@
 import express from "express";
-import { getAllOrders, createOrder } from "../controllers/orderController.js";
+import {
+  getAllOrders,
+  createOrder,
+  getOrderById,
+  updateOrderStatus,
+} from "../controllers/orderController.js";
 import { protect } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
-router.get("/", protect, getAllOrders); // Fetch all orders
-router.post("/", protect, createOrder); // Place a new order
+router.route("/")
+  .get(protect, getAllOrders) // Get all orders for logged-in user
+  .post(protect, createOrder); // Create a new order
+
+router.route("/:id")
+  .get(protect, getOrderById) // Get a single order by ID
+  .put(protect, updateOrderStatus); // Update order status (Admin functionality can be added here)
 
 export default router;
