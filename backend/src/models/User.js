@@ -1,5 +1,6 @@
-import mongoose from 'mongoose';
-import bcrypt from "bcrypt"
+import mongoose from "mongoose";
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 
 const userSchema = new mongoose.Schema(
   {
@@ -60,20 +61,30 @@ userSchema.index(
   }
 );
 
-// Hash password before saving
-userSchema.pre("save", async function (next) {
-  if (!this.isModified("password")) {
-    return next();
-  }
+// Add methods for password hashing and token generation
+userSchema.methods.hashPassword = async function () {
+  if (!this.isModified("password")) return;
   const salt = await bcrypt.genSalt(10);
   this.password = await bcrypt.hash(this.password, salt);
-  next();
-});
+};
 
-// Compare password for login
 userSchema.methods.comparePassword = async function (enteredPassword) {
   return await bcrypt.compare(enteredPassword, this.password);
 };
+
+userSchema.methods.generateAuthToken = function () {
+  const token = jwt.sign(
+    { id: this._id, isAdmin: this.isAdmin },
+    process.env.JWT_SECRET,
+    { expiresIn: "1h" }
+  );
+  return token;
+};
+
+userSchema.pre("save", async function (next) {
+  await this.hashPassword();
+  next();
+});
 
 const User = mongoose.model("User", userSchema);
 
