@@ -14,7 +14,7 @@ export const getAllOrders = async (req, res) => {
 export const getOrderById = async (req, res) => {
   try {
     const order = await Order.findById(req.params.id).populate(
-      "products.product"
+      "orderItems.product"
     );
     if (!order) {
       return res.status(404).json({ message: "Order not found" });
@@ -28,12 +28,13 @@ export const getOrderById = async (req, res) => {
 // Create a new order
 export const createOrder = async (req, res) => {
   try {
-    const { products, shippingInfo, paymentMethod } = req.body;
+    const { orderItems, shippingInfo, paymentMethod, totalPrice } = req.body;
     const order = await Order.create({
       user: req.user._id,
-      products,
+      orderItems,
       shippingInfo,
       paymentMethod,
+      totalPrice,
     });
     res.status(201).json({ message: "Order created", order });
   } catch (error) {
@@ -47,7 +48,7 @@ export const updateOrderStatus = async (req, res) => {
     const { status } = req.body;
     const order = await Order.findByIdAndUpdate(
       req.params.id,
-      { status },
+      { paymentStatus: status },
       { new: true }
     );
     if (!order) {
