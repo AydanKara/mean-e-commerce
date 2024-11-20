@@ -3,8 +3,33 @@ import Product from "../models/Product.js";
 // Get all products
 export const getAllProducts = async (req, res) => {
   try {
-    const products = await Product.find({});
-    res.status(200).json(products);
+    // Search products
+    const { keyword, category } = req.query;
+    const filter = {};
+
+    if (keyword) {
+      filter.name = { $regex: keyword, $options: "i" }; // Case-insensitive search
+    }
+
+    if (category) {
+      filter.category = category;
+    }
+
+    // Pagination
+    const { page = 1, limit = 10 } = req.query;
+
+    const products = await Product.find(filter)
+      .skip((page - 1) * limit)
+      .limit(Number(limit));
+
+    const totalProducts = await Product.countDocuments();
+    res
+      .status(200)
+      .json({
+        products,
+        currentPage: Number(page),
+        totalPages: Math.ceil(totalProducts / limit),
+      });
   } catch (error) {
     res.status(500).json({ message: "Server error", error });
   }
