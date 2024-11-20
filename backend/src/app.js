@@ -3,8 +3,9 @@ import cors from "cors";
 import bodyParser from "body-parser";
 import dotenv from "dotenv";
 
-import productRoutes from "./routes/productRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
+import productRoutes from "./routes/productRoutes.js";
+import orderRoutes from "./routes/orderRoutes.js";
 
 dotenv.config();
 
@@ -16,8 +17,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // API Routes
-app.use("/api/products", productRoutes); // Example route
 app.use("/api/users", userRoutes);
+app.use("/api/products", productRoutes);
+app.use("/api/orders", orderRoutes);
 
 // Error handling
 app.use((err, req, res, next) => {

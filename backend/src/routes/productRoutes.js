@@ -1,9 +1,9 @@
 import express from "express";
+import { getAllProducts, createProduct } from "../controllers/productController.js";
+
 const router = express.Router();
 
-// Example GET route
-router.get("/", (req, res) => {
-  res.json({ message: "List of products" });
-});
+router.get("/", getAllProducts); // Fetch all products
+router.post("/", createProduct); // Create a new product
 
 export default router;
