@@ -1,10 +1,16 @@
 import User from "../models/User.js";
 
+const cookieOptions = {
+  httpOnly: true, // Prevent JavaScript access
+  secure: process.env.NODE_ENV === "production", // Enable in production
+  sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+  maxAge: 60 * 60 * 1000, // 1 hour
+};
+
 // Register a new user
 export const registerUser = async (req, res) => {
   try {
-    const { email, username, password } =
-      req.body;
+    const { email, username, password } = req.body;
 
     // Check if the user already exists
     const userExists = await User.findOne({ email });
@@ -46,8 +52,29 @@ export const loginUser = async (req, res) => {
 
     // Generate JWT token
     const token = user.generateAuthToken();
-    res.status(200).json({ message: "Login successful", token });
+
+    // Store the token in a cookie
+    res.cookie("token", token, cookieOptions);
+
+    res.status(200).json({
+      message: "Login successful",
+      user: { id: user._id, username: user.username, email: user.email },
+    });
   } catch (error) {
     res.status(500).json({ message: "Error logging in", error });
+  }
+};
+
+// Logout a user
+export const logoutUser = (req, res) => {
+  try {
+    res.clearCookie("token", {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+    }); // Clear the token cookie
+    res.status(200).json({ message: "Logout successful" });
+  } catch (error) {
+    console.error(error);
   }
 };

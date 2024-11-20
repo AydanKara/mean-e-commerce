@@ -5,23 +5,17 @@ import User from "../models/User.js";
 export const protect = async (req, res, next) => {
   let token;
 
-  if (
-    req.headers.authorization &&
-    req.headers.authorization.startsWith("Bearer")
-  ) {
+  // Check token in cookies
+  if (req.cookies && req.cookies.token) {
+    token = req.cookies.token;
     try {
-      token = req.headers.authorization.split(" ")[1];
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
-
-      // Attach user info to the request object
       req.user = await User.findById(decoded.id).select("-password");
       next();
     } catch (error) {
       res.status(401).json({ message: "Not authorized, token failed" });
     }
-  }
-
-  if (!token) {
+  } else {
     res.status(401).json({ message: "Not authorized, no token" });
   }
 };
