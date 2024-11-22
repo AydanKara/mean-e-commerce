@@ -15,7 +15,14 @@ dotenv.config();
 const app = express();
 
 // Middleware
-app.use(cors());
+app.use(
+  cors({
+    origin: process.env.FRONT_END_URL,
+    credentials: true,
+    methods: "GET,HEAD,PUT,POST,PATCH,DELETE",
+    allowedHeaders: "Content-Type,Authorization",
+  })
+);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());

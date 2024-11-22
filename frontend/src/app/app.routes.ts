@@ -7,11 +7,12 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./pages/home/home.component').then((m) => m.HomeComponent),
   },
-  /* {
+  {
     path: 'login',
     loadComponent: () =>
       import('./pages/login/login.component').then((m) => m.LoginComponent),
   },
+
   {
     path: 'register',
     loadComponent: () =>
@@ -19,6 +20,7 @@ export const routes: Routes = [
         (m) => m.RegisterComponent
       ),
   },
+  /*
   {
     path: 'product/:id',
     loadComponent: () =>
