@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { User } from '../models/user.model';
 
 @Injectable({
@@ -9,6 +9,8 @@ import { User } from '../models/user.model';
 })
 export class UserService {
   private apiUrl = `${environment.apiUrl}/auth`;
+  // Track authentication state
+  private authState = new BehaviorSubject<User | null>(null);
 
   constructor(private http: HttpClient) {}
 
@@ -22,5 +24,21 @@ export class UserService {
     return this.http.post<User>(`${this.apiUrl}/register`, data, {
       withCredentials: true,
     });
+  }
+
+  logout(): Observable<void> {
+    return this.http.post<void>(
+      `${this.apiUrl}/logout`,
+      {},
+      { withCredentials: true }
+    );
+  }
+
+  setAuthState(user: User | null) {
+    this.authState.next(user);
+  }
+
+  getAuthState(): Observable<User | null> {
+    return this.authState.asObservable();
   }
 }

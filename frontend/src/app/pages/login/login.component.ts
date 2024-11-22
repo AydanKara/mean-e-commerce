@@ -34,7 +34,11 @@ export class LoginComponent {
     if (this.loginForm.invalid) return;
 
     this.userService.login(this.loginForm.value).subscribe({
-      next: () => this.router.navigate(['/home']),
+      next: (user) => {
+        // Update auth state
+        this.userService.setAuthState(user); 
+        this.router.navigate(['/home']);
+      },
       error: (err) => (this.errorMessage = err.error.message || 'Login failed'),
     });
   }
