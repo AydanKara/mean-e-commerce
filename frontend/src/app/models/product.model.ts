@@ -1,0 +1,17 @@
+import { Category } from "./category.model";
+
+export interface Product {
+  _id: string;
+  name: string;
+  description: string;
+  price: number;
+  category: Category;
+  subcategory: string;
+  stock: number;
+  ratings: number;
+  numReviews: number;
+  images: [{ url: string }];
+  isFeatured: boolean;
+  createdAt?: string; // Optional (from timestamps)
+  updatedAt?: string; // Optional (from timestamps)
+}
