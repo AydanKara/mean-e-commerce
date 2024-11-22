@@ -1,4 +1,5 @@
 import { Schema, model } from "mongoose";
+import Category from "./Category.js";
 
 const productSchema = new Schema(
   {
@@ -15,11 +16,19 @@ const productSchema = new Schema(
       required: true,
     },
     category: {
-      type: String,
+      type: Schema.Types.ObjectId,
+      ref: "Category",
       required: true,
     },
-    brand: {
+    subcategory: {
       type: String,
+      validate: {
+        validator: async function (value) {
+          const category = await Category.findById(this.category);
+          return category?.subcategories.includes(value);
+        },
+        message: "Invalid subcategory for the selected category",
+      },
     },
     stock: {
       type: Number,
@@ -36,9 +45,8 @@ const productSchema = new Schema(
     },
     images: [
       {
-        url: {
-          type: String,
-        },
+        type: String,
+        required: true,
       },
     ],
     isFeatured: {
