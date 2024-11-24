@@ -4,6 +4,7 @@ export interface User {
   username: string;
   password: string;
   fullName?: string;
+  isAdmin: boolean;
   phone?: string;
   shippingInfo?: {
     address?: string;
@@ -12,7 +13,6 @@ export interface User {
     country?: string;
   };
   avatar?: string;
-  isAdmin: boolean;
   createdAt?: string; // Optional (from timestamps)
   updatedAt?: string; // Optional (from timestamps)
 }

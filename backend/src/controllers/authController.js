@@ -58,10 +58,27 @@ export const loginUser = async (req, res) => {
 
     res.status(200).json({
       message: "Login successful",
-      user: { id: user._id, username: user.username, email: user.email },
+      user: {
+        id: user._id,
+        username: user.username,
+        email: user.email,
+        isAdmin: user.isAdmin,
+      },
     });
   } catch (error) {
     res.status(500).json({ message: "Error logging in", error });
+  }
+};
+
+// Get the current user
+export const getCurrentUser = async (req, res) => {
+  try {
+    // User info is available in `req.user` after token verification
+    const user = await User.findById(req.user.id).select("-password"); // Exclude password
+    if (!user) return res.status(404).json({ message: "User not found" });
+    res.json(user);
+  } catch (err) {
+    res.status(500).json({ message: "Server error" });
   }
 };
 

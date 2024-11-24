@@ -1,0 +1,22 @@
+.sidebar {
+    width: 200px;
+    height: 100vh;
+    position: fixed;
+    left: 0;
+    top: 0;
+    padding-top: 60px;
+    /* For header height */
+}
+
+.content {
+    margin-left: 200px;
+    padding-top: 60px;
+    /* For header height */
+}
+
+header {
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+}

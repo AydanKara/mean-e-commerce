@@ -35,9 +35,16 @@ export class LoginComponent {
 
     this.userService.login(this.loginForm.value).subscribe({
       next: (user) => {
-        // Update auth state
-        this.userService.setAuthState(user); 
-        this.router.navigate(['/home']);
+        if (user.isAdmin) {
+          console.log(user.isAdmin);
+          this.userService.setAuthState(user);
+          this.router.navigate(['/admin/dashboard']);
+        } else {
+          console.log(user);
+          // Update auth state
+          this.userService.setAuthState(user);
+          this.router.navigate(['/home']);
+        }
       },
       error: (err) => (this.errorMessage = err.error.message || 'Login failed'),
     });

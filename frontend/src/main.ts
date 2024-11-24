@@ -1,16 +1,17 @@
 import { bootstrapApplication } from '@angular/platform-browser';
 import { importProvidersFrom } from '@angular/core';
-import { LayoutComponent } from './app/shared/layout/layout.component';
 import { RouterModule } from '@angular/router';
 import { routes } from './app/app.routes';
 import {
   provideHttpClient,
   withInterceptorsFromDi,
 } from '@angular/common/http';
+import { AppComponent } from './app/app.component';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
-bootstrapApplication(LayoutComponent, {
+bootstrapApplication(AppComponent, {
   providers: [
     importProvidersFrom(RouterModule.forRoot(routes)),
-    provideHttpClient(withInterceptorsFromDi()),
+    provideHttpClient(withInterceptorsFromDi()), provideAnimationsAsync(),
   ],
 }).catch((err) => console.error(err));
