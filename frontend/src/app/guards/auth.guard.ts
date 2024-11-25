@@ -8,7 +8,8 @@ import {
 import { Observable } from 'rxjs';
 
 import { map } from 'rxjs/operators';
-import { UserService } from '../services/user.service';
+import { UserService } from '../core/services/user.service';
+
 
 @Injectable({
   providedIn: 'root',
