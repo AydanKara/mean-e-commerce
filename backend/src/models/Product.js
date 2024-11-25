@@ -25,7 +25,9 @@ const productSchema = new Schema(
       validate: {
         validator: async function (value) {
           const category = await Category.findById(this.category);
-          return category?.subcategories.includes(value);
+          return category?.subcategories.find(
+            (subcategory) => subcategory.name == value
+          );
         },
         message: "Invalid subcategory for the selected category",
       },

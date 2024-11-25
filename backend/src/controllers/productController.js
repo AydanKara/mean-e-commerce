@@ -83,13 +83,22 @@ export const getProductById = async (req, res) => {
 // Create a new product
 export const createProduct = async (req, res) => {
   try {
-    const { name, description, price, category, stock, images, isFeatured } =
-      req.body;
+    const {
+      name,
+      description,
+      price,
+      category,
+      subcategory,
+      stock,
+      images,
+      isFeatured,
+    } = req.body;
     const product = new Product({
       name,
       description,
       price,
       category,
+      subcategory,
       stock,
       images,
       isFeatured,
@@ -104,10 +113,11 @@ export const createProduct = async (req, res) => {
 // Update an existing product
 export const updateProduct = async (req, res) => {
   try {
-    const { name, price, description, stock, category } = req.body;
+    const { name, price, description, stock, category, subcategory, images } =
+      req.body;
     const product = await Product.findByIdAndUpdate(
       req.params.id,
-      { name, price, description, stock, category },
+      { name, price, description, stock, category, subcategory, images },
       { new: true }
     );
     if (!product) {
