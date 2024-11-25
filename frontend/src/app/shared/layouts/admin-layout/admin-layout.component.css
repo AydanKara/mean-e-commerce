@@ -1,16 +1,17 @@
 .sidebar {
     width: 200px;
-    height: 100vh;
+    height: 90%;
     position: fixed;
     left: 0;
     top: 0;
-    padding-top: 60px;
-    /* For header height */
+    padding-top: 100px;
+    background-color: beige !important;
 }
 
 .content {
     margin-left: 200px;
-    padding-top: 60px;
+    padding-top: 100px !important;
+    height: 90%;
     /* For header height */
 }
 

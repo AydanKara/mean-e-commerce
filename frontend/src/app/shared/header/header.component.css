@@ -1,0 +1,40 @@
+header {
+    background-color: #f8f9fa;
+    padding: 10px;
+    text-align: center;
+}
+
+nav a {
+    margin: 0 15px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.filter-menu {
+    position: fixed;
+    top: 0;
+    left: -250px;
+    /* Hidden by default */
+    width: 250px;
+    height: 100%;
+    overflow-y: auto;
+    transition: left 0.3s ease-in-out;
+    z-index: 1000;
+}
+
+.filter-menu.open {
+    left: 0;
+    /* Slide in when open */
+}
+
+.filter-menu .btn-close {
+    background-color: transparent;
+    border: none;
+    font-size: 1.5rem;
+    line-height: 1;
+}
+
+.search-bar input {
+    border-radius: 20px;
+    padding: 5px 15px;
+}

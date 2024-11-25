@@ -1,0 +1,20 @@
+<header class="bg-dark text-white p-3">
+  <div class="container">
+    <nav class="d-flex justify-content-between">
+      <a class="text-white" routerLink="/home">Home</a>
+      <div *ngIf="!isLoading">
+        <ng-container *ngIf="currentUser; else guestLinks">
+          <a class="text-white" routerLink="/profile">Profile</a>
+          <a class="text-white" (click)="onLogout()"> Logout </a>
+        </ng-container>
+        <ng-template #guestLinks>
+          <a class="text-white" routerLink="/login">Login</a>
+          <a class="text-white ms-3" routerLink="/register">Register</a>
+        </ng-template>
+      </div>
+    </nav>
+  </div>
+</header>
+@if (isLoading) {
+  <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+}
