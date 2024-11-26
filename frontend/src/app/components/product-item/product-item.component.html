@@ -1,0 +1,19 @@
+@if (product) {
+<div class="card">
+  <div class="media">
+    <img
+      src="{{ product.images }}"
+      class="card-img-top"
+      alt="{{ product.name }}"
+    />
+  </div>
+  <div class="card-body">
+    <h5 class="card-title">{{ product.name }}</h5>
+    <p class="card-text">
+      {{ product.subcategory }}
+    </p>
+    <p>{{ product.price | currency }}</p>
+    <a href="#" class="button-35">Add to cart</a>
+  </div>
+</div>
+}
