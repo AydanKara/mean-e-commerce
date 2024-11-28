@@ -7,12 +7,7 @@ const categorySchema = new Schema(
       required: true,
       unique: true,
     },
-    subcategories: [
-      {
-        name: { type: String, required: true },
-        img: { type: String, required: true },
-      },
-    ],
+    image: { type: String, required: true },
   },
   { timestamps: true }
 );

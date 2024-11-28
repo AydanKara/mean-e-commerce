@@ -1,6 +1,5 @@
 import express from "express";
 import {
-  addSubCategory,
   createCategory,
   deleteCategory,
   getAllCategories,
@@ -19,7 +18,5 @@ router
   .route("/:id")
   .put(protect, admin, updateCategory) // Update a product (Admin only)
   .delete(protect, admin, deleteCategory); // Delete a product (Admin only)
-
-router.route("/:id/add-subcategory").put(protect, admin, addSubCategory);
 
 export default router;

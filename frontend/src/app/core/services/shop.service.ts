@@ -11,7 +11,11 @@ import { environment } from '../../../environments/environment';
 export class ShopService {
   private productsUrl = `${environment.apiUrl}/products`;
   private categoriesUrl = `${environment.apiUrl}/categories`;
-  private http = inject(HttpClient)
+  private http = inject(HttpClient);
+  errorMessage: string = '';
+  categories: Category[] = [];
+  brands: string[] = [];
+  genders: string[] = [];
 
   constructor() {}
 
@@ -19,7 +23,8 @@ export class ShopService {
   getAllProducts(
     searchTerm: string = '',
     category: string = '',
-    subcategory: string = '',
+    gender: string = '',
+    brand: string = '',
     priceRange: string = '',
     sort: string = '',
     page: number = 1,
@@ -27,12 +32,13 @@ export class ShopService {
   ): Observable<{
     products: Product[];
     currentPage: number;
-    totalPage: number;
+    totalPages: number;
   }> {
     let params = new HttpParams()
       .set('keyword', searchTerm)
       .set('category', category)
-      .set('subcategory', subcategory)
+      .set('gender', gender)
+      .set('brand', brand)
       .set('price', priceRange)
       .set('sort', sort)
       .set('page', page.toString())
@@ -42,14 +48,66 @@ export class ShopService {
       .get<{
         products: Product[];
         currentPage: number;
-        totalPage: number;
+        totalPages: number;
       }>(this.productsUrl, { params })
       .pipe(map((response) => response));
   }
 
   // Fetch Categories
-  getAllCategories(): Observable<Category[]> {
-    return this.http.get<Category[]>(this.categoriesUrl);
+  getAllCategories() {
+    return this.http
+      .get<{ success: boolean; categories: Category[] }>(this.categoriesUrl)
+      .subscribe({
+        next: (response) => {
+          if (response.success) {
+            this.categories = response.categories;
+          } else {
+            this.errorMessage = 'Failed to fetch Categories.';
+          }
+        },
+        error: (error) => {
+          console.error('Error fetching products:', error);
+          this.errorMessage = 'An error occurred while fetching Categories.';
+        },
+      });
+  }
+
+  getBrands() {
+    return this.http
+      .get<{ success: boolean; brands: string[] }>(`${this.productsUrl}/brands`)
+      .subscribe({
+        next: (response) => {
+          if (response.success) {
+            this.brands = response.brands;
+          } else {
+            this.errorMessage = 'Failed to fetch Brands.';
+          }
+        },
+        error: (error) => {
+          console.error('Error fetching products:', error);
+          this.errorMessage = 'An error occurred while fetching Brands.';
+        },
+      });
+  }
+
+  getGenders() {
+    return this.http
+      .get<{ success: boolean; genders: string[] }>(
+        `${this.productsUrl}/genders`
+      )
+      .subscribe({
+        next: (response) => {
+          if (response.success) {
+            this.genders = response.genders;
+          } else {
+            this.errorMessage = 'Failed to fetch Genders.';
+          }
+        },
+        error: (error) => {
+          console.error('Error fetching products:', error);
+          this.errorMessage = 'An error occurred while fetching Genders.';
+        },
+      });
   }
 
   getProductById(id: string): Observable<Product> {

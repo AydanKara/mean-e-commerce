@@ -20,17 +20,13 @@ const productSchema = new Schema(
       ref: "Category",
       required: true,
     },
-    subcategory: {
+    gender: {
       type: String,
-      validate: {
-        validator: async function (value) {
-          const category = await Category.findById(this.category);
-          return category?.subcategories.find(
-            (subcategory) => subcategory.name == value
-          );
-        },
-        message: "Invalid subcategory for the selected category",
-      },
+      required: true,
+    },
+    brand: {
+      type: String,
+      required: true,
     },
     stock: {
       type: Number,

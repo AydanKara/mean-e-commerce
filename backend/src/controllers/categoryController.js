@@ -13,9 +13,9 @@ export const getAllCategories = async (req, res) => {
 // Create a new category
 export const createCategory = async (req, res) => {
   try {
-    const { name, subcategories } = req.body;
+    const { name, image } = req.body;
 
-    const category = new Category({ name, subcategories });
+    const category = new Category({ name, image });
     await category.save();
 
     res.status(201).json({ success: true, category });
@@ -27,11 +27,11 @@ export const createCategory = async (req, res) => {
 // Update a category
 export const updateCategory = async (req, res) => {
   try {
-    const { name, subcategories } = req.body;
+    const { name, image } = req.body;
 
     const category = await Category.findByIdAndUpdate(
       req.params.id,
-      { name, subcategories },
+      { name, image },
       { new: true }
     );
 
@@ -59,29 +59,6 @@ export const deleteCategory = async (req, res) => {
     }
 
     res.status(200).json({ success: true, message: "Category deleted" });
-  } catch (error) {
-    res.status(500).json({ success: false, error: error.message });
-  }
-};
-
-// Add a subcategory
-export const addSubCategory = async (req, res) => {
-  try {
-    const { subcategory } = req.body;
-    const category = await Category.findById(req.params.id);
-
-    if (!category) {
-      return res
-        .status(404)
-        .json({ success: false, message: "Category not found" });
-    }
-
-    if (!category.subcategories.includes(subcategory)) {
-      category.subcategories.push(subcategory);
-      await category.save();
-    }
-
-    res.status(200).json({ success: true, category });
   } catch (error) {
     res.status(500).json({ success: false, error: error.message });
   }

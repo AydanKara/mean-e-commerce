@@ -5,7 +5,7 @@ import Product from "../models/Product.js";
 export const getAllProducts = async (req, res) => {
   try {
     // Search products
-    const { keyword, category, subcategory, price, sort } = req.query;
+    const { keyword, category, gender, brand, price, sort } = req.query;
 
     // Construct filter
     const filter = {};
@@ -13,8 +13,12 @@ export const getAllProducts = async (req, res) => {
       const categoryDoc = await Category.findOne({ name: category });
       if (categoryDoc) filter.category = categoryDoc._id;
     }
-    if (subcategory) {
-      filter.subcategory = subcategory;
+    if (brand) {
+      filter.brand = { $regex: brand, $options: "i" };
+    }
+
+    if (gender) {
+      filter.gender = { $regex: gender, $options: "i" };
     }
     if (keyword) {
       filter.$or = [
@@ -88,7 +92,8 @@ export const createProduct = async (req, res) => {
       description,
       price,
       category,
-      subcategory,
+      gender,
+      brand,
       stock,
       images,
       isFeatured,
@@ -98,7 +103,8 @@ export const createProduct = async (req, res) => {
       description,
       price,
       category,
-      subcategory,
+      gender,
+      brand,
       stock,
       images,
       isFeatured,
@@ -113,11 +119,11 @@ export const createProduct = async (req, res) => {
 // Update an existing product
 export const updateProduct = async (req, res) => {
   try {
-    const { name, price, description, stock, category, subcategory, images } =
+    const { name, price, description, stock, category, gender, brand, images } =
       req.body;
     const product = await Product.findByIdAndUpdate(
       req.params.id,
-      { name, price, description, stock, category, subcategory, images },
+      { name, price, description, stock, category, gender, brand, images },
       { new: true }
     );
     if (!product) {
@@ -139,5 +145,25 @@ export const deleteProduct = async (req, res) => {
     res.status(200).json({ message: "Product deleted" });
   } catch (error) {
     res.status(500).json({ message: "Error deleting product", error });
+  }
+};
+
+// Get unique brands
+export const getUniqueBrands = async (req, res) => {
+  try {
+    const brands = await Product.distinct("brand"); // Fetch distinct brands from the Product collection
+    res.status(200).json({ success: true, brands });
+  } catch (error) {
+    res.status(500).json({ success: false, message: "Server error", error });
+  }
+};
+
+// Get unique genders
+export const getUniqueGenders = async (req, res) => {
+  try {
+    const genders = await Product.distinct("gender"); // Fetch distinct genders from the Product collection
+    res.status(200).json({ success: true, genders });
+  } catch (error) {
+    res.status(500).json({ success: false, message: "Server error", error });
   }
 };
