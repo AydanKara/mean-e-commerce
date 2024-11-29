@@ -10,15 +10,19 @@ export const getAllProducts = async (req, res) => {
     // Construct filter
     const filter = {};
     if (category) {
-      const categoryDoc = await Category.findOne({ name: category });
-      if (categoryDoc) filter.category = categoryDoc._id;
+      const categories = category.split(", "); 
+      const categoryDocs = await Category.find({ name: { $in: categories } });
+      const categoryIds = categoryDocs.map((cat) => cat._id);
+      filter.category = { $in: categoryIds };
     }
     if (brand) {
-      filter.brand = { $regex: brand, $options: "i" };
+      const brands = brand.split(", ");
+      filter.brand = { $in: brands.map((b) => new RegExp(b, "i")) };
     }
 
     if (gender) {
-      filter.gender = { $regex: gender, $options: "i" };
+      const genders = gender.split(", ");
+      filter.gender = { $in: genders.map((g) => new RegExp(g, "i")) };
     }
     if (keyword) {
       filter.$or = [

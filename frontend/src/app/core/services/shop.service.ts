@@ -22,9 +22,9 @@ export class ShopService {
   // Fetch All Products
   getAllProducts(
     searchTerm: string = '',
-    category: string = '',
-    gender: string = '',
-    brand: string = '',
+    categories: string[] = [],
+    brands: string[] = [],
+    genders: string[] = [],
     priceRange: string = '',
     sort: string = '',
     page: number = 1,
@@ -36,9 +36,9 @@ export class ShopService {
   }> {
     let params = new HttpParams()
       .set('keyword', searchTerm)
-      .set('category', category)
-      .set('gender', gender)
-      .set('brand', brand)
+      .set('category', categories.join(', '))
+      .set('gender', genders.join(', '))
+      .set('brand', brands.join(', '))
       .set('price', priceRange)
       .set('sort', sort)
       .set('page', page.toString())

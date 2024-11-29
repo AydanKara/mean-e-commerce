@@ -10,7 +10,13 @@
   <div class="card-body">
     <h5 class="card-title">{{ product.name }}</h5>
     <p class="card-text">
-      {{ product.subcategory }}
+      {{ product.brand }}
+    </p>
+    <p class="card-text">
+      {{ product.category.name }}
+    </p>
+    <p class="card-text">
+      {{ product.gender }}
     </p>
     <p>{{ product.price | currency }}</p>
     <a href="#" class="button-35">Add to cart</a>

@@ -4,30 +4,32 @@
   <div class="d-flex gap-4 p-4">
     <div class="w-1/2">
       <h4 class="font-sebold text-xl text-primary">Categories</h4>
-      <mat-selection-list>
+      <mat-selection-list [(ngModel)]="selectedCategories" [multiple]="true">
         @for (category of shopService.categories; track $index) {
-        <mat-list-option>{{ category.name }}</mat-list-option>
+        <mat-list-option [value]="category.name">{{
+          category.name
+        }}</mat-list-option>
         }
       </mat-selection-list>
     </div>
     <div class="w-1/2">
       <h4 class="font-sebold text-xl text-primary">Brands</h4>
-      <mat-selection-list>
+      <mat-selection-list [(ngModel)]="selectedBrands" [multiple]="true">
         @for (brand of shopService.brands; track $index) {
-        <mat-list-option>{{ brand }}</mat-list-option>
+        <mat-list-option [value]="brand">{{ brand }}</mat-list-option>
         }
       </mat-selection-list>
     </div>
     <div class="w-1/2">
-        <h4 class="font-sebold text-xl text-primary">For whom</h4>
-        <mat-selection-list>
-          @for (gender of shopService.genders; track $index) {
-          <mat-list-option>{{ gender }}</mat-list-option>
-          }
-        </mat-selection-list>
-      </div>
+      <h4 class="font-sebold text-xl text-primary">For whom</h4>
+      <mat-selection-list [(ngModel)]="selectedGenders" [multiple]="true">
+        @for (gender of shopService.genders; track $index) {
+        <mat-list-option [value]="gender">{{ gender }}</mat-list-option>
+        }
+      </mat-selection-list>
+    </div>
   </div>
   <div class="d-flex justify-content-end p-4">
-    <button mat-flat-button>Apply Filters</button>
+    <button mat-flat-button (click)="applyFilters()">Apply Filters</button>
   </div>
 </div>
