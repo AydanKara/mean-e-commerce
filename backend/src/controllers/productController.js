@@ -10,7 +10,7 @@ export const getAllProducts = async (req, res) => {
     // Construct filter
     const filter = {};
     if (category) {
-      const categories = category.split(", "); 
+      const categories = category.split(", ");
       const categoryDocs = await Category.find({ name: { $in: categories } });
       const categoryIds = categoryDocs.map((cat) => cat._id);
       filter.category = { $in: categoryIds };
@@ -39,7 +39,7 @@ export const getAllProducts = async (req, res) => {
 
     // Sort by price, rating, or relevance
     const sortQuery = {};
-    if (sort === "price") {
+    if (sort === "price_asc") {
       sortQuery.price = 1; // Ascending order
     } else if (sort === "price_desc") {
       sortQuery.price = -1; // Descending order
@@ -47,6 +47,10 @@ export const getAllProducts = async (req, res) => {
       sortQuery.ratings = -1; // Sort by ratings in descending order
     } else if (sort === "relevance") {
       sortQuery.createdAt = -1; // Sort by relevance (newest first)
+    } else if (sort === "name_asc") {
+      sortQuery.name = 1; // Alphabetical order (A-Z)
+    } else if (sort === "name_desc") {
+      sortQuery.name = -1; // Reverse alphabetical order (Z-A)
     }
 
     // Pagination

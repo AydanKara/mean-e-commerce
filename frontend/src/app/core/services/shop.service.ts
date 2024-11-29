@@ -25,8 +25,8 @@ export class ShopService {
     categories: string[] = [],
     brands: string[] = [],
     genders: string[] = [],
-    priceRange: string = '',
     sort: string = '',
+    priceRange: string = '',
     page: number = 1,
     limit: number = 10
   ): Observable<{
@@ -39,8 +39,8 @@ export class ShopService {
       .set('category', categories.join(', '))
       .set('gender', genders.join(', '))
       .set('brand', brands.join(', '))
-      .set('price', priceRange)
       .set('sort', sort)
+      .set('price', priceRange)
       .set('page', page.toString())
       .set('limit', limit.toString());
 
