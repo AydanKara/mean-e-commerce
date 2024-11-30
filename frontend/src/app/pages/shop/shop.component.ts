@@ -14,6 +14,7 @@ import {
   MatSelectionListChange,
 } from '@angular/material/list';
 import { ProductQueryParams } from '../../models/product-query-params.model';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-shop',
@@ -25,6 +26,7 @@ import { ProductQueryParams } from '../../models/product-query-params.model';
     MatSelectionList,
     MatListOption,
     MatMenuTrigger,
+    MatPaginator,
   ],
   templateUrl: './shop.component.html',
   styleUrl: './shop.component.css',
@@ -32,7 +34,15 @@ import { ProductQueryParams } from '../../models/product-query-params.model';
 export class ShopComponent implements OnInit {
   private shopService = inject(ShopService);
   private dialogService = inject(MatDialog);
+  // List of products
   products: Product[] = [];
+
+  // For pagination
+  totalProducts: number = 0;
+  currentPage: number = 1;
+  totalPages: number = 1;
+
+  // Sort options
   sortOptions = [
     { name: 'Relevance', value: 'relevance' },
     { name: 'Name: A-Z', value: 'name_asc' },
@@ -40,6 +50,8 @@ export class ShopComponent implements OnInit {
     { name: 'Price: Low-High', value: 'price_asc' },
     { name: 'Price: High-Low', value: 'price_desc' },
   ];
+
+  // Product query parameters
   queryParams = new ProductQueryParams();
 
   ngOnInit(): void {
@@ -57,9 +69,18 @@ export class ShopComponent implements OnInit {
     this.shopService.getAllProducts(this.queryParams).subscribe({
       next: (response) => {
         this.products = response.products;
+        this.currentPage = response.currentPage;
+        this.totalPages = response.totalPages;
+        this.totalProducts = response.totalProducts;
       },
       error: (error) => console.log(error),
     });
+  }
+
+  handlePageEvent(event: PageEvent) {
+    this.queryParams.page = event.pageIndex + 1;
+    this.queryParams.limit = event.pageSize;
+    this.getProducts();
   }
 
   onSortChange(event: MatSelectionListChange) {

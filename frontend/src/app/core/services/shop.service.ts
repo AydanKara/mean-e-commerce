@@ -25,8 +25,8 @@ export class ShopService {
     products: Product[];
     currentPage: number;
     totalPages: number;
+    totalProducts: number;
   }> {
-    
     const params = queryParams.toHttpParams();
 
     return this.http
@@ -34,6 +34,7 @@ export class ShopService {
         products: Product[];
         currentPage: number;
         totalPages: number;
+        totalProducts: number;
       }>(this.productsUrl, { params })
       .pipe(map((response) => response));
   }
