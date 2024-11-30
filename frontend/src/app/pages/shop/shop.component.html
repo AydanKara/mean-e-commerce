@@ -1,5 +1,7 @@
 <div class="d-flex flex-column gap-3">
-  <div class="d-flex justify-content-between align-items-center">
+  <div
+    class="d-flex flex-lg-row flex-md-column-reverse gap-md-3 justify-content-between align-items-center"
+  >
     <mat-paginator
       class="paginator"
       (page)="handlePageEvent($event)"
@@ -10,15 +12,33 @@
       [pageIndex]="currentPage - 1"
       aria-label="Select page"
     ></mat-paginator>
-    <div class="d-flex gap-3">
-      <button mat-stroked-button (click)="openFiltersDialog()">
-        <mat-icon>filter_list</mat-icon>
-        Filters
-      </button>
-      <button mat-stroked-button [matMenuTriggerFor]="sortMenu">
-        <mat-icon>swap_vert</mat-icon>
-        Sort
-      </button>
+    <div class="d-md-flex gap-3">
+      <form
+        #searchForm="ngForm"
+        (ngSubmit)="onSearchPage()"
+        class="position-relative d-flex align-items-center"
+      >
+        <input
+          type="search"
+          class="search-input"
+          placeholder="Search"
+          name="keyword"
+          [(ngModel)]="queryParams.searchTerm"
+        />
+        <button mat-icon-button type="submit" class="search-icon">
+          <mat-icon>search</mat-icon>
+        </button>
+      </form>
+      <div class="d-flex gap-3">
+        <button mat-stroked-button (click)="openFiltersDialog()">
+          <mat-icon>filter_list</mat-icon>
+          Filters
+        </button>
+        <button mat-stroked-button [matMenuTriggerFor]="sortMenu">
+          <mat-icon>swap_vert</mat-icon>
+          Sort
+        </button>
+      </div>
     </div>
   </div>
   <div class="container text-center">

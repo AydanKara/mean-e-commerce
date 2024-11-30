@@ -6,7 +6,7 @@ import { ProductItemComponent } from '../../components/product-item/product-item
 import { MatDialog } from '@angular/material/dialog';
 import { FilterDialogComponent } from '../../components/filter-dialog/filter-dialog.component';
 import { MatIcon } from '@angular/material/icon';
-import { MatButton } from '@angular/material/button';
+import { MatButton, MatIconButton } from '@angular/material/button';
 import { MatMenu, MatMenuTrigger } from '@angular/material/menu';
 import {
   MatListOption,
@@ -15,18 +15,21 @@ import {
 } from '@angular/material/list';
 import { ProductQueryParams } from '../../models/product-query-params.model';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-shop',
   imports: [
     ProductItemComponent,
     MatIcon,
+    MatIconButton,
     MatButton,
     MatMenu,
     MatSelectionList,
     MatListOption,
     MatMenuTrigger,
     MatPaginator,
+    FormsModule,
   ],
   templateUrl: './shop.component.html',
   styleUrl: './shop.component.css',
@@ -75,6 +78,10 @@ export class ShopComponent implements OnInit {
       },
       error: (error) => console.log(error),
     });
+  }
+
+  onSearchPage() {
+    this.getProducts();
   }
 
   handlePageEvent(event: PageEvent) {
