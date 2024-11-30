@@ -1,6 +1,6 @@
 @if (product) {
 <div class="card">
-  <div class="media">
+  <div class="media" routerLink="/product/{{ product._id }}">
     <img
       src="{{ product.images }}"
       class="card-img-top"
@@ -19,7 +19,7 @@
       {{ product.gender }}
     </p>
     <p>{{ product.price | currency }}</p>
-    <a href="#" class="button-35">Add to cart</a>
+    <a routerLink="/product/{{ product._id }}" class="button-35">Add to cart</a>
   </div>
 </div>
 }

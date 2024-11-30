@@ -11,7 +11,7 @@ export type Product = {
   stock: number;
   ratings: number;
   numReviews: number;
-  images: [{ url: string }];
+  images: string[];
   isFeatured: boolean;
   createdAt?: string; // Optional (from timestamps)
   updatedAt?: string; // Optional (from timestamps)

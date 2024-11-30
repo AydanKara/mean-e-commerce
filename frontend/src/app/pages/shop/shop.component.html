@@ -3,7 +3,7 @@
     class="d-flex flex-lg-row flex-md-column-reverse gap-md-3 justify-content-between align-items-center"
   >
     <mat-paginator
-      class="paginator"
+      class="paginator border-2"
       (page)="handlePageEvent($event)"
       [length]="totalProducts"
       [pageSize]="queryParams.limit"
@@ -16,17 +16,22 @@
       <form
         #searchForm="ngForm"
         (ngSubmit)="onSearchPage()"
-        class="position-relative d-flex align-items-center"
+        class="d-flex"
+        role="search"
       >
         <input
           type="search"
-          class="search-input"
+          class="form-control me-2 rounded-0 p-3 border-black border-2"
           placeholder="Search"
+          aria-label="Search"
           name="keyword"
           [(ngModel)]="queryParams.searchTerm"
         />
-        <button mat-icon-button type="submit" class="search-icon">
-          <mat-icon>search</mat-icon>
+        <button type="submit" class="button-nav border-2 gap-2">
+          <span class="material-symbols-outlined d-flex"
+            ><mat-icon>search</mat-icon></span
+          >
+          Search
         </button>
       </form>
       <div class="d-flex gap-3">

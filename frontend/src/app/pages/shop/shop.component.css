@@ -1,22 +1,24 @@
 .paginator {
     background-color: #fff;
     font-family: inherit;
+    border: solid;
+}
+
+.mdc-text-field {
+    border-radius: unset !important;
 }
 
 button {
     color: #000 !important;
-}
-
-.search-input {
-    padding: 0.4rem;
-    border: 1px solid #74777f;
-    border-radius: 8px;
-}
-
-.search-icon {
-    position: absolute;
-    display: flex;
-    right: 10px;
-    justify-content: center;
     align-items: center;
 }
+
+.mdc-button {
+    border: 0.125rem solid !important;
+    font-family: inherit;
+    letter-spacing: 0.1rem;
+    font-weight: 700;
+    border: 0.125rem solid !important;
+}
+
+

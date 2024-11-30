@@ -1,16 +1,164 @@
 /* You can add global styles to this file, and also import other style files */
 @import 'bootstrap/dist/css/bootstrap.min.css';
+@import 'swiper/swiper-bundle.css';
+@import url('https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&family=Manrope:wght@200..800&display=swap');
 
 html,
 body {
-    height: 100%;
+  height: 100%;
 }
 
 body {
-    margin: 0;
-    font-family: Roboto, "Helvetica Neue", sans-serif;
+  margin: 0;
+  font-family: "Jost", sans-serif !important;
+}
+
+a,
+a:hover {
+  text-decoration: none;
+  cursor: pointer;
+  border-radius: 0px !important;
+  letter-spacing: 0.125rem !important;
 }
 
 button {
-    border-radius: 8px !important;
+  height: auto !important;
+  border-radius: 0px !important;
+}
+
+.button-nav {
+  background: #fff !important;
+  backface-visibility: hidden !important;
+  border-style: solid !important;
+  border-width: .125rem !important;
+  box-sizing: border-box !important;
+  color: #212121 !important;
+  cursor: pointer !important;
+  display: inline-flex !important;
+  font-size: 1rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.125rem !important;
+  line-height: 1.3 !important;
+  padding: .6rem 1rem !important;
+  position: relative !important;
+  text-align: left !important;
+  text-decoration: none !important;
+  transform: translateZ(0) scale(1) !important;
+  transition: transform .2s !important;
+  user-select: none !important;
+  -webkit-user-select: none !important;
+  touch-action: manipulation !important;
+}
+
+.button-nav:not(:disabled):hover {
+  transform: scale(1.05) !important;
+}
+
+.button-nav:not(:disabled):hover:active {
+  transform: scale(1.05) translateY(.125rem) !important;
+}
+
+.button-nav:focus {
+  outline: 0 solid transparent !important;
+  ;
+}
+
+.button-nav:focus:before {
+  content: "" !important;
+  left: calc(-1*.375rem) !important;
+  pointer-events: none !important;
+  position: absolute !important;
+  top: calc(-1*.375rem) !important;
+  transition: border-radius !important;
+  ;
+  user-select: none !important;
+}
+
+.button-nav:focus:not(:focus-visible) {
+  outline: 0 solid transparent !important;
+}
+
+.button-nav:focus:not(:focus-visible):before {
+  border-width: 0 !important;
+}
+
+.button-nav:not(:disabled):active {
+  transform: translateY(.125rem);
+}
+
+.button-nav-dark {
+  background: #212121 !important;
+  backface-visibility: hidden !important;
+  border-style: solid !important;
+  border-width: .125rem !important;
+  box-sizing: border-box !important;
+  color: #fff !important;
+  cursor: pointer !important;
+  display: inline-block !important;
+  font-size: 1rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.125rem !important;
+  line-height: 1.3 !important;
+  padding: .6rem 1rem !important;
+  position: relative !important;
+  text-align: left !important;
+  text-decoration: none !important;
+  transform: translateZ(0) scale(1) !important;
+  transition: transform .2s !important;
+  user-select: none !important;
+  -webkit-user-select: none !important;
+  touch-action: manipulation !important;
+}
+
+.button-nav-dark:not(:disabled):hover {
+  transform: scale(1.05) !important;
+}
+
+.button-nav-dark:not(:disabled):hover:active {
+  transform: scale(1.05) translateY(.125rem) !important;
+}
+
+.button-nav-dark:focus {
+  outline: 0 solid transparent !important;
+  ;
+}
+
+.button-nav-dark:focus:before {
+  content: "" !important;
+  left: calc(-1*.375rem) !important;
+  pointer-events: none !important;
+  position: absolute !important;
+  top: calc(-1*.375rem) !important;
+  transition: border-radius !important;
+  ;
+  user-select: none !important;
+}
+
+.button-nav-dark:focus:not(:focus-visible) {
+  outline: 0 solid transparent !important;
+}
+
+.button-nav-dark:focus:not(:focus-visible):before {
+  border-width: 0 !important;
+}
+
+.button-nav-dark:not(:disabled):active {
+  transform: translateY(.125rem);
+}
+
+.btn-1 {
+  letter-spacing: 0.125rem !important;
+  height: calc(3.25rem + 2px);
+  white-space: nowrap;
+}
+
+
+
+.mat-mdc-dialog-surface {
+  border-radius: 0 !important;
+}
+
+.text-primary {
+  --bs-text-opacity: 1;
+  color: #6c757d !important;
 }

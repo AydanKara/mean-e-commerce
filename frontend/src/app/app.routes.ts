@@ -44,14 +44,15 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./pages/shop/shop.component').then((m) => m.ShopComponent),
       },
+
+      {
+        path: 'product/:id',
+        loadComponent: () =>
+          import('./pages/product-details/product-details.component').then(
+            (m) => m.ProductDetailsComponent
+          ),
+      },
       /*
-  {
-    path: 'product/:id',
-    loadComponent: () =>
-      import('./pages/product-details/product-details.component').then(
-        (m) => m.ProductDetailsComponent
-      ),
-  },
   {
     path: '**', // Wildcard Route for 404
     loadComponent: () =>

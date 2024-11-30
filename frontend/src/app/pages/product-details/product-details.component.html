@@ -1,0 +1,121 @@
+<!-- PRODUCT -->
+<section>
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="row">
+          <!-- Left Column: Product Images -->
+          <div class="col-12 col-md-6">
+            <div class="card">
+              <!-- Main Slider -->
+              <div class="swiper main-slider">
+                <div class="swiper-wrapper">
+                  <div *ngFor="let image of productImages" class="swiper-slide h-auto">
+                    <img [src]="image" class="img-fluid" alt="Product Image" />
+                  </div>
+                </div>
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+              </div>
+            </div>
+
+            <div class="mx-n2 mb-10 mb-md-0 mt-2">
+              <!-- Thumbnail Slider -->
+              <div class="swiper thumbnail-slider">
+                <div class="swiper-wrapper">
+                  <div *ngFor="let image of productImages" class="swiper-slide">
+                    <img
+                      [src]="image"
+                      class="img-thumbnail"
+                      alt="Thumbnail Image"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Column: Product Details -->
+          <div class="col-12 col-md-6 ps-lg-10">
+            <!-- Header -->
+            <div class="row mb-4">
+              <div class="col">
+                <a routerLink="/shop" class="text-muted">{{
+                  product?.category?.name
+                }}</a>
+              </div>
+              <div class="col-auto d-flex align-items-center">
+                <!-- Rating -->
+                <div class="rating fs-xs text-dark">
+                  <div class="rating-item">
+                    <mat-icon> star </mat-icon>
+                  </div>
+                  <div class="rating-item"><mat-icon> star </mat-icon></div>
+                  <div class="rating-item"><mat-icon> star </mat-icon></div>
+                  <div class="rating-item"><mat-icon> star </mat-icon></div>
+                  <div class="rating-item"><mat-icon> star </mat-icon></div>
+                </div>
+                <a routerLink="/reviews" class="fs-sm text-reset ms-3">
+                  Reviews ({{ product?.numReviews }})</a
+                >
+              </div>
+            </div>
+            <!-- Heading -->
+            <h1 class="mb-4">{{ product?.name }}</h1>
+            <!-- Price -->
+            <div class="mb-lg-5 mb-md-3 d-flex align-items-center">
+              <h2 class="ms-1 fw-bolder text-primary">
+                {{ product?.price | currency }}
+              </h2>
+              <span class="fs-sm ms-1">( In stock: {{ product?.stock }})</span>
+            </div>
+            <!-- Description -->
+            <div class="mb-5">
+              <p class="text-muted">{{ product?.description }}</p>
+            </div>
+
+            <!-- Form -->
+            <form>
+              <div class="form-group">
+                <div class="row mt-lg-5">
+                  <div class="col-12 col-lg-auto">
+                    <!-- Quantity -->
+                    <select class="form-select mb-2">
+                      <!--! implement product stock -->
+                      <option value="1" selected>1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                      <option value="4">4</option>
+                    </select>
+                  </div>
+                  <div class="col-12 col-lg">
+                    <!-- Submit -->
+                    <button
+                      type="submit"
+                      class="button-nav-dark w-100 mb-2"
+                    >
+                      Add to Cart
+                      <span class="material-symbols-outlined">
+                        <mat-icon>shopping_cart</mat-icon>
+                      </span>
+                    </button>
+                  </div>
+                  <div class="col-12 col-lg-auto">
+                    <!-- WishList -->
+                    <button class="button-nav w-100 mb-2 mt-md-1 mt-xl-0">
+                      WishList
+                      <span class="material-symbols-outlined">
+                        <mat-icon>favorite</mat-icon>
+                      </span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </form>
+            <!-- Additional Details -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

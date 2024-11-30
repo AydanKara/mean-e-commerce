@@ -1,6 +1,17 @@
 .card {
     height: 100%;
     box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+    transition: transform .2s;
+    border-radius: 0 !important;
+}
+
+.card-img, .card-img-top {
+  border-radius: 0 !important;
+}
+
+.card:hover {
+  transform: scale(1.05);
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 14px 28px, rgba(0, 0, 0, 0.1) 0px 10px 10px;
 }
 
 .card-body {
@@ -11,6 +22,7 @@
 
 .media {
     height: 14rem;
+    cursor: pointer;
 }
 
 .media .card-img-top {
