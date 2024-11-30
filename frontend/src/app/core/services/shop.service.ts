@@ -4,6 +4,7 @@ import { map, Observable } from 'rxjs';
 import { Product } from '../../models/product.model';
 import { Category } from '../../models/category.model';
 import { environment } from '../../../environments/environment';
+import { ProductQueryParams } from '../../models/product-query-params.model';
 
 @Injectable({
   providedIn: 'root',
@@ -20,29 +21,13 @@ export class ShopService {
   constructor() {}
 
   // Fetch All Products
-  getAllProducts(
-    searchTerm: string = '',
-    categories: string[] = [],
-    brands: string[] = [],
-    genders: string[] = [],
-    sort: string = '',
-    priceRange: string = '',
-    page: number = 1,
-    limit: number = 10
-  ): Observable<{
+  getAllProducts(queryParams: ProductQueryParams): Observable<{
     products: Product[];
     currentPage: number;
     totalPages: number;
   }> {
-    let params = new HttpParams()
-      .set('keyword', searchTerm)
-      .set('category', categories.join(', '))
-      .set('gender', genders.join(', '))
-      .set('brand', brands.join(', '))
-      .set('sort', sort)
-      .set('price', priceRange)
-      .set('page', page.toString())
-      .set('limit', limit.toString());
+    
+    const params = queryParams.toHttpParams();
 
     return this.http
       .get<{

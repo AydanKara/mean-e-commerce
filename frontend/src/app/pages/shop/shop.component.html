@@ -30,7 +30,7 @@
     @for (sort of sortOptions; track $index) {
     <mat-list-option
       [value]="sort.value"
-      [selected]="selectedSort === sort.value"
+      [selected]="queryParams.sort === sort.value"
       >{{ sort.name }}</mat-list-option
     >
     }

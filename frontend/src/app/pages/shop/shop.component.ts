@@ -2,7 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { ShopService } from '../../core/services/shop.service';
 import { Product } from '../../models/product.model';
 import { ProductItemComponent } from '../../components/product-item/product-item.component';
-import { Category } from '../../models/category.model';
+
 import { MatDialog } from '@angular/material/dialog';
 import { FilterDialogComponent } from '../../components/filter-dialog/filter-dialog.component';
 import { MatIcon } from '@angular/material/icon';
@@ -13,6 +13,7 @@ import {
   MatSelectionList,
   MatSelectionListChange,
 } from '@angular/material/list';
+import { ProductQueryParams } from '../../models/product-query-params.model';
 
 @Component({
   selector: 'app-shop',
@@ -32,11 +33,6 @@ export class ShopComponent implements OnInit {
   private shopService = inject(ShopService);
   private dialogService = inject(MatDialog);
   products: Product[] = [];
-  selectedSearch: string = '';
-  selectedCategories: string[] = [];
-  selectedBrands: string[] = [];
-  selectedGenders: string[] = [];
-  selectedSort: string = 'name';
   sortOptions = [
     { name: 'Relevance', value: 'relevance' },
     { name: 'Name: A-Z', value: 'name_asc' },
@@ -44,6 +40,7 @@ export class ShopComponent implements OnInit {
     { name: 'Price: Low-High', value: 'price_asc' },
     { name: 'Price: High-Low', value: 'price_desc' },
   ];
+  queryParams = new ProductQueryParams();
 
   ngOnInit(): void {
     this.initializeShop();
@@ -57,26 +54,18 @@ export class ShopComponent implements OnInit {
   }
 
   getProducts() {
-    this.shopService
-      .getAllProducts(
-        this.selectedSearch,
-        this.selectedCategories,
-        this.selectedBrands,
-        this.selectedGenders,
-        this.selectedSort
-      )
-      .subscribe({
-        next: (response) => {
-          this.products = response.products;
-        },
-        error: (error) => console.log(error),
-      });
+    this.shopService.getAllProducts(this.queryParams).subscribe({
+      next: (response) => {
+        this.products = response.products;
+      },
+      error: (error) => console.log(error),
+    });
   }
 
   onSortChange(event: MatSelectionListChange) {
     const selectedOption = event.options[0];
     if (selectedOption) {
-      this.selectedSort = selectedOption.value;
+      this.queryParams.sort = selectedOption.value;
       this.getProducts();
     }
   }
@@ -85,17 +74,17 @@ export class ShopComponent implements OnInit {
     const dialogRef = this.dialogService.open(FilterDialogComponent, {
       maxWidth: '100%',
       data: {
-        selectedCategories: this.selectedCategories,
-        selectedBrands: this.selectedBrands,
-        selectedGenders: this.selectedGenders,
+        selectedCategories: this.queryParams.categories,
+        selectedBrands: this.queryParams.brands,
+        selectedGenders: this.queryParams.genders,
       },
     });
     dialogRef.afterClosed().subscribe({
       next: (result) => {
         if (result) {
-          this.selectedCategories = result.selectedCategories;
-          this.selectedBrands = result.selectedBrands;
-          this.selectedGenders = result.selectedGenders;
+          this.queryParams.categories = result.selectedCategories;
+          this.queryParams.brands = result.selectedBrands;
+          this.queryParams.genders = result.selectedGenders;
           this.getProducts();
         }
       },
