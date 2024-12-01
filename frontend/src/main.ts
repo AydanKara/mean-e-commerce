@@ -11,7 +11,12 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 
 bootstrapApplication(AppComponent, {
   providers: [
-    importProvidersFrom(RouterModule.forRoot(routes)),
-    provideHttpClient(withInterceptorsFromDi()), provideAnimationsAsync(),
+    importProvidersFrom(
+      RouterModule.forRoot(routes, {
+        scrollPositionRestoration: 'enabled', // Restores scroll position or scrolls to top
+      })
+    ),
+    provideHttpClient(withInterceptorsFromDi()),
+    provideAnimationsAsync(),
   ],
 }).catch((err) => console.error(err));
