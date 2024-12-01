@@ -7,6 +7,7 @@ import {
   deleteProduct,
   getUniqueBrands,
   getUniqueGenders,
+  getRelatedProducts,
 } from "../controllers/productController.js";
 import { admin, protect } from "../middleware/authMiddleware.js";
 
@@ -25,4 +26,5 @@ router
   .put(protect, admin, updateProduct) // Update a product (Admin only)
   .delete(protect, admin, deleteProduct); // Delete a product (Admin only)
 
+router.route("/:id/related").get(getRelatedProducts);
 export default router;

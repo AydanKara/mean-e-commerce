@@ -17,6 +17,7 @@ export class ShopService {
   categories: Category[] = [];
   brands: string[] = [];
   genders: string[] = [];
+  relatedProducts: Product[] = [];
 
   constructor() {}
 
@@ -98,5 +99,15 @@ export class ShopService {
 
   getProductById(id: string): Observable<Product> {
     return this.http.get<Product>(`${this.productsUrl}/${id}`);
+  }
+
+  getRelatedProductsById(
+    id: string
+  ): Observable<{ success: boolean; relatedProducts: Product[] }> {
+    return this.http
+      .get<{ success: boolean; relatedProducts: Product[] }>(
+        `${this.productsUrl}/${id}/related`
+      )
+      .pipe(map((response) => response));
   }
 }

@@ -1,0 +1,95 @@
+<section class="pt-5">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <!-- Heading -->
+        <h4 class="mb-5 text-center">You might also like</h4>
+
+        <!-- Items -->
+        <div class="row justify-content-center">
+          @for (relatedProduct of relatedProducts; track relatedProduct._id) {
+          <div class="col-6 col-sm-6 col-md-4 col-lg-3">
+            <!-- Card -->
+            <div class="card mb-5">
+              <!-- Image -->
+              <div class="card-img">
+                <!-- Image -->
+                <a
+                  class="card-img-hover docs-creator"
+                  routerLink="/product/{{ relatedProduct._id }}"
+                >
+                  <img
+                    class="card-img-top card-img-back"
+                    src="{{ relatedProduct.images[0] }}"
+                    alt="{{ relatedProduct.name }}"
+                  />
+                </a>
+
+                <!-- Actions -->
+                <div class="card-actions">
+                  <span class="card-action">
+                    <button
+                      class="btn btn-xs btn-circle btn-white-primary"
+                      data-bs-toggle="modal"
+                      data-bs-target="#modalProduct"
+                    >
+                      <span
+                        [routerLink]="['/product', relatedProduct._id]"
+                        class="material-symbols-outlined"
+                      >
+                        <mat-icon>visibility</mat-icon>
+                      </span>
+                    </button>
+                  </span>
+                  <span class="card-action">
+                    <button
+                      class="btn btn-xs btn-circle btn-white-primary"
+                      data-toggle="button"
+                    >
+                      <span class="material-symbols-outlined">
+                        <mat-icon>shopping_cart</mat-icon>
+                      </span>
+                    </button>
+                  </span>
+                  <span class="card-action">
+                    <button
+                      class="btn btn-xs btn-circle btn-white-primary"
+                      data-toggle="button"
+                    >
+                      <span class="material-symbols-outlined">
+                        <mat-icon>favorite</mat-icon>
+                      </span>
+                    </button>
+                  </span>
+                </div>
+              </div>
+
+              <!-- Body -->
+              <div class="card-body px-0">
+                <!-- Category -->
+                <div class="fs-xs">
+                  <a class="text-muted" routerLink="/shop">{{
+                    relatedProduct.category.name
+                  }}</a>
+                </div>
+
+                <!-- Title -->
+                <div class="fw-bold">
+                  <a class="text-body docs-creator" href="product.html">
+                    {{ relatedProduct.name }}
+                  </a>
+                </div>
+
+                <!-- Price -->
+                <div class="fw-bold text-muted">
+                  {{ relatedProduct.price | currency }}
+                </div>
+              </div>
+            </div>
+          </div>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

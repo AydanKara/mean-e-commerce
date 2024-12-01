@@ -96,6 +96,43 @@ export const getProductById = async (req, res) => {
   }
 };
 
+// Get related products
+export const getRelatedProducts = async (req, res) => {
+  try {
+    // Find the current product to fetch its category, brand, etc.
+    const currentProduct = await Product.findById(req.params.id);
+    if (!currentProduct) {
+      return res.status(404).json({ message: "Product not found" });
+    }
+
+    // Build a filter for related products
+    const filter = {
+      _id: { $ne: req.params.id }, // Exclude the current product
+      category: currentProduct.category, // Match category
+    };
+
+    // Optionally include brand or gender if needed
+    if (currentProduct.brand) {
+      filter.brand = currentProduct.brand;
+    }
+    if (currentProduct.gender) {
+      filter.gender = currentProduct.gender;
+    }
+
+    // Fetch related products (limit to a few products for recommendations)
+    const relatedProducts = await Product.find(filter)
+      .limit(4) // Adjust the limit as per your UI design
+      .populate("category", "name");
+
+    res.status(200).json({
+      success: true,
+      relatedProducts,
+    });
+  } catch (error) {
+    res.status(500).json({ success: false, message: "Server error", error });
+  }
+};
+
 // Create a new product
 export const createProduct = async (req, res) => {
   try {

@@ -16,13 +16,14 @@ import {
 import { ProductQueryParams } from '../../models/product-query-params.model';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { FormsModule } from '@angular/forms';
+import { FeaturesComponent } from '../../shared/features/features.component';
 
 @Component({
   selector: 'app-shop',
   imports: [
     ProductItemComponent,
+    FeaturesComponent,
     MatIcon,
-    MatIconButton,
     MatButton,
     MatMenu,
     MatSelectionList,

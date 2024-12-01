@@ -2,7 +2,7 @@ footer {
     background-color: #efedf0 !important;
     padding: 1.5rem !important;
     text-align: center;
-    box-shadow: rgba(0, 0, 0, 0.2) 0px 6px 24px 0px, rgba(0, 0, 0, 0.1) 0px 0px 0px 1px;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 6px 24px 0px, rgba(0, 0, 0, 0.2) 0px 6px 24px 0px;
 }
 
 footer p {

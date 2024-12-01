@@ -133,7 +133,7 @@
                   <div class="col-12">
                     <!-- Text -->
                     <p class="text-gray-500">
-                      {{product?.description}}
+                      {{ product?.description }}
                     </p>
                   </div>
                   <div class="col-12 col-md-6">
@@ -220,3 +220,9 @@
     </div>
   </div>
 </section>
+<!-- YOU MAY ALSO LIKE -->
+<app-related-products
+  [relatedProducts]="relatedProducts"
+></app-related-products>
+<!-- FEATURES -->
+<app-features></app-features>
