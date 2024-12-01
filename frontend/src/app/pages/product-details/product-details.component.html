@@ -10,7 +10,10 @@
               <!-- Main Slider -->
               <div class="swiper main-slider">
                 <div class="swiper-wrapper">
-                  <div *ngFor="let image of productImages" class="swiper-slide h-auto">
+                  <div
+                    *ngFor="let image of productImages"
+                    class="swiper-slide h-auto"
+                  >
                     <img [src]="image" class="img-fluid" alt="Product Image" />
                   </div>
                 </div>
@@ -90,10 +93,7 @@
                   </div>
                   <div class="col-12 col-lg">
                     <!-- Submit -->
-                    <button
-                      type="submit"
-                      class="button-nav-dark w-100 mb-2"
-                    >
+                    <button type="submit" class="button-nav-dark w-100 mb-2">
                       Add to Cart
                       <span class="material-symbols-outlined">
                         <mat-icon>shopping_cart</mat-icon>
@@ -115,6 +115,107 @@
             <!-- Additional Details -->
           </div>
         </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- DESCRIPTION -->
+<section class="descriptions">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <!-- Tabs -->
+        <mat-tab-group>
+          <mat-tab label="Description"
+            ><div class="row justify-content-center py-5 mx-0">
+              <div class="col-12 col-lg-10 col-xl-8">
+                <div class="row">
+                  <div class="col-12">
+                    <!-- Text -->
+                    <p class="text-gray-500">
+                      {{product?.description}}
+                    </p>
+                  </div>
+                  <div class="col-12 col-md-6">
+                    <!-- List -->
+                    <ul class="list list-unstyled mb-md-0 text-gray-500">
+                      <li><strong class="text-body">SKU</strong>: #61590437</li>
+                      <li>
+                        <strong class="text-body">Occasion</strong>: Lifestyle,
+                        Sport
+                      </li>
+                      <li><strong class="text-body">Country</strong>: Italy</li>
+                    </ul>
+                  </div>
+                  <div class="col-12 col-md-6">
+                    <!-- List -->
+                    <ul class="list list-unstyled mb-0">
+                      <li>
+                        <strong>Outer</strong>: Leather 100%, Polyamide 100%
+                      </li>
+                      <li><strong>Lining</strong>: Polyester 100%</li>
+                      <li><strong>CounSoletry</strong>: Rubber 100%</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div></mat-tab
+          >
+          <mat-tab label="Size & Fit"> </mat-tab>
+          <mat-tab label="Shipping & Return" class="overflow-hidden">
+            <div class="row justify-content-center py-5 mx-0">
+              <div class="col-12 col-lg-10 col-xl-8">
+                <!-- Table -->
+                <div class="table-responsive">
+                  <table class="table table-bordered table-sm table-hover">
+                    <thead>
+                      <tr>
+                        <th>Shipping Options</th>
+                        <th>Delivery Time</th>
+                        <th>Price</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>Standard Shipping</td>
+                        <td>Delivery in 5 - 7 working days</td>
+                        <td>$8.00</td>
+                      </tr>
+                      <tr>
+                        <td>Express Shipping</td>
+                        <td>Delivery in 3 - 5 working days</td>
+                        <td>$12.00</td>
+                      </tr>
+                      <tr>
+                        <td>1 - 2 day Shipping</td>
+                        <td>Delivery in 1 - 2 working days</td>
+                        <td>$12.00</td>
+                      </tr>
+                      <tr>
+                        <td>Free Shipping</td>
+                        <td>
+                          Living won't the He one every subdue meat replenish
+                          face was you morning firmament darkness.
+                        </td>
+                        <td>$0.00</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <!-- Caption -->
+                <p class="mb-0 text-gray-500">
+                  May, life blessed night so creature likeness their, for.
+                  <a
+                    class="text-body text-decoration-underline docs-creator"
+                    href="#!"
+                    >Find out more</a
+                  >
+                </p>
+              </div>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
       </div>
     </div>
   </div>

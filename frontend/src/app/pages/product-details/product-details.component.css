@@ -67,6 +67,15 @@ button {
     gap: 1rem;
 }
 
+.descriptions {
+    margin-top: 10rem;
+    font-size: inherit !important;
+}
+
+.table-sm>:not(caption)>*>* {
+    padding: 1.25rem;
+}
+
 /* Responsive */
 @media screen and (max-width: 1199.98px) {
     .main-slider .swiper-slide {

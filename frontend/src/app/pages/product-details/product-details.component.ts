@@ -7,10 +7,11 @@ import Swiper from 'swiper';
 import { Navigation } from 'swiper/modules';
 import { Thumbs } from 'swiper/modules';
 import { MatIcon } from '@angular/material/icon';
+import { MatTabsModule } from '@angular/material/tabs';
 
 @Component({
   selector: 'app-product-details',
-  imports: [CommonModule, MatIcon],
+  imports: [CommonModule, MatIcon, MatTabsModule],
   templateUrl: './product-details.component.html',
   styleUrl: './product-details.component.css',
 })
@@ -36,7 +37,7 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
     this.shopService.getProductById(id).subscribe({
       next: (product) => {
         this.product = product;
-        console.log(product.category.name)
+        console.log(product.category.name);
         this.productImages = product.images;
         this.initializeSwiper(); // Reinitialize Swiper when product data is available
       },
