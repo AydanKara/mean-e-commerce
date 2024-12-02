@@ -1,0 +1,34 @@
+<div class="carousel-container">
+  <div
+    class="carousel-slide"
+    *ngIf="slides.length > 0"
+    [@carouselAnimation]="{
+      value: currentSlide,
+      params: { duration: transitionDuration, easing: transitionEasing }
+    }"
+  >
+    <img
+      [src]="slides[currentSlide].image"
+      alt="carousel image"
+      class="carousel-image"
+    />
+    <!-- Content -->
+    <div
+      class="carousel-content"
+      [innerHTML]="slides[currentSlide].content"
+    ></div>
+  </div>
+
+  <button
+    class="carousel-control-prev material-symbols-outlined"
+    (click)="prevSlide()"
+  >
+    <mat-icon class="fs-1">arrow_back_ios</mat-icon>
+  </button>
+  <button
+    class="carousel-control-next material-symbols-outlined"
+    (click)="nextSlide()"
+  >
+    <mat-icon>arrow_forward_ios</mat-icon>
+  </button>
+</div>

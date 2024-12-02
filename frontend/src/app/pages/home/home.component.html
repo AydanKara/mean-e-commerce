@@ -1,3 +1,8 @@
+<app-carousel
+  [slides]="slides"
+  [transitionDuration]="900"
+  [transitionEasing]="'ease-in'"
+></app-carousel>
 
 <div class="container row mx-auto">
   <div class="col-12 text-center">
@@ -13,7 +18,7 @@
     <app-product-list></app-product-list>
 </div> -->
 
-<ng-template #noProducts>
+<!-- <ng-template #noProducts>
   <div class="no-products-container text-center">
     <div class="media">
       <img
@@ -24,7 +29,7 @@
     </div>
     <p>We're sorry, but there are no products to display at the moment.</p>
   </div>
-</ng-template>
+</ng-template> -->
 
 <!-- FEATURES -->
 <app-features></app-features>
