@@ -1,0 +1,31 @@
+<section class="py-5">
+  <h2 class="my-5 text-center">Shop by Category</h2>
+  <div class="container">
+    <div class="row justify-content-center gap-4">
+      <!-- Card-->
+      @for (category of categoryService.categories; track category._id) {
+      <div class="col-12 col-lg-2 col-md-4 card-wrapper p-0">
+        <div class="card card-xl" style="min-height: 280px">
+          <!-- Background -->
+          <div class="card-bg">
+            <img src="{{ category.image }}" class="card-bg-img bg-cover" />
+          </div>
+          <!-- Body -->
+          <div class="card-body my-auto card-img-overlay-hover bg-white-90">
+            <!-- Heading -->
+            <h5 class="mb-0">{{ category.name }}</h5>
+
+            <!-- Link -->
+            <a
+              class="btn btn-link stretched-link px-0 text-reset"
+              routerLink="/shop"
+            >
+              Shop Now
+            </a>
+          </div>
+        </div>
+      </div>
+      }
+    </div>
+  </div>
+</section>
