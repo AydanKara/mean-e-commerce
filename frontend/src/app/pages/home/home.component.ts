@@ -6,6 +6,7 @@ import { CarouselComponent } from '../../components/carousel/carousel.component'
 import { CategoriesComponent } from '../../components/categories/categories.component';
 import { CategoryService } from '../../core/services/category.service';
 import { Category } from '../../models/category.model';
+import { MustHavesComponent } from '../../components/must-haves/must-haves.component';
 
 @Component({
   selector: 'app-home',
@@ -15,6 +16,7 @@ import { Category } from '../../models/category.model';
     FeaturesComponent,
     CarouselComponent,
     CategoriesComponent,
+    MustHavesComponent
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',

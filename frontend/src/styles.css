@@ -13,6 +13,41 @@ body {
   font-family: "Jost", sans-serif !important;
 }
 
+.my-6 {
+  margin-block: 6rem !important;
+}
+
+.bg-light {
+  --bs-bg-opacity: 1;
+  background-color: rgba(245, 245, 245, 1) !important;
+}
+
+.text-primary {
+  --bs-text-opacity: 1;
+  color: #6c757d !important;
+}
+
+.text-gray-350[href]:hover,
+.text-gray-400 {
+  color: #909090 !important;
+}
+
+.text-gray-450[href]:hover,
+.text-gray-500 {
+  color: #525252 !important;
+}
+
+.heading-xxs {
+  font-size: .8125rem;
+}
+
+.heading-xxs,
+.heading-xxxs {
+  font-weight: 500;
+  letter-spacing: .02em;
+  text-transform: uppercase;
+}
+
 a,
 a:hover {
   text-decoration: none;
@@ -153,12 +188,6 @@ button {
 }
 
 
-
 .mat-mdc-dialog-surface {
   border-radius: 0 !important;
-}
-
-.text-primary {
-  --bs-text-opacity: 1;
-  color: #6c757d !important;
 }

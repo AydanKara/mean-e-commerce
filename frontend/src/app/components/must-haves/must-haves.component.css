@@ -1,0 +1,14 @@
+/* MUST HAVE */
+.content {
+    padding-block: 8rem;
+}
+
+.bg-cover {
+    background-position: 50% 60% !important;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+}
+
+.vw-50 {
+    width: 50vw !important;
+}
