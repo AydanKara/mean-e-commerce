@@ -40,6 +40,15 @@ export class ShopService {
       .pipe(map((response) => response));
   }
 
+  // Fetch newest products
+  getNewProducts() {
+    return this.http
+      .get<{ success: boolean; newProducts: Product[] }>(
+        `${this.productsUrl}/new`
+      )
+      .pipe(map((response) => response));
+  }
+
   // Fetch Categories
   getAllCategories() {
     return this.http

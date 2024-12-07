@@ -1,0 +1,77 @@
+<section>
+  <div class="container py-5 border-bottom">
+    <div class="row">
+      <div class="col-12 buttons">
+        <!-- Heading -->
+        <h2 class="mb-5 text-center">New Arrivals</h2>
+
+        <!-- Main Swiper Slider -->
+        <div class="swiper new-arrivals-slider">
+          <div class="swiper-wrapper">
+            <div
+              *ngFor="let product of newProducts"
+              class="swiper-slide col-12 col-md-4 mb-5 px-3"
+            >
+              <div class="card">
+                <!-- Image -->
+                <a [routerLink]="'/product/' + product._id">
+                  <img
+                    class="card-img-top"
+                    [src]="product.images[0]"
+                    [alt]="product.name"
+                  />
+                </a>
+
+                <!-- Body -->
+                <div class="card-body px-0">
+                  <div class="d-flex">
+                    <!-- Caption -->
+                    <div class="me-auto">
+                      <!-- Heading -->
+                      <div class="fw-bold">
+                        <a
+                          class="text-body"
+                          [routerLink]="'/product/' + product._id"
+                        >
+                          {{ product.name }}
+                        </a>
+                      </div>
+
+                      <!-- Category -->
+                      <div class="fs-sm">
+                        <a
+                          class="text-muted"
+                          [routerLink]="'/category/' + product.category"
+                        >
+                          {{ product.category.name }}
+                        </a>
+                      </div>
+                    </div>
+
+                    <!-- Price -->
+                    <div class="fs-sm fw-bold text-muted">
+                      {{ product.price | currency }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Navigation -->
+          
+        </div>
+
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+
+        <!-- Button -->
+        <div class="text-center">
+          <a class="button-nav-dark" routerLink="/shop">
+            Shop Now <i class="fe fe-arrow-right ms-2"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

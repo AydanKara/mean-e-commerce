@@ -21,7 +21,6 @@ export class CategoryService {
         next: (response) => {
           if (response.success) {
             this.categories = response.categories;
-            console.log(response);
           } else {
             this.errorMessage = 'Failed to fetch Categories.';
           }

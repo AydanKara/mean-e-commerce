@@ -8,6 +8,7 @@ import {
   getUniqueBrands,
   getUniqueGenders,
   getRelatedProducts,
+  getNewProducts,
 } from "../controllers/productController.js";
 import { admin, protect } from "../middleware/authMiddleware.js";
 
@@ -20,6 +21,9 @@ router
 
 router.route("/brands").get(getUniqueBrands); // Get all products with unique brands
 router.route("/genders").get(getUniqueGenders); // Get all products with unique genders
+
+router.route("/new").get(getNewProducts);
+
 router
   .route("/:id")
   .get(getProductById) // Get a single product by ID

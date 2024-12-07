@@ -7,6 +7,15 @@ import { CategoriesComponent } from '../../components/categories/categories.comp
 import { CategoryService } from '../../core/services/category.service';
 import { Category } from '../../models/category.model';
 import { MustHavesComponent } from '../../components/must-haves/must-haves.component';
+import { animate, style, transition, trigger } from '@angular/animations';
+import { ShopService } from '../../core/services/shop.service';
+import { Product } from '../../models/product.model';
+import {
+  sliderHeroAnimation,
+  sliderNewProductsAnimation,
+} from '../../animations/animations';
+import { NewProductsCarouselComponent } from '../../components/new-products-carousel/new-products-carousel.component';
+import { BlogsComponent } from "../../components/blogs/blogs.component";
 
 @Component({
   selector: 'app-home',
@@ -16,14 +25,21 @@ import { MustHavesComponent } from '../../components/must-haves/must-haves.compo
     FeaturesComponent,
     CarouselComponent,
     CategoriesComponent,
-    MustHavesComponent
-  ],
+    MustHavesComponent,
+    NewProductsCarouselComponent,
+    BlogsComponent
+],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
+  animations: [sliderHeroAnimation, sliderNewProductsAnimation],
 })
 export class HomeComponent implements OnInit {
   private categoryService = inject(CategoryService);
+  private shopService = inject(ShopService);
   categories: Category[] = [];
+  newProducts: Product[] = [];
+  brands: string[] = [];
+  errorMessage: string = '';
 
   slides = [
     {
@@ -99,5 +115,19 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.categoryService.getAllCategories();
+    this.shopService.getNewProducts().subscribe({
+      next: (response) => {
+        if (response.success) {
+          this.newProducts = response.newProducts;
+          console.log(this.newProducts);
+        } else {
+          this.errorMessage = 'Failed to fetch new products.';
+        }
+      },
+      error: (error) => {
+        console.error('Error fetching new products:', error);
+        this.errorMessage = 'An error occurred while fetching new products.';
+      },
+    });
   }
 }

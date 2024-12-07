@@ -80,6 +80,20 @@ export const getAllProducts = async (req, res) => {
   }
 };
 
+// Get newest products (limited to 6 items)
+export const getNewProducts = async (req, res) => {
+  try {
+    const newProducts = await Product.find()
+      .sort({ createdAt: -1 }) // Sort by newest first
+      .limit(6) // Limit to 6 items
+      .populate("category", "name");
+
+    res.status(200).json({ success: true, newProducts });
+  } catch (error) {
+    res.status(500).json({ success: false, message: "Server error", error });
+  }
+};
+
 // Get a single product by ID
 export const getProductById = async (req, res) => {
   try {
