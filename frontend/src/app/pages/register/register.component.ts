@@ -9,10 +9,11 @@ import {
 
 import { Router } from '@angular/router';
 import { UserService } from '../../core/services/user.service';
+import { FeaturesComponent } from "../../shared/features/features.component";
 
 @Component({
   selector: 'app-register',
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, FeaturesComponent],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css',
 })

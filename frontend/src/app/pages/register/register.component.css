@@ -1,8 +1,15 @@
-.form {
-    max-width: 500px;
-    margin: 50px auto;
-    padding: 50px;
-    box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.2);
-    border-radius: 8px;
-    text-align: center;
+.card {
+    background-color: #f5f5f5;
+    margin: 0 auto;
+    max-width: 36rem;
+    justify-content: center;
+    align-items: center;
+}
+
+.card-lg .card-body, .card-lg .card-footer {
+    padding: 2rem;
+}
+
+.card-body {
+    flex: 0 0 auto;
 }

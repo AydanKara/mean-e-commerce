@@ -208,7 +208,7 @@ button {
 }
 
 .btn {
-  padding: 1rem 1.8rem;
+  padding: .875rem 1.75rem;
 }
 
 .btn-1 {
@@ -230,4 +230,53 @@ button {
 .card-img,
 .card-img-top {
   border-radius: 0;
+}
+
+.form-control {
+  background-clip: border-box;
+  transition: all .1s ease-in-out;
+  transition-property: border;
+}
+
+.form-control-lg,
+.form-control-sm,
+.form-select-lg,
+.form-select-sm {
+  line-height: 1.5;
+}
+
+.form-control-sm {
+  font-size: .9375rem;
+  min-height: calc(1.5em + 1.625rem + 2px);
+  padding: .8125rem 1.25rem;
+  border-radius: 0;
+}
+
+.form-control:focus {
+  background-color: #fff;
+  border-color: #1f1f1f;
+  box-shadow: 0 0, 0 0;
+  color: #1f1f1f;
+  outline: 0;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-check-input:checked {
+  background-color: #1f1f1f;
+  border-color: transparent;
+}
+
+.form-check-input:focus {
+  border-color: 0;
+  box-shadow: 0 0;
+  outline: 0;
+}
+
+.paginator {
+  background-color: #fff;
+  font-family: inherit;
+  border: solid;
 }

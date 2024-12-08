@@ -1,55 +1,158 @@
-<div class="container">
-  <h2 class="text-center">Register</h2>
-  <form class="form" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-    <div class="mb-3">
-      <label for="username" class="form-label">Username</label>
-      <input
-        id="username"
-        type="text"
-        class="form-control"
-        formControlName="username"
-      />
-    </div>
+<section class="my-5 py-5">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <!-- Card -->
+        <div class="card card-lg">
+          <div class="card-body">
+            <!-- Heading -->
+            <h6 class="mb-4">New Customer</h6>
 
-    <div class="mb-3">
-      <label for="email" class="form-label">Email</label>
-      <input
-        id="email"
-        type="email"
-        class="form-control"
-        formControlName="email"
-      />
+            <!-- Form -->
+            <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+              <div class="row">
+                <div class="col-12">
+                  <!-- Email -->
+                  <div class="form-group">
+                    <label class="visually-hidden" for="username">
+                      Username
+                    </label>
+                    <input
+                      class="form-control form-control-sm"
+                      id="username"
+                      type="text"
+                      placeholder="Username *"
+                      required=""
+                      formControlName="username"
+                    />
+                    <div
+                      class="text-danger"
+                      *ngIf="
+                        registerForm.get('username')?.touched &&
+                        registerForm.get('username')?.invalid
+                      "
+                    >
+                      Please enter a valid username.
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12">
+                  <!-- Email -->
+                  <div class="form-group">
+                    <label class="visually-hidden" for="email">
+                      Email Address *
+                    </label>
+                    <input
+                      class="form-control form-control-sm"
+                      id="email"
+                      type="email"
+                      placeholder="Email Address *"
+                      required=""
+                      formControlName="email"
+                    />
+                    <div
+                      class="text-danger"
+                      *ngIf="
+                        registerForm.get('email')?.touched &&
+                        registerForm.get('email')?.invalid
+                      "
+                    >
+                      Please enter a valid email.
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12 col-md-6">
+                  <!-- Password -->
+                  <div class="form-group">
+                    <label class="visually-hidden" for="password">
+                      Password *
+                    </label>
+                    <input
+                      class="form-control form-control-sm"
+                      id="password"
+                      type="password"
+                      placeholder="Password *"
+                      required=""
+                      formControlName="password"
+                    />
+                    <div
+                      *ngIf="
+                        registerForm.get('password')?.touched &&
+                        registerForm.get('password')?.invalid
+                      "
+                      class="text-danger"
+                    >
+                      Password must be at least 6 characters.
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12 col-md-6">
+                  <!-- Password -->
+                  <div class="form-group">
+                    <label class="visually-hidden" for="confirmPassword">
+                      Confirm Password *
+                    </label>
+                    <input
+                      class="form-control form-control-sm"
+                      id="confirmPassword"
+                      type="password"
+                      placeholder="Confirm Password *"
+                      required=""
+                      formControlName="confirmPassword"
+                    />
+                    <div
+                      *ngIf="
+                        registerForm.get('password')?.touched &&
+                        registerForm.get('password')?.invalid
+                      "
+                      class="text-danger"
+                    >
+                      Confirm password must match the password.
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12 col-md-auto">
+                  <!-- Link -->
+                  <div class="form-group fs-sm text-muted">
+                    By registering your details, you agree with our Terms &amp;
+                    Conditions, and Privacy and Cookie Policy.
+                  </div>
+                </div>
+                <div class="col-12 col-md">
+                  <!-- Newsletter -->
+                  <div class="form-group">
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        id="registerNewsletter"
+                        type="checkbox"
+                      />
+                      <label class="form-check-label" for="registerNewsletter">
+                        Sign me up for the Newsletter!
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12">
+                  <!-- Button -->
+                  <button
+                    class="btn btn-sm btn-dark"
+                    type="submit"
+                    [disabled]="registerForm.invalid"
+                  >
+                    Register
+                  </button>
+                </div>
+                <div *ngIf="errorMessage" class="text-danger mt-3">
+                  {{ errorMessage }}
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
+</section>
 
-    <div class="mb-3">
-      <label for="password" class="form-label">Password</label>
-      <input
-        id="password"
-        type="password"
-        class="form-control"
-        formControlName="password"
-      />
-    </div>
-
-    <div class="mb-3">
-      <label for="confirmPassword" class="form-label">Confirm Password</label>
-      <input
-        id="confirmPassword"
-        type="password"
-        class="form-control"
-        formControlName="confirmPassword"
-      />
-    </div>
-
-    <button
-      type="submit"
-      class="btn btn-primary"
-      [disabled]="registerForm.invalid"
-    >
-      Register
-    </button>
-    <div *ngIf="errorMessage" class="text-danger mt-3">
-      {{ errorMessage }}
-    </div>
-  </form>
-</div>
+<app-features></app-features>
