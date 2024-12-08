@@ -3,10 +3,11 @@ import { Component } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { UserService } from '../../../core/services/user.service';
 import { FooterComponent } from "../../footer/footer.component";
+import { HeaderComponent } from "../../header/header.component";
 
 @Component({
   selector: 'app-admin-layout',
-  imports: [RouterModule, CommonModule, FooterComponent],
+  imports: [RouterModule, CommonModule, FooterComponent, HeaderComponent],
   templateUrl: './admin-layout.component.html',
   styleUrl: './admin-layout.component.css',
 })

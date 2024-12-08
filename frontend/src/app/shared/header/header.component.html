@@ -1,6 +1,7 @@
 <header class="bg-dark text-white p-3">
   <div class="container">
     <nav class="d-flex justify-content-between">
+      <!-- Home Link -->
       <a
         class="text-white button-nav"
         routerLink="/home"
@@ -8,15 +9,31 @@
         >Home</a
       >
       <div *ngIf="!isLoading">
-        <ng-container *ngIf="currentUser; else guestLinks">
+        <!-- Admin Links -->
+        <ng-container *ngIf="currentUser?.isAdmin; else nonAdminLinks">
           <a
             class="text-white button-nav"
-            routerLink="/profile"
+            routerLink="/admin/dashboard"
             routerLinkActive="active"
-            >Profile</a
+            >Admin Dashboard</a
           >
-          <a class="text-white button-nav" (click)="onLogout()"> Logout </a>
+          <a class="text-white button-nav" (click)="onLogout()">Logout</a>
         </ng-container>
+
+        <!-- Non-Admin (Regular User) Links -->
+        <ng-template #nonAdminLinks>
+          <ng-container *ngIf="currentUser; else guestLinks">
+            <a
+              class="text-white button-nav"
+              routerLink="/profile"
+              routerLinkActive="active"
+              >Profile</a
+            >
+            <a class="text-white button-nav" (click)="onLogout()">Logout</a>
+          </ng-container>
+        </ng-template>
+
+        <!-- Guest Links -->
         <ng-template #guestLinks>
           <a
             class="text-white button-nav"
@@ -35,6 +52,6 @@
     </nav>
   </div>
 </header>
-@if (isLoading) {
-<mat-progress-bar mode="indeterminate"></mat-progress-bar>
-}
+<div *ngIf="isLoading">
+  <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+</div>
