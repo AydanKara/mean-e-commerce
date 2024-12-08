@@ -1,0 +1,75 @@
+.card-img {
+    position: relative;
+    cursor: pointer;
+}
+
+.btn-white-primary {
+    background-color: #fff;
+    color: #1f1f1f;
+}
+
+.btn-circle {
+    align-items: center;
+    border-radius: 50% !important;
+    display: inline-flex;
+    justify-content: center;
+    padding: 0;
+    width: calc(3.25rem + 2px);
+}
+
+.btn-xs {
+    height: calc(2.40625rem + 2px) !important;
+    padding: .5rem .75rem;
+}
+
+.btn-circle.btn-xs {
+    width: calc(2.40625rem + 2px);
+}
+
+.card-action {
+    position: absolute;
+    top: 1.25rem;
+    z-index: 1;
+}
+
+.card-action-end {
+    right: 1.25rem;
+}
+
+.mat-icon {
+    height: 19px !important;
+}
+
+.btn-white-primary:focus,
+.btn-white-primary:hover {
+    background-color: #ff6f61;
+    border-color: #ff6f61;
+    color: #fff;
+}
+
+.card-btn {
+    bottom: 0;
+    left: 0;
+    opacity: 0;
+    position: absolute;
+    transition: opacity .2s ease-in-out;
+}
+
+.card-img:hover .card-btn {
+    opacity: 1;
+}
+
+.btn-dark:focus,
+.btn-dark:hover {
+    background-color: #1c1c1c;
+    border-color: #1c1c1c;
+    color: #fff;
+}
+
+.btn-check:focus+.btn-dark,
+.btn-dark:focus,
+.btn-dark:hover {
+    background-color: #1a1a1a;
+    border-color: #191919;
+    color: #fff;
+}

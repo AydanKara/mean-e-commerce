@@ -22,13 +22,13 @@ export class ShopService {
   constructor() {}
 
   // Fetch All Products
-  getAllProducts(queryParams: ProductQueryParams): Observable<{
+  getAllProducts(queryParams?: ProductQueryParams): Observable<{
     products: Product[];
     currentPage: number;
     totalPages: number;
     totalProducts: number;
   }> {
-    const params = queryParams.toHttpParams();
+    const params = queryParams?.toHttpParams();
 
     return this.http
       .get<{

@@ -1,22 +1,63 @@
-<header class="bg-dark text-white p-3">
-  <div class="container d-flex justify-content-between">
-    <h2>Admin Dashboard</h2>
-    <button class="btn btn-link text-white" (click)="onLogout()">Logout</button>
-  </div>
-</header>
+<app-header></app-header>
 
-<nav class="bg-light sidebar">
-  <ul class="nav flex-column">
-    <li class="nav-item">
-      <a class="nav-link" routerLink="/admin/dashboard">Dashboard</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" routerLink="/admin/products">Products</a>
-    </li>
-  </ul>
-</nav>
 <main class="content p-4">
-  <router-outlet></router-outlet>
+  <div class="container">
+    <div class="row">
+      <div class="col-12 text-center">
+        <h1 class="my-5">Admin</h1>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12 col-md-3">
+        <!-- Nav -->
+        <nav class="mb-5 mb-md-0">
+          <div
+            class="list-group list-group-sm list-group-strong list-group-flush-x"
+          >
+            <a
+              class="list-group-item list-group-item-action dropend-toggle docs-creator"
+              routerLink="/admin/dashboard"
+            >
+              Dashboard
+            </a>
+            <a
+              class="list-group-item list-group-item-action dropend-toggle docs-creator"
+              routerLink="/admin/categories"
+            >
+              Categories
+            </a>
+            <a
+              class="list-group-item list-group-item-action dropend-toggle docs-creator"
+              routerLink="/admin/products"
+            >
+              Products
+            </a>
+            <a
+              class="list-group-item list-group-item-action dropend-toggle active docs-creator"
+              routerLink="/admin/user-lists"
+            >
+              Users List
+            </a>
+            <a
+              class="list-group-item list-group-item-action dropend-toggle docs-creator"
+              routerLink="/admin/orders"
+            >
+              Orders
+            </a>
+            <a
+              class="list-group-item list-group-item-action dropend-toggle docs-creator"
+              (click)="onLogout()"
+            >
+              Logout
+            </a>
+          </div>
+        </nav>
+      </div>
+      <div class="col-12 col-md-9 col-lg-8 offset-lg-1">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </div>
 </main>
 
 <app-footer></app-footer>

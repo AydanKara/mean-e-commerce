@@ -1,3 +1,60 @@
-<h1>Products</h1>
-<button class="btn btn-primary" (click)="onAddProduct()">Add Product</button>
-<!-- Products List Goes Here -->
+<div class="row">
+  <div class="col-12 d-flex justify-content-between align-items-center">
+    <a class="link-underline" (click)="onAddProduct()">Add Product</a>
+    <mat-paginator
+      class="paginator border-2"
+      (page)="handlePageEvent($event)"
+      [length]="totalProducts"
+      [pageSize]="queryParams.limit"
+      [showFirstLastButtons]="true"
+      [pageSizeOptions]="[5, 10, 20, 30]"
+      [pageIndex]="currentPage - 1"
+      aria-label="Select page"
+    ></mat-paginator>
+  </div>
+</div>
+
+<div class="row my-4">
+  @for (product of products; track product._id) {
+  <div class="col-6 col-md-4">
+    <div class="card mb-4">
+      <!-- Image -->
+      <div class="card-img">
+        <!-- Action -->
+        <button
+          class="btn btn-xs btn-circle btn-white-primary card-action card-action-end"
+        >
+          <span class="material-symbols-outlined">
+            <mat-icon>close</mat-icon>
+          </span>
+        </button>
+
+        <!-- Button -->
+        <a
+          class="btn btn-xs w-100 btn-dark card-btn"
+          routerLink="/product/{{product._id}}"
+        >
+          <span class="material-symbols-outlined">
+            <mat-icon>visibility</mat-icon>
+          </span>
+          Quick View
+        </a>
+
+        <!-- Image -->
+        <img
+          class="card-img-top"
+          src="{{ product.images[0] }}"
+          alt="{{ product.name }}"
+        />
+      </div>
+
+      <!-- Body -->
+      <div class="card-body fw-bold text-center">
+        <a class="text-body" routerLink="/products">{{ product.name }}</a>
+        <br />
+        <span class="text-muted">{{ product.price | currency }}</span>
+      </div>
+    </div>
+  </div>
+  }
+</div>
