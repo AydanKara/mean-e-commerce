@@ -1,52 +1,101 @@
-<div class="container">
-  <h2 class="text-center">Login</h2>
-  <form class="form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-    <div class="mb-3">
-      <label for="email" class="form-label">Email</label>
-      <input
-        type="email"
-        id="email"
-        class="form-control"
-        formControlName="email"
-      />
-      <div
-        class="text-danger"
-        *ngIf="
-          loginForm.get('email')?.touched && loginForm.get('email')?.invalid
-        "
-      >
-        Please enter a valid email.
+<section class="my-5 py-5">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <!-- Card -->
+        <div class="card card-lg mb-5 mb-md-0">
+          <div class="card-body">
+            <!-- Heading -->
+            <h6 class="mb-4">Returning Customer</h6>
+
+            <!-- Form -->
+            <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+              <div class="row">
+                <div class="col-12">
+                  <!-- Email -->
+                  <div class="form-group">
+                    <label class="visually-hidden" for="email">
+                      Email Address *
+                    </label>
+                    <input
+                      class="form-control form-control-sm"
+                      id="email"
+                      type="email"
+                      placeholder="Email Address *"
+                      required=""
+                      formControlName="email"
+                    />
+                    <div
+                      class="text-danger"
+                      *ngIf="
+                        loginForm.get('email')?.touched &&
+                        loginForm.get('email')?.invalid
+                      "
+                    >
+                      Please enter a valid email.
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12">
+                  <!-- Password -->
+                  <div class="form-group">
+                    <label class="visually-hidden" for="password">
+                      Password *
+                    </label>
+                    <input
+                      class="form-control form-control-sm"
+                      id="password"
+                      type="password"
+                      placeholder="Password *"
+                      required=""
+                      formControlName="password"
+                    />
+                    <div
+                      *ngIf="
+                        loginForm.get('password')?.touched &&
+                        loginForm.get('password')?.invalid
+                      "
+                      class="text-danger"
+                    >
+                      Password must be at least 6 characters.
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12 col-md">
+                  <!-- Remember -->
+                  <div class="form-group">
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        id="loginRemember"
+                        type="checkbox"
+                      />
+                      <label class="form-check-label" for="loginRemember">
+                        Remember me
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12">
+                  <!-- Button -->
+                  <button
+                    class="btn btn-sm btn-dark"
+                    type="submit"
+                    [disabled]="loginForm.invalid"
+                  >
+                    Sign In
+                  </button>
+                </div>
+                <div *ngIf="errorMessage" class="text-danger mt-3">
+                  {{ errorMessage }}
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
       </div>
     </div>
+  </div>
+</section>
 
-    <div class="mb-3">
-      <label for="password" class="form-label">Password</label>
-      <input
-        id="password"
-        type="password"
-        class="form-control"
-        formControlName="password"
-      />
-      <div
-        *ngIf="
-          loginForm.get('password')?.touched &&
-          loginForm.get('password')?.invalid
-        "
-        class="text-danger"
-      >
-        Password must be at least 6 characters.
-      </div>
-    </div>
-
-    <button
-      type="submit"
-      class="btn btn-primary"
-      [disabled]="loginForm.invalid"
-    >
-      Login
-    </button>
-    <div *ngIf="errorMessage" class="text-danger mt-3">
-      {{ errorMessage }}
-    </div>
-  </form>
-</div>
+<app-features></app-features>
