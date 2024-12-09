@@ -32,3 +32,4 @@ router
 
 router.route("/:id/related").get(getRelatedProducts);
 export default router;
+

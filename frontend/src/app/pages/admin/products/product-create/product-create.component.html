@@ -1,0 +1,173 @@
+<div class="col-12 offset-md-1 offset-lg-0">
+  <!-- Heading -->
+  <h6 class="mb-4">{{ isEditMode ? "Edit Product" : "Create New Product" }}</h6>
+
+  <!-- Success or Error Message -->
+  <div *ngIf="successMessage" class="alert alert-success">
+    {{ successMessage }}
+  </div>
+  <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+
+  <!-- Form -->
+  <form (ngSubmit)="onSubmit()">
+    <div class="row">
+      <!-- Product Name -->
+      <div class="col-12 col-md-6">
+        <div class="form-group">
+          <label class="form-label" for="productName">Product Name *</label>
+          <input
+            class="form-control"
+            id="productName"
+            type="text"
+            placeholder="Enter product name"
+            [(ngModel)]="product.name"
+            name="name"
+            required
+          />
+        </div>
+      </div>
+
+      <!-- Product Description -->
+      <div class="col-12">
+        <div class="form-group">
+          <label class="form-label" for="productDescription"
+            >Description *</label
+          >
+          <textarea
+            class="form-control"
+            id="productDescription"
+            rows="3"
+            placeholder="Enter product description"
+            [(ngModel)]="product.description"
+            name="description"
+            required
+          ></textarea>
+        </div>
+      </div>
+
+      <!-- Price -->
+      <div class="col-12 col-md-6">
+        <div class="form-group">
+          <label class="form-label" for="price">Price *</label>
+          <input
+            class="form-control"
+            id="price"
+            type="number"
+            placeholder="Enter price"
+            [(ngModel)]="product.price"
+            name="price"
+            required
+          />
+        </div>
+      </div>
+
+      <!-- Stock -->
+      <div class="col-12 col-md-6">
+        <div class="form-group">
+          <label class="form-label" for="stock">Stock *</label>
+          <input
+            class="form-control"
+            id="stock"
+            type="number"
+            placeholder="Enter stock quantity"
+            [(ngModel)]="product.stock"
+            name="stock"
+            required
+          />
+        </div>
+      </div>
+
+      <!-- Category -->
+      <div class="col-12">
+        <div class="form-group">
+          <label class="form-label" for="category">Category *</label>
+          <select
+            class="form-control"
+            id="category"
+            [(ngModel)]="product.category._id"
+            name="category"
+            required
+          >
+            <option
+              *ngFor="let category of categoryService.categories"
+              [value]="category._id"
+            >
+              {{ category.name }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Gender -->
+      <div class="col-12 col-md-6">
+        <div class="form-group">
+          <label class="form-label" for="gender">Gender *</label>
+          <select
+            class="form-control"
+            id="gender"
+            [(ngModel)]="product.gender"
+            name="gender"
+            required
+          >
+            <option value="Men">Men</option>
+            <option value="Women">Women</option>
+            <option value="Unisex">Unisex</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Brand -->
+      <div class="col-12 col-md-6">
+        <div class="form-group">
+          <label class="form-label" for="brand">Brand *</label>
+          <input
+            class="form-control"
+            id="brand"
+            type="text"
+            placeholder="Enter brand"
+            [(ngModel)]="product.brand"
+            name="brand"
+            required
+          />
+        </div>
+      </div>
+
+      <!-- Is Featured -->
+      <div class="col-12">
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            id="isFeatured"
+            type="checkbox"
+            [(ngModel)]="product.isFeatured"
+            name="isFeatured"
+          />
+          <label class="form-check-label" for="isFeatured">Is Featured</label>
+        </div>
+      </div>
+
+      <!-- Images -->
+      <div class="col-12">
+        <div class="form-group">
+          <label class="form-label" for="images"
+            >Images (Comma Separated URLs) *</label
+          >
+          <textarea
+            class="form-control"
+            id="images"
+            rows="4"
+            placeholder="Enter image URLs separated by commas"
+            [(ngModel)]="product.images"
+            name="images"
+            required
+          ></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- Button -->
+    <button class="btn btn-dark" type="submit">
+      {{ isEditMode ? "Update Product" : "Create Product" }}
+    </button>
+  </form>
+</div>

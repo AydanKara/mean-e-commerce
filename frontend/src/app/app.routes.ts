@@ -71,11 +71,11 @@ export const routes: Routes = [
       ),
     children: [
       {
-        path: 'dashboard',
+        path: 'products/edit/:id',
         loadComponent: () =>
-          import('./pages/admin/dashboard/dashboard.component').then(
-            (m) => m.DashboardComponent
-          ),
+          import(
+            './pages/admin/products/product-create/product-create.component'
+          ).then((m) => m.ProductCreateComponent),
       },
       {
         path: 'products',
@@ -83,6 +83,20 @@ export const routes: Routes = [
           import('./pages/admin/products/products.component').then(
             (m) => m.ProductsComponent
           ),
+      },
+      {
+        path: 'dashboard',
+        loadComponent: () =>
+          import('./pages/admin/dashboard/dashboard.component').then(
+            (m) => m.DashboardComponent
+          ),
+      },
+      {
+        path: 'product/create',
+        loadComponent: () =>
+          import(
+            './pages/admin/products/product-create/product-create.component'
+          ).then((m) => m.ProductCreateComponent),
       },
     ],
   },

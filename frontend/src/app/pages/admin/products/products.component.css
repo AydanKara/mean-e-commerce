@@ -1,6 +1,12 @@
 .card-img {
     position: relative;
     cursor: pointer;
+    height: 22rem;
+}
+
+.card-img-top {
+    height: 100%;
+    object-fit: cover;
 }
 
 .btn-white-primary {
@@ -30,6 +36,11 @@
     position: absolute;
     top: 1.25rem;
     z-index: 1;
+}
+
+.edit-btn {
+    border: 0;
+    bottom: 2.5rem !important;
 }
 
 .card-action-end {
@@ -69,7 +80,31 @@
 .btn-check:focus+.btn-dark,
 .btn-dark:focus,
 .btn-dark:hover {
-    background-color: #1a1a1a;
-    border-color: #191919;
-    color: #fff;
+    background-color: #fff;
+    border-color: #fff;
+    color: #1a1a1a;
+}
+
+@media  (max-width: 1399px) {
+    .card-img {
+        height: 20rem;
+    }    
+}
+
+@media  (max-width: 1199px) {
+    .card-img {
+        height: 17rem;
+    }    
+}
+
+@media  (max-width: 990px) {
+    .card-img {
+        height: 13rem;
+    }    
+}
+
+@media  (max-width: 768px) {
+    .card-img {
+        height: 20.5rem;
+    }    
 }

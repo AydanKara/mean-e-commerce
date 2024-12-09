@@ -148,7 +148,7 @@ export const getRelatedProducts = async (req, res) => {
 };
 
 // Create a new product
-export const createProduct = async (req, res) => {
+/* export const createProduct = async (req, res) => {
   try {
     const {
       name,
@@ -177,10 +177,10 @@ export const createProduct = async (req, res) => {
   } catch (error) {
     res.status(400).json({ message: "Error creating product", error });
   }
-};
+}; */
 
 // Update an existing product
-export const updateProduct = async (req, res) => {
+/* export const updateProduct = async (req, res) => {
   try {
     const { name, price, description, stock, category, gender, brand, images } =
       req.body;
@@ -196,10 +196,10 @@ export const updateProduct = async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: "Error updating product", error });
   }
-};
+}; */
 
 // Delete a product
-export const deleteProduct = async (req, res) => {
+/* export const deleteProduct = async (req, res) => {
   try {
     const product = await Product.findByIdAndDelete(req.params.id);
     if (!product) {
@@ -209,7 +209,7 @@ export const deleteProduct = async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: "Error deleting product", error });
   }
-};
+}; */
 
 // Get unique brands
 export const getUniqueBrands = async (req, res) => {
@@ -230,3 +230,122 @@ export const getUniqueGenders = async (req, res) => {
     res.status(500).json({ success: false, message: "Server error", error });
   }
 };
+
+//! Admin 
+// Create a new product
+export const createProduct = async (req, res) => {
+  try {
+    const {
+      name,
+      description,
+      price,
+      category,
+      gender,
+      brand,
+      stock,
+      images,
+      isFeatured,
+    } = req.body;
+
+    // Validate required fields
+    if (!name || !description || !price || !category || !gender || !brand || !stock) {
+      return res.status(400).json({ message: "All required fields must be filled" });
+    }
+
+    console.log(category)
+    // Validate the category exists
+    const categoryExists = await Category.findById(category);
+    if (!categoryExists) {
+      return res.status(404).json({ message: "Invalid category ID" });
+    }
+
+    // Create the product
+    const product = new Product({
+      name,
+      description,
+      price,
+      category,
+      gender,
+      brand,
+      stock,
+      images,
+      isFeatured,
+    });
+
+    await product.save();
+
+    res.status(201).json({
+      success: true,
+      message: "Product created successfully",
+      product,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Error creating product",
+      error: error.message,
+    });
+  }
+};
+
+// Update an existing product
+export const updateProduct = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const updates = req.body;
+
+    // Validate category if updated
+    if (updates.category) {
+      const categoryExists = await Category.findById(updates.category);
+      if (!categoryExists) {
+        return res.status(404).json({ message: "Invalid category ID" });
+      }
+    }
+
+    // Update the product
+    const product = await Product.findByIdAndUpdate(id, updates, { new: true });
+
+    if (!product) {
+      return res.status(404).json({ message: "Product not found" });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "Product updated successfully",
+      product,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Error updating product",
+      error: error.message,
+    });
+  }
+};
+
+// Delete a product
+export const deleteProduct = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    // Find and delete the product
+    const product = await Product.findByIdAndDelete(id);
+
+    if (!product) {
+      return res.status(404).json({ message: "Product not found" });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "Product deleted successfully",
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Error deleting product",
+      error: error.message,
+    });
+  }
+};
+
+
