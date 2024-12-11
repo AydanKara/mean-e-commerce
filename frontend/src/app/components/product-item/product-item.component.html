@@ -1,25 +1,78 @@
 @if (product) {
 <div class="card">
-  <div class="media" routerLink="/product/{{ product._id }}">
-    <img
-      src="{{ product.images[0] }}"
-      class="card-img-top"
-      alt="{{ product.name }}"
-    />
+  <!-- Image -->
+  <div class="card-img">
+    <!-- Image -->
+    <a
+      class="card-img-hover docs-creator"
+      routerLink="/product/{{ product._id }}"
+    >
+      <img
+        class="card-img-top card-img-back"
+        src="{{ product.images[0] }}"
+        alt="{{ product.name }}"
+      />
+    </a>
+
+    <!-- Actions -->
+    <div class="card-actions">
+      <span class="card-action">
+        <button
+          class="btn btn-xs btn-circle btn-white-primary"
+          data-bs-toggle="modal"
+          data-bs-target="#modalProduct"
+        >
+          <span
+            [routerLink]="['/product', product._id]"
+            class="material-symbols-outlined"
+          >
+            <mat-icon>visibility</mat-icon>
+          </span>
+        </button>
+      </span>
+      <span class="card-action">
+        <button
+          class="btn btn-xs btn-circle btn-white-primary"
+          data-toggle="button"
+        >
+          <span class="material-symbols-outlined">
+            <mat-icon>shopping_cart</mat-icon>
+          </span>
+        </button>
+      </span>
+      <span class="card-action">
+        <button
+          class="btn btn-xs btn-circle btn-white-primary"
+          data-toggle="button"
+        >
+          <span class="material-symbols-outlined">
+            <mat-icon>favorite</mat-icon>
+          </span>
+        </button>
+      </span>
+    </div>
   </div>
-  <div class="card-body">
-    <h5 class="card-title">{{ product.name }}</h5>
-    <p class="card-text">
-      {{ product.brand }}
-    </p>
-    <p class="card-text">
-      {{ product.category.name }}
-    </p>
-    <p class="card-text">
-      {{ product.gender }}
-    </p>
-    <p>{{ product.price | currency }}</p>
-    <a routerLink="/product/{{ product._id }}" class="button-35">Add to cart</a>
+
+  <!-- Body -->
+  <div class="card-body p-2 ">
+    <!-- Category -->
+    <div class="fs-xs">
+      <a class="text-muted" routerLink="/shop">{{
+        product.category.name
+      }}</a>
+    </div>
+
+    <!-- Title -->
+    <div class="fw-bold">
+      <a class="text-body docs-creator" href="product.html">
+        {{ product.name }}
+      </a>
+    </div>
+
+    <!-- Price -->
+    <div class="fw-bold text-muted">
+      {{ product.price | currency }}
+    </div>
   </div>
 </div>
 }

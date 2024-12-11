@@ -33,13 +33,10 @@ export class NewProductsCarouselComponent implements OnInit, AfterViewInit {
           slidesPerView: 1,
         },
         480: {
-          slidesPerView: 1,
-        },
-        640: {
-          slidesPerView: 1,
+          slidesPerView: 2,
         },
         768: {
-          slidesPerView: 3,
+          slidesPerView: 2,
         },
         1024: {
           slidesPerView: 4,
