@@ -1,56 +1,87 @@
 <header class="bg-dark text-white p-3">
-  <div class="container">
-    <nav class="d-flex justify-content-between">
+  <nav class="navbar navbar-expand-lg navbar-light">
+    <div class="container">
       <!-- Home Link -->
-      <a
-        class="text-white button-nav"
-        routerLink="/home"
-        routerLinkActive="active"
-        >Home</a
-      >
-      <div *ngIf="!isLoading">
-        <!-- Admin Links -->
-        <ng-container *ngIf="currentUser?.isAdmin; else nonAdminLinks">
-          <a
-            class="text-white button-nav"
-            routerLink="/admin/dashboard"
-            routerLinkActive="active"
-            >Admin Dashboard</a
-          >
-          <a class="text-white button-nav" (click)="onLogout()">Logout</a>
-        </ng-container>
-
-        <!-- Non-Admin (Regular User) Links -->
-        <ng-template #nonAdminLinks>
-          <ng-container *ngIf="currentUser; else guestLinks">
+      <a class="navbar-brand" routerLink="/home">Shopper.</a>
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+        <!-- Nav -->
+        <ul class="navbar-nav mx-auto" *ngIf="!isLoading">
+          <!-- Admin Links -->
+          <li *ngIf="currentUser?.isAdmin; else nonAdminLinks">
             <a
-              class="text-white button-nav"
-              routerLink="/profile"
+              class="text-white button-nav mx-1"
+              routerLink="/admin/dashboard"
               routerLinkActive="active"
-              >Profile</a
+              >Admin Dashboard</a
             >
             <a class="text-white button-nav" (click)="onLogout()">Logout</a>
-          </ng-container>
-        </ng-template>
+          </li>
 
-        <!-- Guest Links -->
-        <ng-template #guestLinks>
-          <a
-            class="text-white button-nav"
-            routerLink="/login"
-            routerLinkActive="active"
-            >Login</a
-          >
-          <a
-            class="text-white button-nav"
-            routerLink="/register"
-            routerLinkActive="active"
-            >Register</a
-          >
-        </ng-template>
+          <!-- Non-Admin (Regular User) Links -->
+          <ng-template #nonAdminLinks>
+            <ng-container *ngIf="currentUser; else guestLinks">
+              <li class="nav-item">
+                <a
+                  class="text-white button-nav mx-1"
+                  routerLink="/profile"
+                  routerLinkActive="active"
+                  >Profile</a
+                >
+              </li>
+              <li class="nav-item">
+                <a class="text-white button-nav" (click)="onLogout()">Logout</a>
+              </li>
+            </ng-container>
+          </ng-template>
+
+          <!-- Guest Links -->
+          <ng-template #guestLinks>
+            <li class="nav-item">
+              <a
+                class="text-white button-nav mx-1"
+                routerLink="/login"
+                routerLinkActive="active"
+                >Login</a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                class="text-white button-nav mx-1"
+                routerLink="/register"
+                routerLinkActive="active"
+                >Register</a
+              >
+            </li>
+          </ng-template>
+        </ul>
+
+        <!-- Nav -->
+        <ul class="navbar-nav flex-row">
+          <li class="nav-item ms-lg-n4">
+            <a class="nav-link" (click)="navigateToAccount()">
+              <mat-icon class="material-symbols-outlined"> person </mat-icon>
+            </a>
+          </li>
+          <li class="nav-item ms-lg-n4">
+            <a class="nav-link" (click)="navigateToWishlist()">
+              <mat-icon class="material-symbols-outlined"> favorite </mat-icon>
+            </a>
+          </li>
+          <li class="nav-item ms-lg-n4">
+            <a
+              class="nav-link"
+              data-bs-toggle="offcanvas"
+              href="#modalShoppingCart"
+            >
+              <mat-icon class="material-symbols-outlined">
+                shopping_cart
+              </mat-icon>
+            </a>
+          </li>
+        </ul>
       </div>
-    </nav>
-  </div>
+    </div>
+  </nav>
 </header>
 <div *ngIf="isLoading">
   <mat-progress-bar mode="indeterminate"></mat-progress-bar>

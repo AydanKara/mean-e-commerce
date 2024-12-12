@@ -1,17 +1,20 @@
 header {
     position: relative;
     background-color: #efedf0 !important;
-    padding: 1.5rem !important;
+    padding: 0.5rem !important;
     text-align: center;
     box-shadow: rgba(0, 0, 0, 0.2) 0px 6px 24px 0px, rgba(0, 0, 0, 0.1) 0px 0px 0px 1px;
     z-index: 3;
 }
 
-nav a {
-    color: #000 !important;
-    margin: 0 15px !important;
-    text-decoration: none !important;
-    cursor: pointer !important;
+.navbar-brand {
+    font-size: 1.75rem;
+    margin-right: 1rem;
+    padding-bottom: -.0625rem;
+    padding-top: -.0625rem;
+    white-space: nowrap;
+    font-weight: 600;
+
 }
 
 .button-nav.active {
