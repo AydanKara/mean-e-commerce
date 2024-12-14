@@ -83,17 +83,30 @@
                 <div class="row mt-lg-5">
                   <div class="col-12 col-lg-auto">
                     <!-- Quantity -->
-                    <select class="form-select mb-2">
+                    <select
+                      class="form-select mb-2"
+                      [(ngModel)]="selectedQuantity"
+                      [ngModelOptions]="{ standalone: true }"
+                    >
                       <!--! implement product stock -->
-                      <option value="1" selected>1</option>
-                      <option value="2">2</option>
-                      <option value="3">3</option>
-                      <option value="4">4</option>
+                      <option
+                        *ngFor="
+                          let quantity of [].constructor(product?.stock || 0);
+                          let i = index
+                        "
+                        [value]="i + 1"
+                      >
+                        {{ i + 1 }}
+                      </option>
                     </select>
                   </div>
                   <div class="col-12 col-lg">
                     <!-- Submit -->
-                    <button type="submit" class="button-nav-dark w-100 mb-2">
+                    <button
+                      type="button"
+                      (click)="addToCart()"
+                      class="button-nav-dark w-100 mb-2"
+                    >
                       Add to Cart
                       <span class="material-symbols-outlined">
                         <mat-icon>shopping_cart</mat-icon>

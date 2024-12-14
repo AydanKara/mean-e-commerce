@@ -38,6 +38,7 @@ import { FeaturesComponent } from '../../shared/features/features.component';
 export class ShopComponent implements OnInit {
   private shopService = inject(ShopService);
   private dialogService = inject(MatDialog);
+
   // List of products
   products: Product[] = [];
 

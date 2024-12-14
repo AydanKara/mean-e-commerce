@@ -68,7 +68,12 @@
             </a>
           </li>
           <li class="nav-item ms-lg-n4">
-            <a class="nav-link" (click)="navigateToShoppingCart()">
+            <a
+              class="nav-link"
+              routerLinkActive="active"
+              routerLink="/shopping-cart"
+              [matBadge]="totalItems"
+            >
               <mat-icon class="material-symbols-outlined">
                 shopping_cart
               </mat-icon>

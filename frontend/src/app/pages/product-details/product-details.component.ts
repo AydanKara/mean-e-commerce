@@ -11,11 +11,15 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { FeaturesComponent } from '../../shared/features/features.component';
 import { RelatedProductsComponent } from '../../components/related-products/related-products.component';
 import { switchMap } from 'rxjs';
+import { CartService } from '../../core/services/cart.service';
+import { SnackbarService } from '../../core/services/snackbar.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-product-details',
   imports: [
     CommonModule,
+    FormsModule,
     MatIcon,
     MatTabsModule,
     RouterModule,
@@ -28,9 +32,12 @@ import { switchMap } from 'rxjs';
 export class ProductDetailsComponent implements OnInit, AfterViewInit {
   private shopService = inject(ShopService);
   private activateRoute = inject(ActivatedRoute);
+  private cartService = inject(CartService);
+  private snackbar = inject(SnackbarService);
   product?: Product;
   relatedProducts?: Product[] = [];
   productImages: string[] = [];
+  selectedQuantity: number = 1;
 
   mainSwiper?: Swiper; // Reference for the main Swiper instance
   thumbSwiper?: Swiper; // Reference for the thumbnail Swiper instance
@@ -82,7 +89,7 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
 
   initializeSwiper() {
     if (this.productImages.length === 0) return;
-  
+
     // Destroy existing Swiper instances
     if (this.mainSwiper) {
       this.mainSwiper.destroy(true, true);
@@ -90,7 +97,7 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
     if (this.thumbSwiper) {
       this.thumbSwiper.destroy(true, true);
     }
-  
+
     // Use a small timeout to ensure DOM is updated
     setTimeout(() => {
       this.thumbSwiper = new Swiper('.thumbnail-slider', {
@@ -98,7 +105,7 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
         spaceBetween: 10,
         watchSlidesProgress: true,
       });
-  
+
       this.mainSwiper = new Swiper('.main-slider', {
         modules: [Navigation, Thumbs],
         navigation: {
@@ -111,6 +118,23 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
       });
     }, 0);
   }
-  
-  
+
+  addToCart() {
+    if (!this.product || this.selectedQuantity > this.product.stock) {
+      this.snackbar.error('Cannot add more than available stock!');
+      return;
+    }
+
+    const cartItem = {
+      productId: this.product._id,
+      name: this.product.name,
+      price: this.product.price,
+      quantity: Number(this.selectedQuantity),
+      image: this.product.images[0],
+      stock: this.product.stock,
+    };
+
+    this.cartService.addToCart(cartItem);
+    this.snackbar.success(this.product.name + ' added to cart!');
+  }
 }

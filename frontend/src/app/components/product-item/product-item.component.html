@@ -17,11 +17,7 @@
     <!-- Actions -->
     <div class="card-actions">
       <span class="card-action">
-        <button
-          class="btn btn-xs btn-circle btn-white-primary"
-          data-bs-toggle="modal"
-          data-bs-target="#modalProduct"
-        >
+        <button class="btn btn-xs btn-circle btn-white-primary">
           <span
             [routerLink]="['/product', product._id]"
             class="material-symbols-outlined"
@@ -31,10 +27,7 @@
         </button>
       </span>
       <span class="card-action">
-        <button
-          class="btn btn-xs btn-circle btn-white-primary"
-          data-toggle="button"
-        >
+        <button class="btn btn-xs btn-circle btn-white-primary" (click)="addToCart()">
           <span class="material-symbols-outlined">
             <mat-icon>shopping_cart</mat-icon>
           </span>
@@ -54,12 +47,10 @@
   </div>
 
   <!-- Body -->
-  <div class="card-body p-2 ">
+  <div class="card-body p-2">
     <!-- Category -->
     <div class="fs-xs">
-      <a class="text-muted" routerLink="/shop">{{
-        product.category.name
-      }}</a>
+      <a class="text-muted" routerLink="/shop">{{ product.category.name }}</a>
     </div>
 
     <!-- Title -->

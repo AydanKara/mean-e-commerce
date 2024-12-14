@@ -299,3 +299,12 @@ button {
   font-family: inherit;
   border: solid;
 }
+
+.mdc-snackbar__label {
+  padding: 1rem 2rem !important;
+  font-size: large !important;
+}
+
+.mat-mdc-button {
+  font-size: large !important;
+}

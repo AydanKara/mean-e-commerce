@@ -1,25 +1,34 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { UserService } from '../../core/services/user.service';
 import { Router, RouterModule } from '@angular/router';
 import { User } from '../../models/user.model';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatIcon } from '@angular/material/icon';
+import { MatBadgeModule } from '@angular/material/badge';
 import { BusyService } from '../../core/services/busy.service';
+import { CartService } from '../../core/services/cart.service';
 
 @Component({
   selector: 'app-header',
-  imports: [RouterModule, CommonModule, MatProgressBarModule, MatIcon],
+  imports: [
+    RouterModule,
+    CommonModule,
+    MatProgressBarModule,
+    MatIcon,
+    MatBadgeModule,
+  ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.css',
 })
 export class HeaderComponent {
-  busyService = inject(BusyService)
+  busyService = inject(BusyService);
   private userService = inject(UserService);
   private router = inject(Router);
-
+  private cartService = inject(CartService);
   currentUser: User | null = null;
   isLoading: boolean = true;
+  totalItems: number = 0;
 
   ngOnInit(): void {
     this.userService.getLoadingState().subscribe((loading) => {
@@ -32,6 +41,10 @@ export class HeaderComponent {
       this.userService.setLoadingState(false); // Stop loading when auth state is resolved
     });
     console.log(this.isLoading);
+
+    this.cartService.getTotalQuantityObservable().subscribe((total) => {
+      this.totalItems = Number(total);
+    });
   }
 
   navigateToAccount() {
@@ -48,16 +61,6 @@ export class HeaderComponent {
     if (this.currentUser) {
       // If user is logged in, navigate to account page
       this.router.navigate(['/account-wishlist']);
-    } else {
-      // If no user is logged in, navigate to login page
-      this.router.navigate(['/login']);
-    }
-  }
-
-  navigateToShoppingCart() {
-    if (this.currentUser) {
-      // If user is logged in, navigate to account page
-      this.router.navigate(['/shopping-cart']);
     } else {
       // If no user is logged in, navigate to login page
       this.router.navigate(['/login']);
