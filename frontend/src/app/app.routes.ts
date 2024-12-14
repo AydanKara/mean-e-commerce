@@ -40,6 +40,14 @@ export const routes: Routes = [
         canActivate: [AuthGuard],
       },
       {
+        path: 'shopping-cart',
+        loadComponent: () =>
+          import('./pages/shopping-cart/shopping-cart.component').then(
+            (m) => m.ShoppingCartComponent
+          ),
+        canActivate: [AuthGuard],
+      },
+      {
         path: 'shop',
         loadComponent: () =>
           import('./pages/shop/shop.component').then((m) => m.ShopComponent),
@@ -52,14 +60,25 @@ export const routes: Routes = [
             (m) => m.ProductDetailsComponent
           ),
       },
-      /*
-  {
-    path: '**', // Wildcard Route for 404
-    loadComponent: () =>
-      import('./pages/not-found/not-found.component').then(
-        (m) => m.NotFoundComponent
-      ),
-  }, */
+      {
+        path: 'not-found',
+        loadComponent: () =>
+          import('./shared/not-found/not-found.component').then(
+            (m) => m.NotFoundComponent
+          ),
+      },
+      {
+        path: 'server-error',
+        loadComponent: () =>
+          import('./shared/server-error/server-error.component').then(
+            (m) => m.ServerErrorComponent
+          ),
+      },
+      {
+        path: '**', // Wildcard Route for 404
+        redirectTo: 'not-found',
+        pathMatch: 'full',
+      },
     ],
   },
   {

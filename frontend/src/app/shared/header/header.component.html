@@ -68,11 +68,7 @@
             </a>
           </li>
           <li class="nav-item ms-lg-n4">
-            <a
-              class="nav-link"
-              data-bs-toggle="offcanvas"
-              href="#modalShoppingCart"
-            >
+            <a class="nav-link" (click)="navigateToShoppingCart()">
               <mat-icon class="material-symbols-outlined">
                 shopping_cart
               </mat-icon>
@@ -83,6 +79,8 @@
     </div>
   </nav>
 </header>
-<div *ngIf="isLoading">
-  <mat-progress-bar mode="indeterminate"></mat-progress-bar>
-</div>
+
+<mat-progress-bar
+  mode="indeterminate"
+  *ngIf="busyService.loading"
+></mat-progress-bar>

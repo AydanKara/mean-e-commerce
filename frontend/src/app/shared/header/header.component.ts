@@ -5,6 +5,7 @@ import { UserService } from '../../core/services/user.service';
 import { Router, RouterModule } from '@angular/router';
 import { User } from '../../models/user.model';
 import { MatIcon } from '@angular/material/icon';
+import { BusyService } from '../../core/services/busy.service';
 
 @Component({
   selector: 'app-header',
@@ -13,6 +14,7 @@ import { MatIcon } from '@angular/material/icon';
   styleUrl: './header.component.css',
 })
 export class HeaderComponent {
+  busyService = inject(BusyService)
   private userService = inject(UserService);
   private router = inject(Router);
 
@@ -46,6 +48,16 @@ export class HeaderComponent {
     if (this.currentUser) {
       // If user is logged in, navigate to account page
       this.router.navigate(['/account-wishlist']);
+    } else {
+      // If no user is logged in, navigate to login page
+      this.router.navigate(['/login']);
+    }
+  }
+
+  navigateToShoppingCart() {
+    if (this.currentUser) {
+      // If user is logged in, navigate to account page
+      this.router.navigate(['/shopping-cart']);
     } else {
       // If no user is logged in, navigate to login page
       this.router.navigate(['/login']);
