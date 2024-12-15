@@ -15,6 +15,7 @@ import { Cart, CartItem } from '../../models/cart.model';
 import { SnackbarService } from '../../core/services/snackbar.service';
 import { Order, OrderItem } from '../../models/order.model';
 import { UserService } from '../../core/services/user.service';
+import { OrderService } from '../../core/services/order.service';
 
 @Component({
   selector: 'app-checkout',
@@ -33,6 +34,7 @@ export class CheckoutComponent implements OnInit {
   paymentMethod = 'Credit Card';
 
   private cartService = inject(CartService);
+  private orderService = inject(OrderService);
   private snackBar = inject(SnackbarService);
   private router = inject(Router);
 
@@ -90,11 +92,12 @@ export class CheckoutComponent implements OnInit {
         updatedAt: new Date().toISOString(),
       };
 
-      this.cartService.checkout(orderData).subscribe({
+      this.orderService.createOrder(orderData).subscribe({
         next: (res) => {
-          this.snackBar.success('Order placed successfully');
+          this.snackBar.success(res.message);
           this.cartService.clearCart();
-          this.router.navigate(['/order-confirmation']);
+          this.orderService.setOrderPlaced(true);
+          this.router.navigate(['/order-confirmation', res.order._id]);
         },
         error: (error) => {
           this.snackBar.error(error.error.message);

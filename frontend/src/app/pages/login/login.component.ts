@@ -9,7 +9,7 @@ import {
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { UserService } from '../../core/services/user.service';
-import { FeaturesComponent } from "../../shared/features/features.component";
+import { FeaturesComponent } from '../../shared/features/features.component';
 
 @Component({
   selector: 'app-login',
@@ -38,11 +38,9 @@ export class LoginComponent {
     this.userService.login(this.loginForm.value).subscribe({
       next: (user) => {
         if (user.isAdmin) {
-          console.log(user.isAdmin);
           this.userService.setAuthState(user);
           this.router.navigate(['/admin/dashboard']);
         } else {
-          console.log(user);
           // Update auth state
           this.userService.setAuthState(user);
           this.router.navigate(['/home']);

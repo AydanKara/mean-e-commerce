@@ -15,7 +15,7 @@ import {
   sliderNewProductsAnimation,
 } from '../../animations/animations';
 import { NewProductsCarouselComponent } from '../../components/new-products-carousel/new-products-carousel.component';
-import { BlogsComponent } from "../../components/blogs/blogs.component";
+import { BlogsComponent } from '../../components/blogs/blogs.component';
 
 @Component({
   selector: 'app-home',
@@ -27,8 +27,8 @@ import { BlogsComponent } from "../../components/blogs/blogs.component";
     CategoriesComponent,
     MustHavesComponent,
     NewProductsCarouselComponent,
-    BlogsComponent
-],
+    BlogsComponent,
+  ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
   animations: [sliderHeroAnimation, sliderNewProductsAnimation],
@@ -119,7 +119,6 @@ export class HomeComponent implements OnInit {
       next: (response) => {
         if (response.success) {
           this.newProducts = response.newProducts;
-          console.log(this.newProducts);
         } else {
           this.errorMessage = 'Failed to fetch new products.';
         }

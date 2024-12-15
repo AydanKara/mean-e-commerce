@@ -2,8 +2,47 @@ import { Routes } from '@angular/router';
 import { AuthGuard } from './guards/auth.guard';
 import { LayoutComponent } from './shared/layouts/layout/layout.component';
 import { AdminGuard } from './guards/admin.guard';
+import { orderConfirmGuard } from './guards/order-confirm.guard';
 
 export const routes: Routes = [
+  {
+    path: 'admin',
+    canActivate: [AuthGuard, AdminGuard], // Protect admin routes
+    loadComponent: () =>
+      import('./shared/layouts/admin-layout/admin-layout.component').then(
+        (m) => m.AdminLayoutComponent
+      ),
+    children: [
+      {
+        path: 'products/edit/:id',
+        loadComponent: () =>
+          import(
+            './pages/admin/products/product-create/product-create.component'
+          ).then((m) => m.ProductCreateComponent),
+      },
+      {
+        path: 'products',
+        loadComponent: () =>
+          import('./pages/admin/products/products.component').then(
+            (m) => m.ProductsComponent
+          ),
+      },
+      {
+        path: 'dashboard',
+        loadComponent: () =>
+          import('./pages/admin/dashboard/dashboard.component').then(
+            (m) => m.DashboardComponent
+          ),
+      },
+      {
+        path: 'product/create',
+        loadComponent: () =>
+          import(
+            './pages/admin/products/product-create/product-create.component'
+          ).then((m) => m.ProductCreateComponent),
+      },
+    ],
+  },
   {
     path: '',
     component: LayoutComponent,
@@ -40,6 +79,18 @@ export const routes: Routes = [
         canActivate: [AuthGuard],
       },
       {
+        path: 'shop',
+        loadComponent: () =>
+          import('./pages/shop/shop.component').then((m) => m.ShopComponent),
+      },
+      {
+        path: 'product/:id',
+        loadComponent: () =>
+          import('./pages/product-details/product-details.component').then(
+            (m) => m.ProductDetailsComponent
+          ),
+      },
+      {
         path: 'shopping-cart',
         loadComponent: () =>
           import('./pages/shopping-cart/shopping-cart.component').then(
@@ -48,17 +99,20 @@ export const routes: Routes = [
         canActivate: [AuthGuard],
       },
       {
-        path: 'shop',
+        path: 'checkout',
         loadComponent: () =>
-          import('./pages/shop/shop.component').then((m) => m.ShopComponent),
-      },
-
-      {
-        path: 'product/:id',
-        loadComponent: () =>
-          import('./pages/product-details/product-details.component').then(
-            (m) => m.ProductDetailsComponent
+          import('./pages/checkout/checkout.component').then(
+            (m) => m.CheckoutComponent
           ),
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'order-confirmation/:id',
+        loadComponent: () =>
+          import(
+            './pages/order-confirmation/order-confirmation.component'
+          ).then((m) => m.OrderConfirmationComponent),
+        canActivate: [AuthGuard, orderConfirmGuard],
       },
       {
         path: 'not-found',
@@ -78,44 +132,6 @@ export const routes: Routes = [
         path: '**', // Wildcard Route for 404
         redirectTo: 'not-found',
         pathMatch: 'full',
-      },
-    ],
-  },
-  {
-    path: 'admin',
-    canActivate: [AuthGuard, AdminGuard], // Protect admin routes
-    loadComponent: () =>
-      import('./shared/layouts/admin-layout/admin-layout.component').then(
-        (m) => m.AdminLayoutComponent
-      ),
-    children: [
-      {
-        path: 'products/edit/:id',
-        loadComponent: () =>
-          import(
-            './pages/admin/products/product-create/product-create.component'
-          ).then((m) => m.ProductCreateComponent),
-      },
-      {
-        path: 'products',
-        loadComponent: () =>
-          import('./pages/admin/products/products.component').then(
-            (m) => m.ProductsComponent
-          ),
-      },
-      {
-        path: 'dashboard',
-        loadComponent: () =>
-          import('./pages/admin/dashboard/dashboard.component').then(
-            (m) => m.DashboardComponent
-          ),
-      },
-      {
-        path: 'product/create',
-        loadComponent: () =>
-          import(
-            './pages/admin/products/product-create/product-create.component'
-          ).then((m) => m.ProductCreateComponent),
       },
     ],
   },

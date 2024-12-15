@@ -83,11 +83,6 @@ export class ShoppingCartComponent implements OnInit {
     );
   }
 
-  // Proceed to checkout
-  checkout() {
-    console.log('Proceeding to checkout...');
-  }
-
   // Clear cart
   clearCart() {
     this.cartService.clearCart();

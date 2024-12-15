@@ -1,20 +1,36 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, map, Observable, tap } from 'rxjs';
+import { BehaviorSubject, catchError, map, Observable, of, tap } from 'rxjs';
 import { User } from '../../models/user.model';
 import { environment } from '../../../environments/environment';
-
+import { SnackbarService } from './snackbar.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
   private apiUrl = `${environment.apiUrl}/auth`;
+  private snackbar = inject(SnackbarService);
   // Track authentication state
   private authState = new BehaviorSubject<User | null>(null);
   private loading = new BehaviorSubject<boolean>(true);
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    this.loadUserOnAppInit();
+  }
+
+  private loadUserOnAppInit() {
+    this.getCurrentUser()
+      .pipe(
+        catchError((error) => {
+          return of(null);
+        })
+      )
+      .subscribe((user) => {
+        this.setAuthState(user);
+        this.setLoadingState(false);
+      });
+  }
 
   setLoadingState(isLoading: boolean) {
     this.loading.next(isLoading);
@@ -37,7 +53,10 @@ export class UserService {
       .post<{ user: User }>(`${this.apiUrl}/login`, credentials, {
         withCredentials: true,
       })
-      .pipe(map((response) => response.user));
+      .pipe(
+        map((response) => response.user),
+        tap((user) => this.setAuthState(user))
+      );
   }
 
   register(data: Partial<User>): Observable<User> {
@@ -47,16 +66,12 @@ export class UserService {
   }
 
   logout(): Observable<void> {
-    return this.http.post<void>(
-      `${this.apiUrl}/logout`,
-      {},
-      { withCredentials: true }
-    );
+    return this.http
+      .post<void>(`${this.apiUrl}/logout`, {}, { withCredentials: true })
+      .pipe(tap(() => this.setAuthState(null)));
   }
 
   getCurrentUser(): Observable<User> {
-    return this.http
-      .get<User>(`${this.apiUrl}/me`, { withCredentials: true })
-      .pipe(tap((response) => console.log('Response from /me:', response)));
+    return this.http.get<User>(`${this.apiUrl}/me`, { withCredentials: true });
   }
 }

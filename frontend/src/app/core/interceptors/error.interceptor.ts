@@ -1,7 +1,7 @@
 import { HttpErrorResponse, HttpInterceptorFn } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { catchError, throwError } from 'rxjs';
+import { catchError, take, throwError } from 'rxjs';
 import { SnackbarService } from '../services/snackbar.service';
 
 export const errorInterceptor: HttpInterceptorFn = (req, next) => {
@@ -11,9 +11,6 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
   return next(req).pipe(
     catchError((err: HttpErrorResponse) => {
       if (err.status === 400) {
-        snackbar.error(err.error.message);
-      }
-      if (err.status === 401) {
         snackbar.error(err.error.message);
       }
       if (err.status === 404) {

@@ -81,7 +81,6 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
       .subscribe({
         next: (response) => {
           this.relatedProducts = response.relatedProducts;
-          console.log(this.relatedProducts);
         },
         error: (err) => console.error(err),
       });

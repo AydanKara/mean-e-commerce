@@ -36,11 +36,9 @@ export class HeaderComponent {
     });
 
     this.userService.getAuthState().subscribe((user) => {
-      console.log('Auth state in Layout:', user);
       this.currentUser = user;
       this.userService.setLoadingState(false); // Stop loading when auth state is resolved
     });
-    console.log(this.isLoading);
 
     this.cartService.getTotalQuantityObservable().subscribe((total) => {
       this.totalItems = Number(total);

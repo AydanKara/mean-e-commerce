@@ -1,8 +1,13 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, Router } from '@angular/router';
+import {
+  ActivatedRouteSnapshot,
+  CanActivate,
+  Router,
+  RouterStateSnapshot,
+} from '@angular/router';
 
-import { Observable } from 'rxjs';
-import { map, first } from 'rxjs/operators';
+import { combineLatest, Observable } from 'rxjs';
+import { map, filter, take, tap } from 'rxjs/operators';
 import { UserService } from '../core/services/user.service';
 
 @Injectable({
@@ -11,16 +16,26 @@ import { UserService } from '../core/services/user.service';
 export class AdminGuard implements CanActivate {
   constructor(private userService: UserService, private router: Router) {}
 
-  canActivate(): Observable<boolean> {
-    return this.userService.getAuthState().pipe(
-      first(), // Take the first emitted value and complete the observable
-      map((user) => {
+  canActivate(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ): Observable<boolean> {
+    return combineLatest([
+      this.userService.getAuthState(),
+      this.userService.getLoadingState(),
+    ]).pipe(
+      filter(([user, isLoading]) => !isLoading), // Wait until loading completes
+      // The filter(([user, isLoading]) => !isLoading) ensures that the guard doesn’t evaluate the authState until loading is complete.
+
+      map(([user]) => {
         if (user?.isAdmin) {
           return true;
+        } else {
+          this.router.navigate(['/']);
+          return false;
         }
-        this.router.navigate(['/home']);
-        return false;
-      })
+      }),
+      take(1) // Complete after the first emission
     );
   }
 }

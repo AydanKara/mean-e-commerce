@@ -58,7 +58,6 @@ export class ProductCreateComponent implements OnInit {
     this.shopService.getProductById(productId).subscribe({
       next: (response) => {
         this.product = response; // Populate form with existing product data
-        console.log(response);
       },
       error: (error) => {
         console.error('Error loading product:', error);
@@ -70,10 +69,8 @@ export class ProductCreateComponent implements OnInit {
   // Handle form submission for both Create and Edit
   onSubmit(): void {
     if (this.isEditMode) {
-      console.log(this.isEditMode);
       this.onUpdateProduct();
     } else {
-      console.log(this.isEditMode);
       this.onCreateProduct();
     }
   }
