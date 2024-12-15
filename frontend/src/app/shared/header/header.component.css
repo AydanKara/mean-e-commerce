@@ -22,3 +22,21 @@ header {
     border-color: #1f1f1f !important;
     color: #fff !important;
 }
+
+.mat-badge {
+    position: relative
+}
+
+.mat-badge.mat-badge {
+    overflow: visible
+}
+
+.mat-badge-content {
+    position: absolute;
+    width: 1.25rem !important;
+    height: 1.25rem !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    background-color: var(--mat-badge-background-color, var(--mat-sys-error));
+}

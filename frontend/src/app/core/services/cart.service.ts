@@ -1,11 +1,16 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Cart, CartItem } from '../../models/cart.model';
 import { BehaviorSubject, map, Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
+import { Order } from '../../models/order.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CartService {
+  private http = inject(HttpClient);
+  private baseUrl = `${environment.apiUrl}/orders`;
   private cartKey = 'cart'; // Key to store the cart in localStorage
   private cart: Cart = { items: [], totalPrice: 0 };
   private cartSubject = new BehaviorSubject<Cart>(this.cart);
@@ -98,5 +103,9 @@ export class CartService {
   clearCart(): void {
     this.cart = { items: [], totalPrice: 0 };
     this.saveCart();
+  }
+
+  checkout(order: Order): Observable<Object> {
+    return this.http.post(this.baseUrl, order, { withCredentials: true });
   }
 }

@@ -136,9 +136,14 @@
         </div>
 
         <!-- Button -->
-        <a class="btn w-100 btn-dark mb-2" (click)="checkout()"
-          >Proceed to Checkout</a
+        <button
+          class="btn w-100 btn-dark mb-2"
+          routerLink="/checkout"
+          [disabled]="cartItems.length === 0"
+          [title]="cartItems.length === 0 ? 'Your cart is empty' : ''"
         >
+          Proceed to Checkout
+        </button>
 
         <!-- Link -->
         <a class="link-underline my-2" routerLink="/shop">

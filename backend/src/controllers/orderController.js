@@ -1,4 +1,6 @@
 import Order from "../models/Order.js";
+import Product from "../models/Product.js";
+import User from "../models/User.js";
 
 // Get all orders
 export const getAllOrders = async (req, res) => {
@@ -28,7 +30,10 @@ export const getOrderById = async (req, res) => {
 // Create a new order
 export const createOrder = async (req, res) => {
   try {
+    const user = await User.findById(req.user._id); // Fetch user info
+    
     const { orderItems, shippingInfo, paymentMethod, totalPrice } = req.body;
+    
     const order = await Order.create({
       user: req.user._id,
       orderItems,
@@ -36,6 +41,7 @@ export const createOrder = async (req, res) => {
       paymentMethod,
       totalPrice,
     });
+
     res.status(201).json({ message: "Order created", order });
   } catch (error) {
     res.status(500).json({ message: "Error creating order", error });
@@ -57,5 +63,42 @@ export const updateOrderStatus = async (req, res) => {
     res.status(200).json({ message: "Order updated", order });
   } catch (error) {
     res.status(500).json({ message: "Error updating order", error });
+  }
+};
+
+export const calculateOrderSummary = async (req, res) => {
+  try {
+    const { orderItems } = req.body;
+
+    if (!orderItems || !orderItems.length) {
+      return res.status(400).json({ message: "Order items are required" });
+    }
+
+    const productIds = orderItems.map((item) => item.product);
+    const products = await Product.find({ _id: { $in: productIds } });
+
+    let totalPrice = 0;
+
+    orderItems.forEach((item) => {
+      const product = products.find(
+        (prod) => prod._id.toString() === item.product
+      );
+      if (!product) {
+        throw new Error(`Product not found: ${item.product}`);
+      }
+      totalPrice += product.price * item.quantity;
+    });
+
+    const tax = totalPrice * 0.1; // Example tax calculation
+    const shipping = totalPrice > 100 ? 0 : 10; // Free shipping for orders over $100
+
+    res.status(200).json({
+      totalPrice,
+      tax,
+      shipping,
+      grandTotal: totalPrice + tax + shipping,
+    });
+  } catch (error) {
+    res.status(500).json({ message: "Error calculating order summary", error });
   }
 };
