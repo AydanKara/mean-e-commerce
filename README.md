@@ -42,7 +42,7 @@ git clone https://github.com/AydanKara/mean-e-commerce.git
     ```
    3.3 Create environments folder in /frontend/src/
    
-   3.4 Add two file into this folder
+   3.4 Add two files into this folder
    ```bash
    /frontend/src/environments
      1. environment.prod.ts
