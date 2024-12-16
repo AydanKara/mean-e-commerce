@@ -2,10 +2,11 @@ import { Component, inject, OnInit } from '@angular/core';
 import { OrderService } from '../../../core/services/order.service';
 import { Order, OrderItem } from '../../../models/order.model';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-account-orders',
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule],
   templateUrl: './account-orders.component.html',
   styleUrl: './account-orders.component.css',
 })

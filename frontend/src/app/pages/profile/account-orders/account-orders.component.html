@@ -73,7 +73,7 @@
             <!-- Button -->
             <a
               class="btn btn-sm w-100 btn-outline-dark"
-              routerLink="account-order"
+              [routerLink]="['/profile', 'order-details', order._id]"
             >
               Order Details
             </a>

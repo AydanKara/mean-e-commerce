@@ -93,6 +93,13 @@ export const routes: Routes = [
               ).then((m) => m.AccountOrdersComponent),
           },
           {
+            path: 'order-details/:id',
+            loadComponent: () =>
+              import(
+                './pages/profile/account-orders/order-details/order-details.component'
+              ).then((m) => m.OrderDetailsComponent),
+          },
+          {
             path: 'account-wishlist',
             loadComponent: () =>
               import(

@@ -77,8 +77,5 @@ section {
     font-weight: 700;
 }
 
-.orders-list {
-    max-height: 54rem;
-    overflow-x: hidden;
-}
+
 
