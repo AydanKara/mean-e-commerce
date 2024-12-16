@@ -1,0 +1,84 @@
+section {
+    min-height: 58vh;
+}
+
+.list-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 0;
+    padding-left: 0;
+}
+
+.list-group-flush-x .list-group-item {
+    border-left: none;
+    border-right: none;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.list-group-sm .list-group-item {
+    padding: 1.25rem;
+}
+
+.list-group-item {
+    flex-shrink: 0;
+    transition: .2s all ease-in-out;
+}
+
+.dropdown-toggle,
+.dropend-toggle {
+    overflow: hidden;
+}
+
+.list-group-item {
+    border: 1px solid #e5e5e5;
+    display: block;
+    padding: 1.5rem;
+    position: relative;
+}
+
+.list-group-item,
+.list-group-item-action:active {
+    background-color: transparent;
+    color: #1f1f1f;
+}
+
+.list-group-item-action {
+    color: #767676;
+    text-align: inherit;
+    width: 100%;
+}
+
+.list-group-flush-x .list-group-item {
+    border-left: none;
+    border-right: none;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.list-group-item+.list-group-item {
+    border-top-width: 0;
+}
+
+.dropend-toggle:after {
+    content: ">";
+}
+
+.dropdown-toggle:after,
+.dropend-toggle:after {
+    border: 0;
+    float: right;
+    font-family: cursive;
+    margin-left: .255em;
+}
+
+.active, .active:hover, .active:focus, .list-group-item:hover {
+    color: #1f1f1f;
+    font-weight: 700;
+}
+
+.orders-list {
+    max-height: 54rem;
+    overflow-x: hidden;
+}
+

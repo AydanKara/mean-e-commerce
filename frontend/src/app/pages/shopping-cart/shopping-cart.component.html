@@ -19,11 +19,11 @@
                 <div class="col-3">
                   <!-- Image -->
                   <a
-                    routerLink="/product/{{ item.productId }}"
+                    routerLink="/product/{{ item._id }}"
                     class="docs-creator"
                   >
                     <img
-                      [src]="item.image"
+                      [src]="item.images[0]"
                       [alt]="item.name"
                       class="img-fluid"
                     />
@@ -63,7 +63,7 @@
                     <!-- Remove -->
                     <a
                       class="fs-xs text-gray-400 ms-auto"
-                      (click)="removeFromCart(item.productId)"
+                      (click)="removeFromCart(item._id)"
                     >
                       Remove
                     </a>

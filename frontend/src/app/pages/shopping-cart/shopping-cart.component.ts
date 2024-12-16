@@ -31,7 +31,7 @@ export class ShoppingCartComponent implements OnInit {
 
     // Create an array of observables to fetch product stock
     const stockObservables = cart.items.map((item) =>
-      this.shopService.getProductById(item.productId)
+      this.shopService.getProductById(item._id)
     );
 
     // Use forkJoin to wait for all API calls to complete
@@ -54,7 +54,7 @@ export class ShoppingCartComponent implements OnInit {
       this.snackbar.error('Quantity exceeds available stock!');
       item.quantity = item.stock;
     } else {
-      this.cartService.updateQuantity(item.productId, item.quantity);
+      this.cartService.updateQuantity(item._id, item.quantity);
       this.calculateTotalPrice();
       this.snackbar.success(item.name + ' quantity updated!');
     }
@@ -71,7 +71,7 @@ export class ShoppingCartComponent implements OnInit {
     this.cartService.removeFromCart(productId);
     // Update the cartItems array directly after removal
     this.cartItems = this.cartItems.filter(
-      (item) => item.productId !== productId
+      (item) => item._id !== productId
     );
     this.calculateTotalPrice();
   }

@@ -41,7 +41,7 @@ export class CartService {
   // Add item to the cart
   addToCart(product: CartItem): void {
     const existingItem = this.cart.items.find(
-      (item) => item.productId === product.productId
+      (item) => item._id === product._id
     );
     if (existingItem) {
       existingItem.quantity += product.quantity;
@@ -55,7 +55,7 @@ export class CartService {
   // Remove item from the cart
   removeFromCart(productId: string): void {
     this.cart.items = this.cart.items.filter(
-      (item) => item.productId !== productId
+      (item) => item._id !== productId
     );
     this.updateTotalPrice();
     this.saveCart();
@@ -63,7 +63,7 @@ export class CartService {
 
   // Update item quantity
   updateQuantity(productId: string, quantity: number): void {
-    const item = this.cart.items.find((item) => item.productId === productId);
+    const item = this.cart.items.find((item) => item._id === productId);
     if (item) {
       item.quantity = quantity;
       this.updateTotalPrice();

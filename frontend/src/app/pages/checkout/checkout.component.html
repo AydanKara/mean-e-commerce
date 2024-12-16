@@ -250,9 +250,9 @@
             <div class="row align-items-center">
               <div class="col-4" style="height: 6rem">
                 <!-- Image -->
-                <a routerLink="/product/{{ item.productId }}">
+                <a routerLink="/product/{{ item._id }}">
                   <img
-                    src="{{ item.image }}"
+                    src="{{ item.images }}"
                     alt="{{ item.name }}"
                     class="img-fluid w-100 h-100 object-fit-cover"
                   />
@@ -263,7 +263,7 @@
                 <p class="mb-4 fs-sm fw-bold">
                   <a
                     class="text-body"
-                    routerLink="/product/{{ item.productId }}"
+                    routerLink="/product/{{ item._id }}"
                     >{{ item.name }}</a
                   >
                   <br />

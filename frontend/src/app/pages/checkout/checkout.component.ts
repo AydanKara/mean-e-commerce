@@ -57,7 +57,7 @@ export class CheckoutComponent implements OnInit {
     const cart = this.cartService.getCart();
     this.cartItems = cart.items;
     this.orderItems = cart.items.map((item) => ({
-      product: item.productId,
+      product: item,
       quantity: item.quantity,
       price: item.price,
     }));
@@ -86,7 +86,7 @@ export class CheckoutComponent implements OnInit {
         shippingInfo: this.shippingInfo,
         paymentMethod: this.paymentMethod,
         totalPrice: this.totalPrice,
-        status: 'Pending', // Assuming "Pending" status initially
+        paymentStatus: 'Pending', // Assuming "Pending" status initially
         isDelivered: false, // Initially not delivered
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),

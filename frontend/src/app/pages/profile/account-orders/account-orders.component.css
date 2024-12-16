@@ -1,0 +1,25 @@
+.card-footer {
+    padding: 2rem;
+    background-color: transparent;
+    border-top: 0 solid hsla(0, 0%, 7%, .125);
+}
+
+.fs-xxs {
+    font-size: .8125rem !important;
+}
+
+.ratio-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.bg-cover {
+    background-position: 50% !important;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+}
+
+.g-5, .gx-5 {
+    --bs-gutter-x: 1rem;
+}

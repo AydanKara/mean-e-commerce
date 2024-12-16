@@ -5,7 +5,16 @@ import User from "../models/User.js";
 // Get all orders
 export const getAllOrders = async (req, res) => {
   try {
-    const orders = await Order.find({ user: req.user._id });
+    const orders = await Order.find({ user: req.user._id })
+      .populate({
+        path: "orderItems.product",
+        select: "_id, name, price, stock, images",
+      })
+      .exec();
+
+    if (!orders) {
+      return res.status(404).json({ message: "Orders not found" });
+    }
     res.status(200).json(orders);
   } catch (error) {
     res.status(500).json({ message: "Server error", error });
@@ -31,9 +40,9 @@ export const getOrderById = async (req, res) => {
 export const createOrder = async (req, res) => {
   try {
     const user = await User.findById(req.user._id); // Fetch user info
-    
+
     const { orderItems, shippingInfo, paymentMethod, totalPrice } = req.body;
-    
+
     const order = await Order.create({
       user: req.user._id,
       orderItems,

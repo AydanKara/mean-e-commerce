@@ -1,1 +1,65 @@
-<p>profile works!</p>
+<section class="my-6">
+  <div class="container">
+    <div class="row">
+      <div class="col-12 text-center">
+        <!-- Heading -->
+        <h1 class="mb-5">My Account</h1>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12 col-md-3">
+        <!-- Nav -->
+        <nav class="mb-4 mb-md-0">
+          <div
+            class="list-group list-group-sm list-group-strong list-group-flush-x"
+          >
+            <a
+              class="list-group-item list-group-item-action dropend-toggle"
+              routerLink="account-orders"
+              routerLinkActive="active"
+            >
+              Orders
+            </a>
+            <a
+              class="list-group-item list-group-item-action dropend-toggle"
+              routerLink="account-wishlist"
+              routerLinkActive="active"
+            >
+              Wishlist
+            </a>
+            <a
+              class="list-group-item list-group-item-action dropend-toggle"
+              routerLink="account-personal-info"
+              routerLinkActive="active"
+            >
+              Personal Info
+            </a>
+            <a
+              class="list-group-item list-group-item-action dropend-toggle"
+              routerLink="account-address"
+              routerLinkActive="active"
+            >
+              Addresses
+            </a>
+            <a
+              class="list-group-item list-group-item-action dropend-toggle"
+              routerLink="account-payment"
+              routerLinkActive="active"
+            >
+              Payment Methods
+            </a>
+            <a
+              class="list-group-item list-group-item-action dropend-toggle"
+              routerLink="#!"
+            >
+              Logout
+            </a>
+          </div>
+        </nav>
+      </div>
+      <div class="col-12 col-md-9 col-lg-8 offset-lg-1 orders-list">
+        <router-outlet> </router-outlet>
+      </div>
+    </div>
+  </div>
+</section>

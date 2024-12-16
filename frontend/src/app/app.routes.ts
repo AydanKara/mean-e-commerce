@@ -77,6 +77,50 @@ export const routes: Routes = [
             (m) => m.ProfileComponent
           ),
         canActivate: [AuthGuard],
+        children: [
+          {
+            path: '',
+            loadComponent: () =>
+              import(
+                './pages/profile/account-welcome/account-welcome.component'
+              ).then((m) => m.AccountWelcomeComponent),
+          },
+          {
+            path: 'account-orders',
+            loadComponent: () =>
+              import(
+                './pages/profile/account-orders/account-orders.component'
+              ).then((m) => m.AccountOrdersComponent),
+          },
+          {
+            path: 'account-wishlist',
+            loadComponent: () =>
+              import(
+                './pages/profile/account-wishlist/account-wishlist.component'
+              ).then((m) => m.AccountWishlistComponent),
+          },
+          {
+            path: 'account-personal-info',
+            loadComponent: () =>
+              import(
+                './pages/profile/account-personal-info/account-personal-info.component'
+              ).then((m) => m.AccountPersonalInfoComponent),
+          },
+          {
+            path: 'account-address',
+            loadComponent: () =>
+              import(
+                './pages/profile/account-address/account-address.component'
+              ).then((m) => m.AccountAddressComponent),
+          },
+          {
+            path: 'account-payment',
+            loadComponent: () =>
+              import(
+                './pages/profile/account-payment/account-payment.component'
+              ).then((m) => m.AccountPaymentComponent),
+          },
+        ],
       },
       {
         path: 'shop',

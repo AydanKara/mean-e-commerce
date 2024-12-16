@@ -6,7 +6,7 @@ export interface Order {
   orderItems: OrderItem[];
   shippingInfo: ShippingInfo;
   paymentMethod: string;
-  status: string; // Example: "Pending", "Shipped", "Delivered"
+  paymentStatus: string; // Example: "Pending", "Shipped", "Delivered"
   totalPrice: number;
   isDelivered: boolean;
   deliveredAt?: Date;
@@ -15,7 +15,14 @@ export interface Order {
 }
 
 export interface OrderItem {
-  product: string;
+  product: {
+    _id: string;
+    name: string;
+    price: number;
+    quantity: number;
+    images: string;
+    stock: number;
+  };
   quantity: number;
   price: number;
 }

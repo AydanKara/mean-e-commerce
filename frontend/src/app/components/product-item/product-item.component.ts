@@ -21,11 +21,11 @@ export class ProductItemComponent {
     if (!this.product) return;
 
     const cartItem = {
-      productId: this.product._id,
+      _id: this.product._id,
       name: this.product.name,
       price: this.product.price,
       quantity: 1,
-      image: this.product.images[0],
+      images: this.product.images[0],
       stock: this.product.stock,
     };
 

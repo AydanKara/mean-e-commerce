@@ -125,11 +125,11 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
     }
 
     const cartItem = {
-      productId: this.product._id,
+      _id: this.product._id,
       name: this.product.name,
       price: this.product.price,
       quantity: Number(this.selectedQuantity),
-      image: this.product.images[0],
+      images: this.product.images[0],
       stock: this.product.stock,
     };
 

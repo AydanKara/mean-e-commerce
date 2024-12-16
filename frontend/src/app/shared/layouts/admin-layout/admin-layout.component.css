@@ -18,6 +18,7 @@
 
 .list-group-item {
     flex-shrink: 0;
+    transition: .2s all ease-in-out;
 }
 
 .dropdown-toggle,
@@ -65,4 +66,12 @@
     float: right;
     font-family: cursive;
     margin-left: .255em;
+}
+
+.active,
+.active:hover,
+.active:focus,
+.list-group-item:hover {
+    color: #1f1f1f;
+    font-weight: 700;
 }
