@@ -7,7 +7,7 @@ This is a a web application (Single Page Application) using MongoDB, Express.js,
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/AydanKara/Audiophile-E-commerce-Project.git
+git clone https://github.com/AydanKara/mean-e-commerce.git
 ```
 2. Start the Backend Server: <br>
    2.1 Open a terminal and navigate to the server directory /backend
