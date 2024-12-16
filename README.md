@@ -7,18 +7,18 @@ This is a a web application (Single Page Application) using MongoDB, Express.js,
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/AydanKara/Audiophile-E-commerce-Project.git
+git clone https://github.com/AydanKara/mean-e-commerce.git
 ```
 2. Start the Backend Server: <br>
    2.1 Open a terminal and navigate to the server directory /backend
    ```bash
-   cd backend
+   cd .\mean-e-commerce\backend\
    ```
    2.2 Instal dependencies
    ```bash
    npm install
    ```
-   2.3 Create .env file in the backend folder and copy this into the file:
+   2.3 Create .env file in the backend folder and copy these variables into the file:
    ```bash
    NODE_ENV=development
    MONGO_URI=mongodb://localhost:27017/mean-ecommerce
@@ -34,7 +34,7 @@ git clone https://github.com/AydanKara/Audiophile-E-commerce-Project.git
 3. Start the Frontend: <br>
     3.1 Open another terminal and navigate to the frontend directory 
    ```bash
-   cd frontend
+   cd .\mean-e-commerce\frontend\
    ```
    3.2 Install dependencies
     ```bash
@@ -42,7 +42,7 @@ git clone https://github.com/AydanKara/Audiophile-E-commerce-Project.git
     ```
    3.3 Create environments folder in /frontend/src/
    
-   3.4 Add two file into this folder
+   3.4 Add two files into this folder
    ```bash
    /frontend/src/environments
      1. environment.prod.ts
