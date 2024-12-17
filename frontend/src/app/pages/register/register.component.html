@@ -77,12 +77,15 @@
                     />
                     <div
                       *ngIf="
-                        registerForm.get('password')?.touched &&
-                        registerForm.get('password')?.invalid
+                        registerForm.get('password')?.invalid &&
+                        registerForm.get('password')?.touched
                       "
                       class="text-danger"
                     >
-                      Password must be at least 6 characters.
+                      <small
+                        *ngIf="registerForm.get('password')?.errors?.['strongPassword']"
+                        >{{ registerForm.get('password')?.errors?.['strongPassword'].message }}</small
+                      >
                     </div>
                   </div>
                 </div>

@@ -10,6 +10,7 @@ import {
 import { Router } from '@angular/router';
 import { UserService } from '../../core/services/user.service';
 import { FeaturesComponent } from "../../shared/features/features.component";
+import { strongPasswordValidator } from '../../utils/password.validator';
 
 @Component({
   selector: 'app-register',
@@ -29,7 +30,7 @@ export class RegisterComponent {
     this.registerForm = this.fb.group({
       username: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
+      password: ['', [strongPasswordValidator()]],
       confirmPassword: ['', Validators.required],
     });
   }

@@ -10,6 +10,7 @@ import { SnackbarService } from './snackbar.service';
 })
 export class UserService {
   private apiUrl = `${environment.apiUrl}/auth`;
+  private userUrl = `${environment.apiUrl}/users`;
   private snackbar = inject(SnackbarService);
   // Track authentication state
   private authState = new BehaviorSubject<User | null>(null);
@@ -55,7 +56,9 @@ export class UserService {
       })
       .pipe(
         map((response) => response.user),
-        tap((user) => this.setAuthState(user))
+        tap(() => {
+          this.getCurrentUser().subscribe((user) => this.setAuthState(user));
+        })
       );
   }
 
@@ -73,5 +76,19 @@ export class UserService {
 
   getCurrentUser(): Observable<User> {
     return this.http.get<User>(`${this.apiUrl}/me`, { withCredentials: true });
+  }
+
+  updateProfile(data: Partial<User>): Observable<User> {
+    return this.http
+      .patch<User>(`${this.userUrl}/update`, data, { withCredentials: true })
+      .pipe(
+        tap((updatedUser) => {
+          this.setAuthState(updatedUser); // Update auth state after successful update
+        }),
+        catchError((error) => {
+          this.snackbar.error('Error updating profile.');
+          throw error;
+        })
+      );
   }
 }

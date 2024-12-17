@@ -1,31 +1,30 @@
-<form>
+<form [formGroup]="userForm" (ngSubmit)="onSubmit()">
   <div class="row">
-    <div class="col-12 col-md-6">
+    <div class="col-12">
       <!-- Email -->
       <div class="form-group">
-        <label class="form-label" for="accountFirstName"> First Name * </label>
+        <label class="form-label" for="accountFirstName"> Full Name * </label>
         <input
           class="form-control form-control-sm"
-          id="accountFirstName"
+          id="fullName"
+          formControlName="fullName"
           type="text"
-          placeholder="First Name *"
-          value="Daniel"
-          required=""
+          placeholder="Full Name *"
         />
-      </div>
-    </div>
-    <div class="col-12 col-md-6">
-      <!-- Email -->
-      <div class="form-group">
-        <label class="form-label" for="accountLastName"> Last Name * </label>
-        <input
-          class="form-control form-control-sm"
-          id="accountLastName"
-          type="text"
-          placeholder="Last Name *"
-          value="Robinson"
-          required=""
-        />
+        <div
+          *ngIf="
+            userForm.get('fullName')?.invalid &&
+            userForm.get('fullName')?.touched
+          "
+          class="text-danger"
+        >
+          <small *ngIf="userForm.get('fullName')?.errors?.['required']"
+            >Full Name is required.</small
+          >
+          <small *ngIf="userForm.get('fullName')?.errors?.['minLength']"
+            >Full Name must be at least 10 characters.</small
+          >
+        </div>
       </div>
     </div>
     <div class="col-12">
@@ -34,111 +33,85 @@
         <label class="form-label" for="accountEmail"> Email Address * </label>
         <input
           class="form-control form-control-sm"
-          id="accountEmail"
+          id="email"
+          formControlName="email"
           type="email"
           placeholder="Email Address *"
-          value="user@email.com"
-          required=""
         />
-      </div>
-    </div>
-    <div class="col-12 col-md-6">
-      <!-- Password -->
-      <div class="form-group">
-        <label class="form-label" for="accountPassword">
-          Current Password *
-        </label>
-        <input
-          class="form-control form-control-sm"
-          id="accountPassword"
-          type="password"
-          placeholder="Current Password *"
-          required=""
-        />
-      </div>
-    </div>
-    <div class="col-12 col-md-6">
-      <!-- Password -->
-      <div class="form-group">
-        <label class="form-label" for="AccountNewPassword">
-          New Password *
-        </label>
-        <input
-          class="form-control form-control-sm"
-          id="AccountNewPassword"
-          type="password"
-          placeholder="New Password *"
-          required=""
-        />
-      </div>
-    </div>
-    <div class="col-12 col-lg-6">
-      <!-- Birthday -->
-      <div class="form-group">
-        <!-- Label -->
-        <label class="form-label">Date of Birth</label>
-
-        <!-- Inputs -->
-        <div class="row gx-5">
-          <div class="col-auto">
-            <!-- Date -->
-            <label class="visually-hidden" for="accountDate"> Date </label>
-            <select class="form-select form-select-sm" id="accountDate">
-              <option>10</option>
-              <option>11</option>
-              <option selected="">12</option>
-            </select>
-          </div>
-          <div class="col">
-            <!-- Date -->
-            <label class="visually-hidden" for="accountMonth"> Month </label>
-            <select class="form-select form-select-sm" id="accountMonth">
-              <option>January</option>
-              <option selected="">February</option>
-              <option>March</option>
-            </select>
-          </div>
-          <div class="col-auto">
-            <!-- Date -->
-            <label class="visually-hidden" for="accountYear"> Year </label>
-            <select class="form-select form-select-sm" id="accountYear">
-              <option>1990</option>
-              <option selected="">1991</option>
-              <option>1992</option>
-            </select>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-12 col-lg-6">
-      <!-- Gender -->
-      <div class="form-group mb-8">
-        <!-- Label -->
-        <label class="form-label">Gender</label>
-
-        <!-- Inputs -->
-        <div>
-          <!-- Male -->
-          <input
-            class="btn-check"
-            type="radio"
-            name="gender"
-            id="male"
-            checked=""
-          />
-          <label class="btn btn-sm btn-outline-border" for="male">Male</label>
-
-          <!-- Female -->
-          <input class="btn-check" type="radio" name="gender" id="female" />
-          <label class="btn btn-sm btn-outline-border" for="female"
-            >Female</label
+        <div
+          *ngIf="
+            userForm.get('email')?.invalid && userForm.get('email')?.touched
+          "
+          class="text-danger"
+        >
+          <small *ngIf="userForm.get('email')?.errors?.['required']"
+            >Email is required.</small
+          >
+          <small *ngIf="userForm.get('email')?.errors?.['maxlength']"
+            >Email cannot be longer than 30 characters.</small
+          >
+          <small *ngIf="userForm.get('email')?.errors?.['email']"
+            >Enter a valid email.</small
           >
         </div>
       </div>
     </div>
+    <div class="col-12 col-md-6">
+      <!-- Password -->
+      <div class="form-group">
+        <label class="form-label" for="password"> Current Password </label>
+        <input
+          class="form-control form-control-sm"
+          id="password"
+          formControlName="password"
+          type="password"
+          placeholder="Current Password"
+        />
+        <div
+          *ngIf="
+            userForm.get('password')?.invalid &&
+            userForm.get('password')?.touched
+          "
+          class="text-danger"
+        >
+          <small
+            *ngIf="userForm.get('password')?.errors?.['strongPassword']"
+            >{{ userForm.get('password')?.errors?.['strongPassword'].message }}</small
+          >
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-md-6">
+      <!-- Password -->
+      <div class="form-group">
+        <label class="form-label" for="newPassword"> New Password </label>
+        <input
+          class="form-control form-control-sm"
+          id="newPassword"
+          formControlName="newPassword"
+          type="password"
+          placeholder="New Password"
+        />
+        <div
+          *ngIf="
+            userForm.get('newPassword')?.invalid &&
+            userForm.get('newPassword')?.touched
+          "
+          class="text-danger"
+        >
+          <small
+            *ngIf="userForm.get('newPassword')?.errors?.['strongPassword']"
+            >{{ userForm.get('newPassword')?.errors?.['strongPassword'].message }}</small
+          >
+        </div>
+      </div>
+    </div>
+
     <div class="col-12">
       <!-- Button -->
-      <button class="btn btn-dark" type="submit">Save Changes</button>
+      <button class="btn btn-dark" type="submit" [disabled]="userForm.invalid">
+        Save Changes
+      </button>
     </div>
   </div>
 </form>
