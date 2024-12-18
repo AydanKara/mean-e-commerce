@@ -12,6 +12,20 @@
             formControlName="address"
             placeholder="Enter address"
           />
+          <div
+            *ngIf="
+              addressForm.get('address')?.invalid &&
+              addressForm.get('address')?.touched
+            "
+            class="text-danger"
+          >
+            <small *ngIf="addressForm.get('address')?.errors?.['required']"
+              >Address is required.</small
+            >
+            <small *ngIf="addressForm.get('address')?.errors?.['minLength']"
+              >Address must be at least 10 characters.</small
+            >
+          </div>
         </div>
       </div>
       <div class="col-12 col-lg-6">
@@ -23,6 +37,20 @@
             formControlName="city"
             placeholder="Enter city"
           />
+          <div
+            *ngIf="
+              addressForm.get('address')?.invalid &&
+              addressForm.get('address')?.touched
+            "
+            class="text-danger"
+          >
+            <small *ngIf="addressForm.get('city')?.errors?.['required']"
+              >City is required.</small
+            >
+            <small *ngIf="addressForm.get('city')?.errors?.['minLength']"
+              >City must be at least 4 characters.</small
+            >
+          </div>
         </div>
       </div>
       <div class="col-12 col-lg-6">
@@ -34,6 +62,20 @@
             formControlName="zipCode"
             placeholder="Enter zip code"
           />
+          <div
+            *ngIf="
+              addressForm.get('zipCode')?.invalid &&
+              addressForm.get('zipCode')?.touched
+            "
+            class="text-danger"
+          >
+            <small *ngIf="addressForm.get('zipCode')?.errors?.['required']"
+              >ZIP or Postcode is required.</small
+            >
+            <small *ngIf="addressForm.get('zipCode')?.errors?.['pattern']"
+              >Please enter a valid ZIP or Postcode (5 digits)</small
+            >
+          </div>
         </div>
       </div>
       <div class="col-12 col-lg-6">
@@ -45,6 +87,17 @@
             formControlName="country"
             placeholder="Enter country"
           />
+          <div
+            *ngIf="
+              addressForm.get('country')?.invalid &&
+              addressForm.get('country')?.touched
+            "
+            class="text-danger"
+          >
+            <small *ngIf="addressForm.get('country')?.errors?.['required']"
+              >Please enter a valid Country.</small
+            >
+          </div>
         </div>
       </div>
       <div class="col-12 col-lg-6">
@@ -56,6 +109,20 @@
             formControlName="phone"
             placeholder="Enter phone number"
           />
+          <div
+            *ngIf="
+              addressForm.get('phone')?.invalid &&
+              addressForm.get('phone')?.touched
+            "
+            class="text-danger"
+          >
+            <small *ngIf="addressForm.get('phone')?.errors?.['required']"
+              >Phone number is required.</small
+            >
+            <small *ngIf="addressForm.get('phone')?.errors?.['pattern']"
+              >Phone number must be 10-15 digits.</small
+            >
+          </div>
         </div>
       </div>
 

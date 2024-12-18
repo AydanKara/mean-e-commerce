@@ -1,9 +1,9 @@
-<section class="pt-4 pb-5">
+<section class="pt-4 pb-5 my-6">
   <div class="container">
     <div class="row">
       <div class="col-12 text-center">
         <!-- Heading -->
-        <h3 class="mb-4">Checkout</h3>
+        <h1 class="mb-5">Checkout</h1>
       </div>
     </div>
     <div class="row">
@@ -11,7 +11,7 @@
         <!-- Form -->
         <form #checkoutForm="ngForm" [formGroup]="form" (ngSubmit)="onSubmit()">
           <!-- Heading -->
-          <h6 class="mb-4">Billing Details</h6>
+          <h2 class="mb-4 fs-5">Billing Details</h2>
 
           <!-- Billing details -->
           <div class="row mb-5">
@@ -167,14 +167,14 @@
                     form.get('phone')?.touched && form.get('phone')?.invalid
                   "
                 >
-                  Phone number must be at least 10 digits.
+                  Phone number must be 10-15 digits.
                 </p>
               </div>
             </div>
           </div>
 
           <!-- Heading -->
-          <h6 class="mb-4">Payment</h6>
+          <h2 class="mb-4 fs-5">Payment</h2>
 
           <!-- List group -->
           <div class="list-group list-group-sm mb-7">
@@ -261,11 +261,9 @@
               <div class="col">
                 <!-- Title -->
                 <p class="mb-4 fs-sm fw-bold">
-                  <a
-                    class="text-body"
-                    routerLink="/product/{{ item._id }}"
-                    >{{ item.name }}</a
-                  >
+                  <a class="text-body" routerLink="/product/{{ item._id }}">{{
+                    item.name
+                  }}</a>
                   <br />
                   <span class="text-muted">{{ item.price | currency }}</span>
                   <span class="fw-bold"> x </span>

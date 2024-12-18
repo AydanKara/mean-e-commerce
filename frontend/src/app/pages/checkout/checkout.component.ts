@@ -35,6 +35,7 @@ export class CheckoutComponent implements OnInit {
 
   private cartService = inject(CartService);
   private orderService = inject(OrderService);
+  private userService = inject(UserService);
   private snackBar = inject(SnackbarService);
   private router = inject(Router);
 
@@ -48,8 +49,8 @@ export class CheckoutComponent implements OnInit {
       country: ['', [Validators.required, Validators.minLength(4)]],
       address: ['', [Validators.required, Validators.minLength(10)]],
       city: ['', [Validators.required, Validators.minLength(4)]],
-      zipCode: ['', [Validators.required, Validators.minLength(4)]],
-      phone: ['', [Validators.required, Validators.minLength(10)]],
+      zipCode: ['', [Validators.required, Validators.pattern(/^\d{5}$/)]],
+      phone: ['', [Validators.required, Validators.pattern(/^[0-9]{10,15}$/)]],
     });
   }
 
@@ -62,6 +63,31 @@ export class CheckoutComponent implements OnInit {
       price: item.price,
     }));
     this.totalPrice = cart.totalPrice;
+
+    // Load user info
+    this.userService.getAuthState().subscribe((user) => {
+      if (user) {
+        const { fullName, email, shippingInfo, phone } = user;
+        const { address, city, zipCode, country } = shippingInfo || {};
+
+        this.form.patchValue({
+          fullName: fullName || '',
+          email: email || '',
+          address: address || '',
+          city: city || '',
+          zipCode: zipCode || '',
+          country: country || '',
+          phone: phone || '',
+        });
+
+        this.shippingInfo = {
+          address: address || '',
+          city: city || '',
+          zipCode: zipCode || '',
+          country: country || '',
+        };
+      }
+    });
 
     // Patch shippingInfo into the form on init
     this.form.patchValue(this.shippingInfo);

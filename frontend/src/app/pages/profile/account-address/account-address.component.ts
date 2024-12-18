@@ -4,7 +4,12 @@ import { MatIcon } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
 import { UserService } from '../../../core/services/user.service';
 import { User } from '../../../models/user.model';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { SnackbarService } from '../../../core/services/snackbar.service';
 
 @Component({
@@ -26,21 +31,28 @@ export class AccountAddressComponent implements OnInit {
     this.userService.getAuthState().subscribe((user) => {
       if (user) {
         this.user = user;
-        console.log(this.user);
-        this.initForm(user.shippingInfo); // Initialize form with shipping info
+        this.initForm(user.shippingInfo);
+      } else {
+        this.initForm();
       }
     });
   }
 
   initForm(shippingInfo?: User['shippingInfo']): void {
     this.addressForm = this.fb.group({
-      address: [shippingInfo?.address || '', Validators.required],
+      address: [
+        shippingInfo?.address || '',
+        [Validators.required, Validators.minLength(10)],
+      ],
       zipCode: [
         shippingInfo?.zipCode || '',
         [Validators.required, Validators.pattern(/^\d{5}$/)],
       ],
-      city: [shippingInfo?.city || '', Validators.required],
-      country: [shippingInfo?.country || '', Validators.required],
+      city: [
+        shippingInfo?.city || '',
+        [Validators.required, Validators.minLength(4)],
+      ],
+      country: [shippingInfo?.country || '', [Validators.required]],
       phone: [
         this.user?.phone || '',
         [Validators.required, Validators.pattern(/^[0-9]{10,15}$/)],
