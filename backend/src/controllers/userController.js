@@ -25,7 +25,7 @@ export const createUser = async (req, res) => {
 
 export const updateUser = async (req, res) => {
   try {
-    const { email, fullName, password } = req.body;
+    const { email, fullName, password, phone, shippingInfo } = req.body;
     const userId = req.user._id;
     // Find the user by ID
     const user = await User.findById(userId);
@@ -43,6 +43,42 @@ export const updateUser = async (req, res) => {
       user.email = email;
     }
     if (fullName) user.fullName = fullName;
+
+    // Update phone number if provided
+    if (phone) {
+      // Simple validation for phone numbers (adjust the regex if needed)
+      const phoneRegex = /^[0-9]{10,15}$/;
+      if (!phoneRegex.test(phone)) {
+        return res
+          .status(400)
+          .json({ message: "Invalid phone number format." });
+      }
+      user.phone = phone;
+    }
+
+    // Update shipping info if provided
+    if (shippingInfo) {
+      const { address, zipCode, city, country } = shippingInfo;
+
+      if (!address || !zipCode || !city || !country) {
+        return res.status(400).json({
+          message: "Incomplete shipping information. All fields are required.",
+        });
+      }
+
+      // Optional validation for zip code
+      const zipRegex = /^\d{5}$/; // Example: 5-digit zip code
+      if (!zipRegex.test(zipCode)) {
+        return res.status(400).json({ message: "Invalid zip code format." });
+      }
+
+      user.shippingInfo = {
+        address,
+        zipCode,
+        city,
+        country,
+      };
+    }
 
     // Only update the password if a new one is provided
     if (password) {
