@@ -60,26 +60,30 @@ a:hover {
   color: #1f1f1f;
   display: inline-block;
   font-weight: 500;
-  padding-left: 1.25rem;
-  padding-right: 1.25rem;
+  padding-inline: 0.7rem;
+  margin-inline: 1rem;
   position: relative;
 }
 
 .link-underline:before {
-  border-bottom: 1px solid;
-  bottom: 0;
+  bottom: -1px;
   content: "";
   left: 0;
   position: absolute;
   right: 0;
-  transform-origin: left center;
-  transition: all .2s ease-in-out;
+  transform-origin: center left;
+  transition: all .4s ease-in-out;
   transition-property: transform;
 }
 
 .link-underline:hover::before {
-  transform-origin: right center;
+  border-bottom: 1px solid;
+  transform-origin: center right;
   transform: scaleX(0)
+}
+
+.link-underline.active {
+  border-bottom: 1px solid;
 }
 
 button {
@@ -308,4 +312,3 @@ button {
 .mat-mdc-button {
   font-size: large !important;
 }
-

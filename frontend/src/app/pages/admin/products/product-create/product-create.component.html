@@ -1,6 +1,6 @@
 <div class="col-12 offset-md-1 offset-lg-0">
   <!-- Heading -->
-  <h6 class="mb-4">{{ isEditMode ? "Edit Product" : "Create New Product" }}</h6>
+  <h2 class="mb-4 fs-5">{{ isEditMode ? "Edit Product" : "Create New Product" }}</h2>
 
   <!-- Success or Error Message -->
   <div *ngIf="successMessage" class="alert alert-success">
@@ -9,7 +9,7 @@
   <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
 
   <!-- Form -->
-  <form (ngSubmit)="onSubmit()">
+  <form (ngSubmit)="onSubmit()" #productForm="ngForm" novalidate>
     <div class="row">
       <!-- Product Name -->
       <div class="col-12 col-md-6">
@@ -22,8 +22,18 @@
             placeholder="Enter product name"
             [(ngModel)]="product.name"
             name="name"
+            #name="ngModel"
             required
+            minlength="3"
           />
+          <div class="text-danger" *ngIf="name.invalid && name.touched">
+            <small *ngIf="name.errors?.['required']"
+              >Product Name is required.</small
+            >
+            <small *ngIf="name.errors?.['minlength']">
+              Product Name must be at least 3 characters long.
+            </small>
+          </div>
         </div>
       </div>
 
@@ -40,8 +50,21 @@
             placeholder="Enter product description"
             [(ngModel)]="product.description"
             name="description"
+            #description="ngModel"
             required
+            minlength="10"
           ></textarea>
+          <div
+            class="text-danger"
+            *ngIf="description.invalid && description.touched"
+          >
+            <small *ngIf="description.errors?.['required']">
+              Description is required.
+            </small>
+            <small *ngIf="description.errors?.['minlength']">
+              Description must be at least 10 characters long.
+            </small>
+          </div>
         </div>
       </div>
 
@@ -56,8 +79,16 @@
             placeholder="Enter price"
             [(ngModel)]="product.price"
             name="price"
+            #price="ngModel"
+            min="0.01"
             required
           />
+          <div class="text-danger" *ngIf="price.invalid && price.touched">
+            <small *ngIf="price.errors?.['required']">Price is required.</small>
+            <small *ngIf="price.errors?.['min']"
+              >Price must be greater than 0.</small
+            >
+          </div>
         </div>
       </div>
 
@@ -72,8 +103,16 @@
             placeholder="Enter stock quantity"
             [(ngModel)]="product.stock"
             name="stock"
+            #stock="ngModel"
+            min="0"
             required
           />
+          <div class="text-danger" *ngIf="stock.invalid && stock.touched">
+            <small *ngIf="stock.errors?.['required']">Stock is required.</small>
+            <small *ngIf="stock.errors?.['min']">
+              Stock must be at least 0 (no negative values).
+            </small>
+          </div>
         </div>
       </div>
 
@@ -86,6 +125,7 @@
             id="category"
             [(ngModel)]="product.category._id"
             name="category"
+            #category="ngModel"
             required
           >
             <option
@@ -95,6 +135,9 @@
               {{ category.name }}
             </option>
           </select>
+          <div class="text-danger" *ngIf="category.invalid && category.touched">
+            <small>Category is required.</small>
+          </div>
         </div>
       </div>
 
@@ -107,12 +150,16 @@
             id="gender"
             [(ngModel)]="product.gender"
             name="gender"
+            #gender="ngModel"
             required
           >
             <option value="Men">Men</option>
             <option value="Women">Women</option>
             <option value="Unisex">Unisex</option>
           </select>
+          <div class="text-danger" *ngIf="gender.invalid && gender.touched">
+            <small>Gender is required.</small>
+          </div>
         </div>
       </div>
 
@@ -127,8 +174,16 @@
             placeholder="Enter brand"
             [(ngModel)]="product.brand"
             name="brand"
+            #brand="ngModel"
             required
+            minlength="2"
           />
+          <div class="text-danger" *ngIf="brand.invalid && brand.touched">
+            <small *ngIf="brand.errors?.['required']">Brand is required.</small>
+            <small *ngIf="brand.errors?.['minlength']">
+              Brand must be at least 2 characters long.
+            </small>
+          </div>
         </div>
       </div>
 
@@ -159,14 +214,18 @@
             placeholder="Enter image URLs separated by commas"
             [(ngModel)]="product.images"
             name="images"
+            #images="ngModel"
             required
           ></textarea>
+          <div class="text-danger" *ngIf="images.invalid && images.touched">
+            <small>At least one image URL is required.</small>
+          </div>
         </div>
       </div>
     </div>
 
     <!-- Button -->
-    <button class="btn btn-dark" type="submit">
+    <button class="btn btn-dark" type="submit" [disabled]="productForm.invalid">
       {{ isEditMode ? "Update Product" : "Create Product" }}
     </button>
   </form>

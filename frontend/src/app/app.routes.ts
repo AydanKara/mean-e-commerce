@@ -41,6 +41,20 @@ export const routes: Routes = [
             './pages/admin/products/product-create/product-create.component'
           ).then((m) => m.ProductCreateComponent),
       },
+      {
+        path: 'categories',
+        loadComponent: () =>
+          import('./pages/admin/categories/categories.component').then(
+            (m) => m.CategoriesComponent
+          ),
+      },
+      {
+        path: 'user-lists',
+        loadComponent: () =>
+          import('./pages/admin/users/users.component').then(
+            (m) => m.UsersComponent
+          ),
+      },
     ],
   },
   {

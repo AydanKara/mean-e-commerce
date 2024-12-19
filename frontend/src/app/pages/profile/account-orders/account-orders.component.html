@@ -1,99 +1,113 @@
 <!-- Order -->
 <div class="orders-list">
-  @for (order of orders; track order._id) {
-  <div class="card card-lg mb-4 border">
-    <div class="card-body pb-0">
-      <!-- Info -->
-      <div class="card card-sm">
-        <div class="card-body bg-light">
-          <div class="row">
-            <div class="col-6 col-lg-3">
-              <!-- Heading -->
-              <h6 class="heading-xxxs text-muted">Order No:</h6>
+  <ng-container *ngIf="orders.length > 0; else noOrders">
+    <div class="card card-lg mb-4 border" *ngFor="let order of orders">
+      <div class="card-body pb-0">
+        <!-- Info -->
+        <div class="card card-sm">
+          <div class="card-body bg-light">
+            <div class="row">
+              <div class="col-6 col-lg-3">
+                <!-- Heading -->
+                <h6 class="heading-xxxs text-muted">Order No:</h6>
 
-              <!-- Text -->
-              <p class="mb-lg-0 fs-sm fw-bold">{{ order._id }}</p>
-            </div>
-            <div class="col-6 col-lg-3">
-              <!-- Heading -->
-              <h6 class="heading-xxxs text-muted">Shipped date:</h6>
+                <!-- Text -->
+                <p class="mb-lg-0 fs-sm fw-bold">{{ order._id }}</p>
+              </div>
+              <div class="col-6 col-lg-3">
+                <!-- Heading -->
+                <h6 class="heading-xxxs text-muted">Shipped date:</h6>
 
-              <!-- Text -->
-              <p class="mb-lg-0 fs-sm fw-bold">
-                <time [attr.datetime]="order?.createdAt"> {{ order?.createdAt | formatDate:'dd MMM, yyyy':'en-US' }} </time>
-              </p>
-            </div>
-            <div class="col-6 col-lg-3">
-              <!-- Heading -->
-              <h6 class="heading-xxxs text-muted">Status:</h6>
+                <!-- Text -->
+                <p class="mb-lg-0 fs-sm fw-bold">
+                  <time [attr.datetime]="order?.createdAt">
+                    {{
+                      order?.createdAt | formatDate : "dd MMM, yyyy" : "en-US"
+                    }}
+                  </time>
+                </p>
+              </div>
+              <div class="col-6 col-lg-3">
+                <!-- Heading -->
+                <h6 class="heading-xxxs text-muted">Status:</h6>
 
-              <!-- Text -->
-              <p class="mb-0 fs-sm fw-bold">{{ order.paymentStatus }}</p>
-            </div>
-            <div class="col-6 col-lg-3">
-              <!-- Heading -->
-              <h6 class="heading-xxxs text-muted">Order Amount:</h6>
+                <!-- Text -->
+                <p class="mb-0 fs-sm fw-bold">{{ order.paymentStatus }}</p>
+              </div>
+              <div class="col-6 col-lg-3">
+                <!-- Heading -->
+                <h6 class="heading-xxxs text-muted">Order Amount:</h6>
 
-              <!-- Text -->
-              <p class="mb-0 fs-sm fw-bold">
-                {{ order.totalPrice | currency }}
-              </p>
+                <!-- Text -->
+                <p class="mb-0 fs-sm fw-bold">
+                  {{ order.totalPrice | currency }}
+                </p>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-    <div class="card-footer">
-      <div class="row align-items-center">
-        <div class="col-12 col-lg-6">
-          <div class="row gx-5 mb-4 mb-lg-0">
-            <!-- Loop through the first three items -->
-            <div
-              class="col-3"
-              *ngFor="let item of order.orderItems.slice(0, 3)"
-            >
-              <!-- Image -->
+      <div class="card-footer">
+        <div class="row align-items-center">
+          <div class="col-12 col-lg-6">
+            <div class="row gx-5 mb-4 mb-lg-0">
+              <!-- Loop through the first three items -->
               <div
-                class="ratio ratio-1x1 bg-cover"
-                [style.backgroundImage]="'url(' + item.product.images[0] + ')'"
-              ></div>
-            </div>
+                class="col-3"
+                *ngFor="let item of order.orderItems.slice(0, 3)"
+              >
+                <!-- Image -->
+                <div
+                  class="ratio ratio-1x1 bg-cover"
+                  [style.backgroundImage]="
+                    'url(' + item.product.images[0] + ')'
+                  "
+                ></div>
+              </div>
 
-            <!-- Show the "+ X more" card if there are more than 3 items -->
-            <div class="col-3" *ngIf="order.orderItems.length > 3">
-              <!-- Summary -->
-              <div class="ratio ratio-1x1 bg-light">
-                <a class="ratio-item ratio-item-text text-reset">
-                  <div class="fs-xxs fw-bold">
-                    + {{ order.orderItems.length - 3 }} <br />
-                    more
-                  </div>
+              <!-- Show the "+ X more" card if there are more than 3 items -->
+              <div class="col-3" *ngIf="order.orderItems.length > 3">
+                <!-- Summary -->
+                <div class="ratio ratio-1x1 bg-light">
+                  <a class="ratio-item ratio-item-text text-reset">
+                    <div class="fs-xxs fw-bold">
+                      + {{ order.orderItems.length - 3 }} <br />
+                      more
+                    </div>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-lg-6">
+            <div class="row gx-5">
+              <div class="col-6">
+                <!-- Button -->
+                <a
+                  class="btn btn-sm w-100 btn-outline-dark"
+                  [routerLink]="['/profile', 'order-details', order._id]"
+                >
+                  Order Details
+                </a>
+              </div>
+              <div class="col-6">
+                <!-- Button -->
+                <a class="btn btn-sm w-100 btn-outline-dark" href="#!">
+                  Track order
                 </a>
               </div>
             </div>
           </div>
         </div>
-        <div class="col-12 col-lg-6">
-          <div class="row gx-5">
-            <div class="col-6">
-              <!-- Button -->
-              <a
-                class="btn btn-sm w-100 btn-outline-dark"
-                [routerLink]="['/profile', 'order-details', order._id]"
-              >
-                Order Details
-              </a>
-            </div>
-            <div class="col-6">
-              <!-- Button -->
-              <a class="btn btn-sm w-100 btn-outline-dark" href="#!">
-                Track order
-              </a>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
-  </div>
-  }
+  </ng-container>
 </div>
+
+<ng-template #noOrders>
+  <div class="text-start mt-5 pt-4">
+    <h4>No Orders yet!</h4>
+    <p class="text-muted">You haven't added any orders to your account yet.</p>
+    <a routerLink="/shop" class="btn btn-sm btn-outline-dark">Start Shopping</a>
+  </div>
+</ng-template>

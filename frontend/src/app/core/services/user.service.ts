@@ -91,4 +91,9 @@ export class UserService {
         })
       );
   }
+
+  getUserId(): string | null {
+    const currentUser = this.authState.getValue(); // Get the current value of the BehaviorSubject
+    return currentUser?._id || null; // Return the user ID if the user is authenticated, else null
+  }
 }

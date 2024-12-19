@@ -4,7 +4,7 @@
   <div class="card-img">
     <!-- Image -->
     <a
-      class="card-img-hover docs-creator"
+      class="card-img-hover"
       routerLink="/product/{{ product._id }}"
     >
       <img
@@ -27,7 +27,10 @@
         </button>
       </span>
       <span class="card-action">
-        <button class="btn btn-xs btn-circle btn-white-primary" (click)="addToCart()">
+        <button
+          class="btn btn-xs btn-circle btn-white-primary"
+          (click)="addToCart()"
+        >
           <span class="material-symbols-outlined">
             <mat-icon>shopping_cart</mat-icon>
           </span>
@@ -36,7 +39,8 @@
       <span class="card-action">
         <button
           class="btn btn-xs btn-circle btn-white-primary"
-          data-toggle="button"
+          [class.active]="isFavorite(product._id)"
+          (click)="toggleFavorite(product._id)"
         >
           <span class="material-symbols-outlined">
             <mat-icon>favorite</mat-icon>
@@ -55,7 +59,7 @@
 
     <!-- Title -->
     <div class="fw-bold">
-      <a class="text-body docs-creator" href="product.html">
+      <a class="text-body" [routerLink]="['/product', product._id]">
         {{ product.name }}
       </a>
     </div>

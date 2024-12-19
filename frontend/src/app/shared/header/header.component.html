@@ -6,30 +6,50 @@
       <div class="collapse navbar-collapse" id="navbarCollapse">
         <!-- Nav -->
         <ul class="navbar-nav mx-auto" *ngIf="!isLoading">
-          <!-- Admin Links -->
-          <li *ngIf="currentUser?.isAdmin; else nonAdminLinks">
+          <li>
             <a
-              class="text-white button-nav mx-1"
-              routerLink="/admin/dashboard"
+              class="link-underline"
+              routerLink="/home"
               routerLinkActive="active"
-              >Admin Dashboard</a
+              >Home</a
             >
-            <a class="text-white button-nav" (click)="onLogout()">Logout</a>
           </li>
+          <li>
+            <a
+              class="link-underline"
+              routerLink="/shop"
+              routerLinkActive="active"
+              >Shop</a
+            >
+          </li>
+          <!-- Admin Links -->
+          <ng-container *ngIf="currentUser?.isAdmin; else nonAdminLinks">
+            <li>
+              <a
+                class="link-underline"
+                routerLink="/admin/dashboard"
+                routerLinkActive="active"
+                >Admin Dashboard</a
+              >
+            </li>
+            <li>
+              <a class="link-underline" (click)="onLogout()">Logout</a>
+            </li>
+          </ng-container>
 
           <!-- Non-Admin (Regular User) Links -->
           <ng-template #nonAdminLinks>
             <ng-container *ngIf="currentUser; else guestLinks">
               <li class="nav-item">
                 <a
-                  class="text-white button-nav mx-1"
+                  class="link-underline"
                   routerLink="/profile"
                   routerLinkActive="active"
                   >Profile</a
                 >
               </li>
               <li class="nav-item">
-                <a class="text-white button-nav" (click)="onLogout()">Logout</a>
+                <a class="link-underline" (click)="onLogout()">Logout</a>
               </li>
             </ng-container>
           </ng-template>
@@ -38,7 +58,7 @@
           <ng-template #guestLinks>
             <li class="nav-item">
               <a
-                class="text-white button-nav mx-1"
+                class="link-underline"
                 routerLink="/login"
                 routerLinkActive="active"
                 >Login</a
@@ -46,7 +66,7 @@
             </li>
             <li class="nav-item">
               <a
-                class="text-white button-nav mx-1"
+                class="link-underline"
                 routerLink="/register"
                 routerLinkActive="active"
                 >Register</a
@@ -63,7 +83,11 @@
             </a>
           </li>
           <li class="nav-item ms-lg-n4">
-            <a class="nav-link" (click)="navigateToWishlist()">
+            <a
+              class="nav-link"
+              routerLink="/profile/account-wishlist"
+              routerLinkActive="active"
+            >
               <mat-icon class="material-symbols-outlined"> favorite </mat-icon>
             </a>
           </li>

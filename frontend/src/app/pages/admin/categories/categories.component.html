@@ -1,0 +1,145 @@
+<!-- Add/Edit Category Form -->
+<form
+  class="mb-4"
+  *ngIf="!isEditMode"
+  #createCategoryForm="ngForm"
+  (ngSubmit)="onCreateCategory(createCategoryForm)"
+>
+  <h2 class="mb-4 fs-5">Create Category</h2>
+  <div class="form-group">
+    <label class="form-label" for="name">Name *</label>
+    <input
+      id="name"
+      name="name"
+      class="form-control"
+      required
+      minlength="2"
+      maxlength="50"
+      pattern="^[a-zA-Z0-9 ]+$"
+      ngModel
+      #name="ngModel"
+    />
+    <!-- Validation Messages -->
+    <div class="text-danger" *ngIf="name.invalid && name.touched">
+      <small *ngIf="name.errors?.['required']">Name is required.</small>
+      <small *ngIf="name.errors?.['minlength']">
+        Name must be at least 2 characters long.
+      </small>
+      <small *ngIf="name.errors?.['maxlength']">
+        Name must not exceed 50 characters.
+      </small>
+      <small *ngIf="name.errors?.['pattern']">
+        Name must only contain letters, numbers, and spaces.
+      </small>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="form-label" for="image">Image URL *</label>
+    <input
+      id="image"
+      name="image"
+      class="form-control"
+      required
+      pattern="https?://.+"
+      ngModel
+      #image="ngModel"
+    />
+    <!-- Validation Messages -->
+    <div class="text-danger" *ngIf="image.invalid && image.touched">
+      <small *ngIf="image.errors?.['required']">Image URL is required.</small>
+      <small *ngIf="image.errors?.['pattern']">
+        Image URL must be a valid URL (starting with http or https).
+      </small>
+    </div>
+  </div>
+  <button class="btn btn-dark" type="submit">Create</button>
+</form>
+
+<form *ngIf="isEditMode" #editCategoryForm="ngForm" (ngSubmit)="onUpdateCategory()">
+  <h2 class="mb-4 fs-5">Edit Category</h2>
+  <div class="form-group">
+    <label for="name">Name</label>
+    <input
+      id="name"
+      [(ngModel)]="selectedCategory.name"
+      name="name"
+      class="form-control"
+      required
+      minlength="2"
+      maxlength="50"
+      pattern="^[a-zA-Z0-9 ]+$"
+      #name="ngModel"
+    />
+    <!-- Validation Messages -->
+    <div class="text-danger" *ngIf="name.invalid && name.touched">
+      <small *ngIf="name.errors?.['required']">Name is required.</small>
+      <small *ngIf="name.errors?.['minlength']">
+        Name must be at least 2 characters long.
+      </small>
+      <small *ngIf="name.errors?.['maxlength']">
+        Name must not exceed 50 characters.
+      </small>
+      <small *ngIf="name.errors?.['pattern']">
+        Name must only contain letters, numbers, and spaces.
+      </small>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="image">Image URL</label>
+    <input
+      id="image"
+      [(ngModel)]="selectedCategory.image"
+      name="image"
+      class="form-control"
+      required
+      pattern="https?://.+"
+      #image="ngModel"
+    />
+    <!-- Validation Messages -->
+    <div class="text-danger" *ngIf="image.invalid && image.touched">
+      <small *ngIf="image.errors?.['required']">Image URL is required.</small>
+      <small *ngIf="image.errors?.['pattern']">
+        Image URL must be a valid URL (starting with http or https).
+      </small>
+    </div>
+  </div>
+  <button class="btn btn-dark" type="submit" [disabled]="editCategoryForm.invalid">Update</button>
+  <button
+    class="btn btn-outline-secondary ms-2"
+    type="button"
+    (click)="isEditMode = false"
+  >
+    Cancel
+  </button>
+</form>
+
+<!-- Categories List -->
+<h2 class="pt-4 mb-4 fs-5">Categories List</h2>
+<table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Image</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let category of categories">
+      <td>{{ category.name }}</td>
+      <td class="td-img">
+        <img [src]="category.image" alt="Category Image" />
+      </td>
+      <td>
+        <button
+          class="btn btn-outline-dark me-3"
+          (click)="onEditCategory(category)"
+        >
+          Edit
+        </button>
+        <button class="btn btn-danger" (click)="onDeleteCategory(category._id)">
+          Delete
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>

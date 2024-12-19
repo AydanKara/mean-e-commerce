@@ -1,91 +1,55 @@
-<div class="row">
-  <!-- Item -->
-  <div class="col-6 col-md-4">
-    <div class="card mb-7">
-      <!-- Image -->
-      <div class="card-img">
-        <!-- Action -->
-        <button
-          class="btn btn-xs btn-circle btn-white-primary card-action card-action-end"
-        >
-          <i class="fe fe-x"></i>
-        </button>
-
-        <!-- Button -->
-        <button
-          class="btn btn-xs w-100 btn-dark card-btn"
-          data-bs-toggle="modal"
-          data-bs-target="#modalProduct"
-        >
-          <i class="fe fe-eye me-2 mb-1"></i> Quick View
-        </button>
-
+<div class="row my-4">
+  <ng-container *ngIf="wishlist.length > 0; else noFavorites">
+    <div class="col-6 col-md-4" *ngFor="let product of wishlist">
+      <div class="card mb-4">
         <!-- Image -->
-        <img
-          class="card-img-top"
-          src="assets/img/products/product-6.jpg"
-          alt="..."
-        />
-      </div>
-
-      <!-- Body -->
-      <div class="card-body fw-bold text-center">
-        <a class="text-body docs-creator" href="product.html"
-          >Cotton floral print Dress</a
-        >
-        <br />
-        <span class="text-muted">$40.00</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- Item -->
-  <div class="col-6 col-md-4">
-    <div class="card mb-7">
-      <!-- Image -->
-      <div class="card-img">
-        <!-- Action -->
-        <button
-          class="btn btn-xs btn-circle btn-white-primary card-action card-action-end"
-        >
-          <i class="fe fe-x"></i>
-        </button>
-
-        <!-- Badge -->
-        <span class="badge bg-dark card-badge card-badge-start text-uppercase">
-          Sale
-        </span>
-
-        <!-- Button -->
-        <button
-          class="btn btn-xs w-100 btn-dark card-btn"
-          data-bs-toggle="modal"
-          data-bs-target="#modalProduct"
-        >
-          <i class="fe fe-eye me-2 mb-1"></i> Quick View
-        </button>
-
-        <!-- Image -->
-        <img
-          class="card-img-top"
-          src="assets/img/products/product-10.jpg"
-          alt="..."
-        />
-      </div>
-
-      <!-- Body -->
-      <div class="card-body fw-bold text-center">
-        <a class="text-body docs-creator" href="product.html"
-          >Suede cross body Bag</a
-        >
-        <br />
-        <span>
-          <span class="fs-xs text-gray-350 text-decoration-line-through"
-            >$85.00</span
+        <div class="card-img">
+          <!-- Action -->
+          <button
+            (click)="removeFromWishlist(product._id)"
+            class="btn btn-xs btn-circle btn-white-primary card-action card-action-end"
           >
-          <span class="text-primary">$49.00</span>
-        </span>
+            <span class="material-symbols-outlined">
+              <mat-icon>close</mat-icon>
+            </span>
+          </button>
+
+          <!-- Buttons -->
+          <a
+            class="btn btn-xs w-100 btn-dark card-btn"
+            routerLink="/product/{{ product._id }}"
+          >
+            <span class="material-symbols-outlined">
+              <mat-icon>visibility</mat-icon>
+            </span>
+            Quick View
+          </a>
+
+          <!-- Image -->
+          <img
+            class="card-img-top"
+            src="{{ product.images[0] }}"
+            alt="{{ product.name }}"
+          />
+        </div>
+
+        <!-- Body -->
+        <div class="card-body fw-bold text-center">
+          <a class="text-body" [routerLink]="'/product/' + product._id">{{
+            product.name
+          }}</a>
+          <br />
+          <span class="text-muted">{{ product.price | currency }}</span>
+        </div>
       </div>
     </div>
-  </div>
+  </ng-container>
+
+  <ng-template #noFavorites>
+    <div class="text-start mt-5">
+      <h4>No favorites yet!</h4>
+      <p class="text-muted">You haven't added any products to your wishlist.</p>
+      <a routerLink="/shop" class="btn btn-sm btn-outline-dark">Start Shopping</a>
+    </div>
+  </ng-template>
 </div>

@@ -7,6 +7,11 @@
 
 .card-img {
   display: flex;
+  height: 18rem !important;
+}
+
+.card-img a {
+  width: 100%;
   height: 100%;
 }
 
@@ -17,6 +22,7 @@
 
 .card-img-top {
   display: flex;
+  width: 100%;
   height: 100%;
   object-fit: cover;
 }
@@ -90,8 +96,8 @@
   color: #1f1f1f;
 }
 
-.btn-white-primary:focus,
-.btn-white-primary:hover {
+.btn-white-primary:hover,
+.btn.active {
   background-color: #ff6f61;
   border-color: #ff6f61;
   color: #fff;

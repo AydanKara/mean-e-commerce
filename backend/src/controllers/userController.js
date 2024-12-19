@@ -1,3 +1,4 @@
+import Product from "../models/Product.js";
 import User from "../models/User.js";
 
 export const createUser = async (req, res) => {
@@ -90,5 +91,127 @@ export const updateUser = async (req, res) => {
     res.status(200).json(user);
   } catch (error) {
     res.status(500).json({ message: "Failed to update profile", error });
+  }
+};
+
+// Get All Wishlists
+export const getWishlist = async (req, res) => {
+  try {
+    const { userId } = req.params;
+
+    // Fetch the user and populate the wishlist with product details
+    const user = await User.findById(userId).populate("wishlist");
+    if (!user) {
+      return res.status(404).json({ message: "User not found." });
+    }
+
+    res.status(200).json(user.wishlist);
+  } catch (error) {
+    res.status(500).json({ message: "Server error.", error: error.message });
+  }
+};
+
+// Add to Wishlist
+export const addToWishlist = async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const { productId } = req.body;
+
+    // Ensure the product exists
+    const product = await Product.findById(productId);
+    if (!product) {
+      return res.status(404).json({ message: "Product not found." });
+    }
+
+    // Find the user and update their wishlist
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: "User not found." });
+    }
+
+    if (user.wishlist.includes(productId)) {
+      return res
+        .status(400)
+        .json({ message: "Product is already in the wishlist." });
+    }
+
+    user.wishlist.push(productId);
+    await user.save();
+
+    res
+      .status(200)
+      .json({ message: "Product added to wishlist.", wishlist: user.wishlist });
+  } catch (error) {
+    res.status(500).json({ message: "Server error.", error: error.message });
+  }
+};
+
+// Remove from Wishlist
+export const removeFromWishlist = async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const { productId } = req.body;
+    console.log(userId);
+    // Find the user and update their wishlist
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: "User not found." });
+    }
+
+    if (!user.wishlist.includes(productId)) {
+      console.log(productId);
+      return res
+        .status(400)
+        .json({ message: "Product is not in the wishlist." });
+    }
+
+    user.wishlist = user.wishlist.filter((id) => id.toString() !== productId);
+    await user.save();
+
+    res.status(200).json({
+      message: "Product removed from wishlist.",
+      wishlist: user.wishlist,
+    });
+  } catch (error) {
+    res.status(500).json({ message: "Server error.", error: error.message });
+  }
+};
+
+// Get all users
+export const getAllUsers = async (req, res) => {
+  try {
+    const users = await User.find();
+    console.log("Users fetched: ", users); // Add this log to debug
+    res.status(200).json({ success: true, users }); // Return success flag
+  } catch (error) {
+    console.error("Error fetching users: ", error); // Log the error on the backend
+    res
+      .status(500)
+      .json({ success: false, message: "Failed to retrieve users", error });
+  }
+};
+
+// Toggle Admin status
+export const toggleAdminStatus = async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Toggle the admin status
+    user.isAdmin = !user.isAdmin;
+    await user.save();
+
+    res.status(200).json({
+      message: `User admin status updated to ${
+        user.isAdmin ? "Admin" : "User"
+      }`,
+      user,
+    });
+  } catch (error) {
+    res.status(500).json({ message: "Failed to update admin status", error });
   }
 };

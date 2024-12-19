@@ -13,6 +13,7 @@ export interface User {
     country?: string;
   };
   avatar?: string;
+  wishlist?: string[]; // Representing wishlist as an array of product IDs
   createdAt?: string; // Optional (from timestamps)
   updatedAt?: string; // Optional (from timestamps)
 }
