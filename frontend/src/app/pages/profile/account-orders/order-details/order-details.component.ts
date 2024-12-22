@@ -37,7 +37,6 @@ export class OrderDetailsComponent implements OnInit {
       )
       .subscribe({
         next: (order) => {
-          console.log(order);
           this.order = order;
         },
         error: (err) => console.error(err),

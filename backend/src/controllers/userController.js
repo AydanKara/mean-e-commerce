@@ -151,7 +151,6 @@ export const removeFromWishlist = async (req, res) => {
   try {
     const { userId } = req.params;
     const { productId } = req.body;
-    console.log(userId);
     // Find the user and update their wishlist
     const user = await User.findById(userId);
     if (!user) {
@@ -159,7 +158,6 @@ export const removeFromWishlist = async (req, res) => {
     }
 
     if (!user.wishlist.includes(productId)) {
-      console.log(productId);
       return res
         .status(400)
         .json({ message: "Product is not in the wishlist." });
@@ -181,7 +179,6 @@ export const removeFromWishlist = async (req, res) => {
 export const getAllUsers = async (req, res) => {
   try {
     const users = await User.find();
-    console.log("Users fetched: ", users); // Add this log to debug
     res.status(200).json({ success: true, users }); // Return success flag
   } catch (error) {
     console.error("Error fetching users: ", error); // Log the error on the backend

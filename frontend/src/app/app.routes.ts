@@ -3,6 +3,7 @@ import { AuthGuard } from './guards/auth.guard';
 import { LayoutComponent } from './shared/layouts/layout/layout.component';
 import { AdminGuard } from './guards/admin.guard';
 import { orderConfirmGuard } from './guards/order-confirm.guard';
+import { NoAuthGuard } from './guards/no-auth.guard';
 
 export const routes: Routes = [
   {
@@ -73,12 +74,14 @@ export const routes: Routes = [
       },
       {
         path: 'login',
+        canActivate: [NoAuthGuard],
         loadComponent: () =>
           import('./pages/login/login.component').then((m) => m.LoginComponent),
       },
 
       {
         path: 'register',
+        canActivate: [NoAuthGuard],
         loadComponent: () =>
           import('./pages/register/register.component').then(
             (m) => m.RegisterComponent

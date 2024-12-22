@@ -24,7 +24,6 @@ export class UsersComponent implements OnInit {
     this.adminService.getAllUsers().subscribe({
       next: (users) => {
         this.users = users;
-        console.log(users)
         this.loading = false;
       },
       error: (error) => {

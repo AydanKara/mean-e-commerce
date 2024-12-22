@@ -17,6 +17,7 @@ bootstrapApplication(AppComponent, {
     importProvidersFrom(
       RouterModule.forRoot(routes, {
         scrollPositionRestoration: 'enabled', // Restores scroll position or scrolls to top
+        onSameUrlNavigation: 'reload',
       })
     ),
     provideHttpClient(

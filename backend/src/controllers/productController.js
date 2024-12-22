@@ -251,8 +251,6 @@ export const createProduct = async (req, res) => {
     if (!name || !description || !price || !category || !gender || !brand || !stock) {
       return res.status(400).json({ message: "All required fields must be filled" });
     }
-
-    console.log(category)
     // Validate the category exists
     const categoryExists = await Category.findById(category);
     if (!categoryExists) {

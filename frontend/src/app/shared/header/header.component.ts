@@ -22,10 +22,10 @@ import { CartService } from '../../core/services/cart.service';
   styleUrl: './header.component.css',
 })
 export class HeaderComponent {
-  busyService = inject(BusyService);
   private userService = inject(UserService);
   private router = inject(Router);
   private cartService = inject(CartService);
+  busyService = inject(BusyService);
   currentUser: User | null = null;
   isLoading: boolean = true;
   totalItems: number = 0;
@@ -45,30 +45,12 @@ export class HeaderComponent {
     });
   }
 
-  navigateToAccount() {
-    if (this.currentUser) {
-      // If user is logged in, navigate to account page
-      this.router.navigate(['/account']);
-    } else {
-      // If no user is logged in, navigate to login page
-      this.router.navigate(['/login']);
-    }
-  }
-
-  navigateToWishlist() {
-    if (this.currentUser) {
-      // If user is logged in, navigate to account page
-      this.router.navigate(['/account-wishlist']);
-    } else {
-      // If no user is logged in, navigate to login page
-      this.router.navigate(['/login']);
-    }
-  }
-
   onLogout(): void {
     this.userService.logout().subscribe(() => {
       // Clear auth state
       this.userService.setAuthState(null);
+      // Clear cart
+      this.cartService.clearCart();
       this.router.navigate(['/home']);
     });
   }

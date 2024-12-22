@@ -50,6 +50,7 @@ export class ShoppingCartComponent implements OnInit {
   }
 
   updateCart(item: CartItem) {
+    item.quantity = Number(item.quantity);
     if (item.quantity > item.stock) {
       this.snackbar.error('Quantity exceeds available stock!');
       item.quantity = item.stock;
@@ -70,9 +71,7 @@ export class ShoppingCartComponent implements OnInit {
   removeFromCart(productId: string) {
     this.cartService.removeFromCart(productId);
     // Update the cartItems array directly after removal
-    this.cartItems = this.cartItems.filter(
-      (item) => item._id !== productId
-    );
+    this.cartItems = this.cartItems.filter((item) => item._id !== productId);
     this.calculateTotalPrice();
   }
 
