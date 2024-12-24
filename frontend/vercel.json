@@ -1,10 +1,9 @@
 {
-    "buildCommand": "bash build.sh",
-    "rewrites": [
+    "builds": [
         {
-            "source": "/(.*)",
-            "destination": "/index.html"
+            "src": "package.json",
+            "use": "@vercel/node"
         }
     ],
-    "cleanUrls": true
+    "buildCommand": "bash ./build.sh"
 }
