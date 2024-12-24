@@ -26,7 +26,7 @@ export class ProductItemComponent {
 
   constructor() {
     // Fetch the current user and their wishlist when the component initializes
-    this.userService.getCurrentUser().subscribe((user) => {
+    this.userService.getAuthState().subscribe((user) => {
       this.userId = user?._id ?? null;
       this.wishlist = user?.wishlist ?? [];
     });

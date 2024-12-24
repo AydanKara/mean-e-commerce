@@ -23,7 +23,7 @@ export class UserService {
   private loadUserOnAppInit() {
     this.getCurrentUser()
       .pipe(
-        catchError((error) => {
+        catchError(() => {
           return of(null);
         })
       )

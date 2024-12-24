@@ -79,7 +79,7 @@ export class AdminService {
         }
       )
       .pipe(
-        tap((updatedUser) => {
+        tap(() => {
           this.snackbar.success(`User's admin status updated.`);
         }),
         catchError((error) => {
