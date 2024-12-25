@@ -1,0 +1,1 @@
+function n(){return t=>{let r=t.value;if(!r)return null;let a=/[a-z]/.test(r),e=/[0-9]/.test(r),s=r.length>=8&&r.length<=20;return a&&e&&s?null:{strongPassword:{message:"Password must be 8-20 characters long, include at least one uppercase letter, one lowercase letter, one number, and one special character."}}}}export{n as a};
