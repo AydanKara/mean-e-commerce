@@ -106,7 +106,7 @@ export class ShopService {
       });
   }
 
-  getProductById(id: string): Observable<Product> {
+  getProductById(id: string | null): Observable<Product> {
     return this.http.get<Product>(`${this.productsUrl}/${id}`);
   }
 

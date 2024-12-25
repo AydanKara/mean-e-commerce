@@ -8,8 +8,9 @@ import { CommonModule } from '@angular/common';
   selector: 'app-related-products',
   imports: [CommonModule, MatIcon, RouterModule],
   templateUrl: './related-products.component.html',
-  styleUrl: './related-products.component.css'
+  styleUrl: './related-products.component.css',
 })
 export class RelatedProductsComponent {
   @Input() relatedProducts?: Product[] = [];
+  @Input() loading: boolean = false;
 }

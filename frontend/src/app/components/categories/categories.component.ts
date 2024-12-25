@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, Input } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { Category } from '../../models/category.model';
 import { CategoryService } from '../../core/services/category.service';
 
 @Component({

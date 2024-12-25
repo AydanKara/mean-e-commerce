@@ -8,8 +8,18 @@
     </div>
     <div class="row">
       <div class="col-12 col-md-7">
+        <div
+          *ngIf="loading"
+          class="spinner-border text-primary d-block mx-auto my-6"
+          role="status"
+        >
+          <span class="visually-hidden">Loading...</span>
+        </div>
         <!-- List group -->
-        <div class="cart-items" *ngIf="cartItems.length > 0; else emptyCart">
+        <div
+          class="cart-items"
+          *ngIf="cartItems.length > 0 && !loading; else emptyCart"
+        >
           <ul
             class="list-group list-group-lg list-group-flush-x mb-3"
             *ngFor="let item of cartItems"
@@ -71,7 +81,9 @@
           </ul>
         </div>
         <ng-template #emptyCart>
-          <h4 class="text-center mx-5 my-6">Your cart is empty.</h4>
+          <h4 class="text-center mx-5 my-6" *ngIf="!loading">
+            Your cart is empty.
+          </h4>
         </ng-template>
 
         <!-- Footer -->

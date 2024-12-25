@@ -4,43 +4,17 @@
   [transitionEasing]="'ease-in'"
 ></app-carousel>
 
-<!-- <div class="container row mx-auto my-5">
-  <div class="col-12 text-center">
-    <h1>Welcome to Our Online Store!</h1>
-    <p class="lead">Discover a variety of products at affordable prices.</p>
-    <div class="my-4">
-      <a class="button-nav" routerLink="/shop">Shop Now</a>
-    </div>
-  </div>
-</div> -->
-
 <app-categories></app-categories>
 
 <app-must-haves></app-must-haves>
 
 <app-new-products-carousel
   [newProducts]="newProducts"
+  [loading]="loading"
 ></app-new-products-carousel>
 
 <!-- BLOGS -->
 <app-blogs></app-blogs>
-
-<!-- <div *ngIf="products?.length; else noProducts">
-    <app-product-list></app-product-list>
-</div> -->
-
-<!-- <ng-template #noProducts>
-  <div class="no-products-container text-center">
-    <div class="media">
-      <img
-        src="/assets/no-product-found.png"
-        alt="No Products"
-        class="no-products-image"
-      />
-    </div>
-    <p>We're sorry, but there are no products to display at the moment.</p>
-  </div>
-</ng-template> -->
 
 <!-- FEATURES -->
 <app-features></app-features>

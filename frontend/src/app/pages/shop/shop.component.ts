@@ -5,7 +5,7 @@ import { ProductItemComponent } from '../../components/product-item/product-item
 
 import { MatDialog } from '@angular/material/dialog';
 import { FilterDialogComponent } from '../../components/filter-dialog/filter-dialog.component';
-import { MatIcon } from '@angular/material/icon';
+import { MatIcon, MatIconModule } from '@angular/material/icon';
 import { MatButton, MatIconButton } from '@angular/material/button';
 import { MatMenu, MatMenuTrigger } from '@angular/material/menu';
 import {
@@ -17,13 +17,15 @@ import { ProductQueryParams } from '../../models/product-query-params.model';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { FormsModule } from '@angular/forms';
 import { FeaturesComponent } from '../../shared/features/features.component';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-shop',
   imports: [
+    CommonModule,
     ProductItemComponent,
     FeaturesComponent,
-    MatIcon,
+    MatIconModule,
     MatButton,
     MatMenu,
     MatSelectionList,
@@ -46,6 +48,9 @@ export class ShopComponent implements OnInit {
   totalProducts: number = 0;
   currentPage: number = 1;
   totalPages: number = 1;
+
+  // Loading flag
+  loading: boolean = false;
 
   // Sort options
   sortOptions = [
@@ -71,14 +76,19 @@ export class ShopComponent implements OnInit {
   }
 
   getProducts() {
+    this.loading = true;
     this.shopService.getAllProducts(this.queryParams).subscribe({
       next: (response) => {
+        this.loading = false;
         this.products = response.products;
         this.currentPage = response.currentPage;
         this.totalPages = response.totalPages;
         this.totalProducts = response.totalProducts;
       },
-      error: (error) => console.log(error),
+      error: (error) => {
+        this.loading = false;
+        console.log(error);
+      },
     });
   }
 

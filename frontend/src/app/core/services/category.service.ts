@@ -11,21 +11,26 @@ export class CategoryService {
   private categoriesUrl = `${environment.apiUrl}/categories`;
   categories: Category[] = [];
   errorMessage: string = '';
+  loading: boolean = false;
 
   constructor(private http: HttpClient) {}
 
   getAllCategories() {
+    this.loading = true;
     return this.http
       .get<{ success: boolean; categories: Category[] }>(this.categoriesUrl)
       .subscribe({
         next: (response) => {
           if (response.success) {
+            this.loading = false;
             this.categories = response.categories;
           } else {
+            this.loading = false;
             this.errorMessage = 'Failed to fetch Categories.';
           }
         },
         error: (error) => {
+          this.loading = false;
           console.error('Error fetching products:', error);
           this.errorMessage = 'An error occurred while fetching Categories.';
         },

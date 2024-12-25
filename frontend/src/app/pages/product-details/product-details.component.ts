@@ -14,6 +14,8 @@ import { switchMap } from 'rxjs';
 import { CartService } from '../../core/services/cart.service';
 import { SnackbarService } from '../../core/services/snackbar.service';
 import { FormsModule } from '@angular/forms';
+import { UserService } from '../../core/services/user.service';
+import { WishlistService } from '../../core/services/wishlist.service';
 
 @Component({
   selector: 'app-product-details',
@@ -30,18 +32,25 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './product-details.component.css',
 })
 export class ProductDetailsComponent implements OnInit, AfterViewInit {
+  private userService = inject(UserService);
+  private wishlistService = inject(WishlistService);
   private shopService = inject(ShopService);
   private activateRoute = inject(ActivatedRoute);
   private cartService = inject(CartService);
   private snackbar = inject(SnackbarService);
+
   product?: Product;
   relatedProducts?: Product[] = [];
   productImages: string[] = [];
   selectedQuantity: number = 1;
+  userId: string | null = null;
+  wishlist: string[] = []; // Store user's wishlist
+  loading: boolean = false;
 
   mainSwiper?: Swiper; // Reference for the main Swiper instance
   thumbSwiper?: Swiper; // Reference for the thumbnail Swiper instance
   ngOnInit(): void {
+    this.getAuthState();
     this.loadProduct();
     this.loadRelatedProducts();
   }
@@ -51,6 +60,7 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
   }
 
   loadProduct() {
+    this.loading = true;
     this.activateRoute.paramMap
       .pipe(
         switchMap((params) => {
@@ -61,15 +71,20 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
       )
       .subscribe({
         next: (product) => {
+          this.loading = false;
           this.product = product;
           this.productImages = product.images;
           this.initializeSwiper(); // Reinitialize Swiper for new product
         },
-        error: (err) => console.error(err),
+        error: (err) => {
+          this.loading = false;
+          console.error(err);
+        },
       });
   }
 
   loadRelatedProducts() {
+    this.loading = true;
     this.activateRoute.paramMap
       .pipe(
         switchMap((params) => {
@@ -80,9 +95,13 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
       )
       .subscribe({
         next: (response) => {
+          this.loading = false;
           this.relatedProducts = response.relatedProducts;
         },
-        error: (err) => console.error(err),
+        error: (err) => {
+          this.loading = false;
+          console.error(err);
+        },
       });
   }
 
@@ -118,6 +137,68 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
     }, 0);
   }
 
+  getAuthState() {
+    this.userService.getAuthState().subscribe((user) => {
+      this.userId = user?._id ?? null;
+
+      if (this.userId) {
+        // Fetch the initial wishlist
+        this.wishlistService.getWishlist(this.userId).subscribe((wishlist) => {
+          const wishlistIds = wishlist.map((product) => product._id);
+          this.wishlistService.setWishlist(wishlistIds);
+        });
+        // Subscribe to wishlist updates
+        this.wishlistService.wishlist$.subscribe((wishlist) => {
+          this.wishlist = wishlist;
+        });
+      }
+    });
+  }
+
+  isFavorite(productId: string | undefined): boolean {
+    return productId ? this.wishlist?.includes(productId) : false;
+  }
+
+  // Add or remove a product from the wishlist
+  toggleFavorite(productId: string | undefined): void {
+    if (!this.userId) {
+      this.snackbar.error('Please log in to manage your wishlist.');
+      return;
+    }
+
+    if (!productId) {
+      this.snackbar.error('Invalid product ID.');
+      return;
+    }
+
+    if (this.isFavorite(productId)) {
+      // Remove from wishlist
+      this.wishlistService
+        .removeFromWishlist(this.userId, productId)
+        .subscribe({
+          next: (response) => {
+            this.wishlist = this.wishlist.filter((id) => id !== productId); // Update local wishlist
+            this.snackbar.success(
+              `${this.product?.name} removed from favorites!`
+            );
+          },
+          error: (error) => {
+            this.snackbar.error(error.message);
+          },
+        });
+    } else {
+      // Add to wishlist
+      this.wishlistService.addToWishlist(this.userId, productId).subscribe({
+        next: (response) => {
+          this.wishlist.push(productId); // Update local wishlist
+          this.snackbar.success(`${this.product?.name} added to favorites!`);
+        },
+        error: (error) => {
+          this.snackbar.error(error.message);
+        },
+      });
+    }
+  }
   addToCart() {
     if (!this.product || this.selectedQuantity > this.product.stock) {
       this.snackbar.error('Cannot add more than available stock!');

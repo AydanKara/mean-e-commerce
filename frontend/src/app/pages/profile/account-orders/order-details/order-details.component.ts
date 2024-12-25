@@ -20,6 +20,7 @@ export class OrderDetailsComponent implements OnInit {
 
   order: Order | null = null;
   userName: string | undefined = '';
+  loading: boolean = false;
 
   ngOnInit(): void {
     this.loadOrder();
@@ -27,6 +28,7 @@ export class OrderDetailsComponent implements OnInit {
   }
 
   loadOrder() {
+    this.loading = true;
     this.activateRoute.paramMap
       .pipe(
         switchMap((params) => {
@@ -37,9 +39,13 @@ export class OrderDetailsComponent implements OnInit {
       )
       .subscribe({
         next: (order) => {
+          this.loading = false;
           this.order = order;
         },
-        error: (err) => console.error(err),
+        error: (err) => {
+          this.loading = false;
+          console.error(err);
+        },
       });
   }
 

@@ -17,19 +17,23 @@ export class CategoriesComponent implements OnInit {
   categories: Category[] = [];
   isEditMode: boolean = false;
   selectedCategory: Category = { _id: '', name: '', image: '' };
+  loading: boolean = false;
 
   ngOnInit(): void {
     this.fetchCategories();
   }
 
   fetchCategories(): void {
+    this.loading = true;
     this.categoryService.fetchAllCategories().subscribe({
       next: (response) => {
         this.categories = response.categories;
+        this.loading = false;
       },
       error: (error) => {
         console.error('Error fetching categories:', error);
         this.snackbar.error(error.error.message);
+        this.loading = false;
       },
     });
   }

@@ -5,8 +5,15 @@
       <div class="col-12">
         <div class="row">
           <!-- Left Column: Product Images -->
-          <div class="col-12 col-md-6">
-            <div class="card">
+          <div class="col-12 col-md-6 align-content-center">
+            <div
+              *ngIf="loading"
+              class="spinner-border text-primary d-block mx-auto"
+              role="status"
+            >
+              <span class="visually-hidden">Loading...</span>
+            </div>
+            <div class="card" *ngIf="!loading">
               <!-- Main Slider -->
               <div class="swiper main-slider">
                 <div class="swiper-wrapper">
@@ -22,7 +29,7 @@
               </div>
             </div>
 
-            <div class="mx-n2 mb-10 mb-md-0 mt-2">
+            <div class="mx-n2 mb-10 mb-md-0 mt-2" *ngIf="!loading">
               <!-- Thumbnail Slider -->
               <div class="swiper thumbnail-slider">
                 <div class="swiper-wrapper">
@@ -41,7 +48,14 @@
           <!-- Right Column: Product Details -->
           <div class="col-12 col-md-6 ps-lg-10">
             <!-- Header -->
-            <div class="row mb-4">
+            <div
+              *ngIf="loading"
+              class="spinner-border text-primary d-block mx-auto"
+              role="status"
+            >
+              <span class="visually-hidden">Loading...</span>
+            </div>
+            <div class="row mb-4" *ngIf="!loading">
               <div class="col">
                 <a routerLink="/shop" class="text-muted">{{
                   product?.category?.name
@@ -64,16 +78,21 @@
               </div>
             </div>
             <!-- Heading -->
-            <h1 class="mb-4">{{ product?.name }}</h1>
+            <h1 class="mb-4" *ngIf="!loading">
+              {{ product?.name }}
+            </h1>
             <!-- Price -->
-            <div class="mb-lg-5 mb-md-3 d-flex align-items-center">
+            <div
+              class="mb-lg-5 mb-md-3 d-flex align-items-center"
+              *ngIf="!loading"
+            >
               <h2 class="ms-1 fw-bolder text-primary">
                 {{ product?.price | currency }}
               </h2>
               <span class="fs-sm ms-1">( In stock: {{ product?.stock }})</span>
             </div>
             <!-- Description -->
-            <div class="mb-5">
+            <div class="mb-5" *ngIf="!loading">
               <p class="text-muted">{{ product?.description }}</p>
             </div>
 
@@ -88,7 +107,7 @@
                       [(ngModel)]="selectedQuantity"
                       [ngModelOptions]="{ standalone: true }"
                     >
-                      <!--! implement product stock -->
+                      <!-- TODO: implement product stock -->
                       <option
                         *ngFor="
                           let quantity of [].constructor(product?.stock || 0);
@@ -115,7 +134,13 @@
                   </div>
                   <div class="col-12 col-lg-auto">
                     <!-- WishList -->
-                    <button class="button-nav w-100 mb-2 mt-md-1 mt-xl-0">
+                    <button
+                      class="button-nav w-100 mb-2 mt-md-1 mt-xl-0"
+                      [class.button-nav-dark]="
+                        product?._id ? isFavorite(product?._id) : false
+                      "
+                      (click)="product?._id && toggleFavorite(product?._id)"
+                    >
                       WishList
                       <span class="material-symbols-outlined">
                         <mat-icon>favorite</mat-icon>
@@ -234,8 +259,9 @@
   </div>
 </section>
 <!-- YOU MAY ALSO LIKE -->
-<app-related-products
+<app-related-products 
   [relatedProducts]="relatedProducts"
+  [loading]="loading"
 ></app-related-products>
 <!-- FEATURES -->
 <app-features></app-features>

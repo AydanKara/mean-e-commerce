@@ -22,11 +22,14 @@ export class ShoppingCartComponent implements OnInit {
 
   totalPrice: number = 0;
 
+  loading: boolean = false;
+
   ngOnInit(): void {
     this.loadCartItems();
   }
 
   loadCartItems() {
+    this.loading = true;
     const cart = this.cartService.getCart();
     const items = cart?.items || [];
     // Create an array of observables to fetch product stock
@@ -37,6 +40,7 @@ export class ShoppingCartComponent implements OnInit {
     // Use forkJoin to wait for all API calls to complete
     forkJoin(stockObservables).subscribe({
       next: (products) => {
+        this.loading = false;
         this.cartItems = items.map((item, index) => ({
           ...item,
           stock: products[index]?.stock || 0, // Add stock property
@@ -44,6 +48,7 @@ export class ShoppingCartComponent implements OnInit {
         this.calculateTotalPrice();
       },
       error: (err) => {
+        this.loading = false;
         console.error('Error fetching stock data:', err);
       },
     });

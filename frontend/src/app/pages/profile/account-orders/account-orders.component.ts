@@ -16,17 +16,21 @@ export class AccountOrdersComponent implements OnInit {
 
   orders: Order[] = [];
   orderItems: OrderItem[] = [];
+  loading: boolean = false;
 
   ngOnInit(): void {
     this.getAllOrders();
   }
 
   getAllOrders() {
+    this.loading = true;
     this.orderService.getAllOrders().subscribe({
       next: (response) => {
+        this.loading = false;
         this.orders = response;
       },
       error: (err) => {
+        this.loading = false;
         console.error('Error fetching orders:', err);
       },
     });

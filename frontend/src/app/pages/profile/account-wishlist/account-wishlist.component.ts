@@ -16,6 +16,7 @@ import { SnackbarService } from '../../../core/services/snackbar.service';
 export class AccountWishlistComponent implements OnInit {
   wishlist: Product[] = []; // To store wishlist products
   userId: string | null = null; // Current logged-in user ID
+  loading: boolean = false;
 
   constructor(
     private wishlistService: WishlistService,
@@ -31,13 +32,16 @@ export class AccountWishlistComponent implements OnInit {
   }
 
   fetchWishlist() {
+    this.loading = true;
     if (!this.userId) return;
 
     this.wishlistService.getWishlist(this.userId).subscribe({
       next: (products) => {
+        this.loading = false;
         this.wishlist = products;
       },
       error: (err) => {
+        this.loading = false;
         console.error('Error fetching wishlist:', err);
         this.snackbar.error('Failed to load wishlist.');
       },

@@ -40,6 +40,7 @@ export class HomeComponent implements OnInit {
   newProducts: Product[] = [];
   brands: string[] = [];
   errorMessage: string = '';
+  loading: boolean = false;
 
   slides = [
     {
@@ -117,13 +118,17 @@ export class HomeComponent implements OnInit {
     this.categoryService.getAllCategories();
     this.shopService.getNewProducts().subscribe({
       next: (response) => {
+        this.loading = true;
         if (response.success) {
+          this.loading = false;
           this.newProducts = response.newProducts;
         } else {
+          this.loading = false;
           this.errorMessage = 'Failed to fetch new products.';
         }
       },
       error: (error) => {
+        this.loading = false;
         console.error('Error fetching new products:', error);
         this.errorMessage = 'An error occurred while fetching new products.';
       },

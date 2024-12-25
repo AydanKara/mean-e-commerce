@@ -1,5 +1,5 @@
-<h1>Shopper E-Commerce Platform</h1>
-<p>Shopper is an e-commerce platform where users can browse and purchase various products such as perfumes, bags, watches, shoes, and more. Users can register, manage their profiles, add products to their cart, place orders, and mark products as favorites. The project also has admin functionality to manage products and users.</p>
+<h1>AuraLux E-Commerce Platform</h1>
+<p>AuraLux is an e-commerce platform where users can browse and purchase various products such as perfumes, bags, watches, shoes, and more. Users can register, manage their profiles, add products to their cart, place orders, and mark products as favorites. The project also has admin functionality to manage products and users.</p>
 <br>
 
 <h2>Tech Stack</h2>
@@ -120,4 +120,4 @@ git clone https://github.com/AydanKara/mean-e-commerce.git
 <h3>And you are ready to go!</h3>
 
 <h2>Conclusion</h2>
-<p>Shopper is a full-stack e-commerce application where users can browse products, manage their profiles, and place orders. Admin users have additional privileges for managing products and users. The project uses Angular for the frontend, Express.js for the backend, and MongoDB for data storage.</p>
+<p>AuraLux is a full-stack e-commerce application where users can browse products, manage their profiles, and place orders. Admin users have additional privileges for managing products and users. The project uses Angular for the frontend, Express.js for the backend, and MongoDB for data storage.</p>

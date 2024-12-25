@@ -1,7 +1,5 @@
-<ng-container *ngIf="isLoading; else loadingTemplate">
-    <router-outlet></router-outlet>
-  </ng-container>
-  
-  <ng-template #loadingTemplate>
-    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
-  </ng-template>
+<ng-container>
+  <router-outlet></router-outlet>
+</ng-container>
+
+

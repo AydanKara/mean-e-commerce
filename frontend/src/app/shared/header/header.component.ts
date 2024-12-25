@@ -4,7 +4,7 @@ import { UserService } from '../../core/services/user.service';
 import { Router, RouterModule } from '@angular/router';
 import { User } from '../../models/user.model';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { MatIcon } from '@angular/material/icon';
+import { MatIcon, MatIconModule } from '@angular/material/icon';
 import { MatBadgeModule } from '@angular/material/badge';
 import { BusyService } from '../../core/services/busy.service';
 import { CartService } from '../../core/services/cart.service';
@@ -15,7 +15,7 @@ import { CartService } from '../../core/services/cart.service';
     RouterModule,
     CommonModule,
     MatProgressBarModule,
-    MatIcon,
+    MatIconModule,
     MatBadgeModule,
   ],
   templateUrl: './header.component.html',

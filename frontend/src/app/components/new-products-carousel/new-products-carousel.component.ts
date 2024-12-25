@@ -15,6 +15,7 @@ import { Navigation } from 'swiper/modules';
 })
 export class NewProductsCarouselComponent implements OnInit, AfterViewInit {
   @Input() newProducts: Product[] = [];
+  @Input() loading: boolean = false;
 
   ngOnInit(): void {}
 

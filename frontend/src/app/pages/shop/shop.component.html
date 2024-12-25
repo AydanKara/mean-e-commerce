@@ -47,9 +47,29 @@
     </div>
   </div>
   <div class="container text-center">
-    <div class="row row-cols-1 row-cols-md-3 row-cols-xl-4 g-4">
+    <div
+      class="row row-cols-1 row-cols-md-3 row-cols-xl-4 g-4 justify-content-center"
+    >
+      <div
+        *ngIf="loading"
+        class="spinner-border text-primary d-block mt-5"
+        role="status"
+      >
+        <span class="visually-hidden">Loading...</span>
+      </div>
       @for (product of products; track product._id) {
-      <app-product-item [product]="product"></app-product-item>
+      <app-product-item [product]="product" *ngIf="!loading"></app-product-item>
+      } @if (!products.length && !loading) {
+      <div class="no-products-container text-center">
+        <div class="media">
+          <img
+            src="assets/no-product-found.png"
+            alt="No Products"
+            class="no-products-image"
+          />
+        </div>
+        <p>We're sorry, but there are no products to display at the moment.</p>
+      </div>
       }
     </div>
   </div>
@@ -71,3 +91,20 @@
     }
   </mat-selection-list>
 </mat-menu>
+
+<!-- <div *ngIf="products?.length; else noProducts">
+    <app-product-list></app-product-list>
+</div> -->
+
+<!-- <ng-template #noProducts>
+  <div class="no-products-container text-center">
+    <div class="media">
+      <img
+        src="/assets/no-product-found.png"
+        alt="No Products"
+        class="no-products-image"
+      />
+    </div>
+    <p>We're sorry, but there are no products to display at the moment.</p>
+  </div>
+</ng-template> -->
