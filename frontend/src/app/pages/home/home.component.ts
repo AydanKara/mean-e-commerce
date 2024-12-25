@@ -43,7 +43,7 @@ export class HomeComponent implements OnInit {
 
   slides = [
     {
-      image: '/assets/cover-23.jpg',
+      image: 'assets/cover-23.jpg',
       content: `
         <div class="container d-flex flex-column">
             <div class="row align-items-center justify-content-end py-5" style="min-height: 550px;">
@@ -69,7 +69,7 @@ export class HomeComponent implements OnInit {
       `,
     },
     {
-      image: '/assets/cover-5.jpg',
+      image: 'assets/cover-5.jpg',
       content: `
         <div class='container d-flex flex-column'>
           <div class='row align-items-center py-5' style='min-height: 550px;'>
@@ -84,7 +84,7 @@ export class HomeComponent implements OnInit {
       `,
     },
     {
-      image: '/assets/cover-16.jpg',
+      image: 'assets/cover-16.jpg',
       content: `
         <div class="bg-dark-20">
             <div class="container d-flex flex-column">

@@ -54,9 +54,7 @@ export class CartService {
 
   // Remove item from the cart
   removeFromCart(productId: string): void {
-    this.cart.items = this.cart.items.filter(
-      (item) => item._id !== productId
-    );
+    this.cart.items = this.cart.items.filter((item) => item._id !== productId);
     this.updateTotalPrice();
     this.saveCart();
   }
@@ -90,13 +88,12 @@ export class CartService {
   }
 
   getTotalQuantityObservable(): Observable<number> {
-    return this.cartSubject
-      .asObservable()
-      .pipe(
-        map((cart) =>
-          cart.items.reduce((total, item) => total + item.quantity, 0)
-        )
-      );
+    return this.cartSubject.asObservable().pipe(
+      map((cart) => {
+        const items = cart?.items || [];
+        return items.reduce((total, item) => total + item.quantity, 0);
+      })
+    );
   }
 
   // Clear the cart

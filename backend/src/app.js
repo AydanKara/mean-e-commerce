@@ -23,6 +23,7 @@ app.use(
     allowedHeaders: "Content-Type,Authorization",
   })
 );
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
