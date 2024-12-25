@@ -35,6 +35,7 @@
           },
           "configurations": {
             "production": {
+              "baseHref": "/mean-e-commerce/",
               "budgets": [
                 {
                   "type": "initial",
