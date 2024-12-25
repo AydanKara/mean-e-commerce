@@ -28,16 +28,16 @@ export class ShoppingCartComponent implements OnInit {
 
   loadCartItems() {
     const cart = this.cartService.getCart();
-
+    const items = cart?.items || [];
     // Create an array of observables to fetch product stock
-    const stockObservables = cart.items.map((item) =>
+    const stockObservables = items.map((item) =>
       this.shopService.getProductById(item._id)
     );
 
     // Use forkJoin to wait for all API calls to complete
     forkJoin(stockObservables).subscribe({
       next: (products) => {
-        this.cartItems = cart.items.map((item, index) => ({
+        this.cartItems = items.map((item, index) => ({
           ...item,
           stock: products[index]?.stock || 0, // Add stock property
         }));
