@@ -1,25 +1,26 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { MatIcon } from '@angular/material/icon';
+import { MatIcon, MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
 import { Product } from '../../../models/product.model';
 import { WishlistService } from '../../../core/services/wishlist.service';
 import { UserService } from '../../../core/services/user.service';
+import { SnackbarService } from '../../../core/services/snackbar.service';
 
 @Component({
   selector: 'app-account-wishlist',
-  imports: [CommonModule, RouterModule, MatIcon],
+  imports: [CommonModule, RouterModule, MatIconModule],
   templateUrl: './account-wishlist.component.html',
   styleUrl: './account-wishlist.component.css',
 })
 export class AccountWishlistComponent implements OnInit {
-  
   wishlist: Product[] = []; // To store wishlist products
   userId: string | null = null; // Current logged-in user ID
 
   constructor(
     private wishlistService: WishlistService,
-    private userService: UserService
+    private userService: UserService,
+    private snackbar: SnackbarService
   ) {}
   ngOnInit(): void {
     this.userId = this.userService.getUserId();
@@ -38,22 +39,24 @@ export class AccountWishlistComponent implements OnInit {
       },
       error: (err) => {
         console.error('Error fetching wishlist:', err);
+        this.snackbar.error('Failed to load wishlist.');
       },
     });
   }
 
-  removeFromWishlist(productId: string) {
+  removeFromWishlist(productId: string): void {
     if (!this.userId) return;
 
     this.wishlistService.removeFromWishlist(this.userId, productId).subscribe({
       next: () => {
-        // Remove the product from the wishlist locally
-        this.wishlist = this.wishlist.filter(
-          (product) => product._id !== productId
-        );
+        this.wishlist = this.wishlist.filter((item) => item._id !== productId);
+        const updatedWishlistIds = this.wishlist.map((product) => product._id);
+        this.wishlistService.setWishlist(updatedWishlistIds);
+
+        this.snackbar.success('Item removed from wishlist!');
       },
       error: (err) => {
-        console.error('Error removing from wishlist:', err);
+        this.snackbar.error('Failed to remove item from wishlist.');
       },
     });
   }

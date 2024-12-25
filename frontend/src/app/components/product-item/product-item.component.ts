@@ -1,4 +1,4 @@
-import { Component, inject, Input } from '@angular/core';
+import { Component, inject, Input, OnInit } from '@angular/core';
 import { Product } from '../../models/product.model';
 import { CommonModule, CurrencyPipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
@@ -14,7 +14,7 @@ import { UserService } from '../../core/services/user.service';
   templateUrl: './product-item.component.html',
   styleUrl: './product-item.component.css',
 })
-export class ProductItemComponent {
+export class ProductItemComponent implements OnInit {
   private userService = inject(UserService);
   private cartService = inject(CartService);
   private wishlistService = inject(WishlistService);
@@ -24,11 +24,21 @@ export class ProductItemComponent {
   userId: string | null = null;
   wishlist: string[] = []; // Store user's wishlist
 
-  constructor() {
-    // Fetch the current user and their wishlist when the component initializes
+  ngOnInit(): void {
     this.userService.getAuthState().subscribe((user) => {
       this.userId = user?._id ?? null;
-      this.wishlist = user?.wishlist ?? [];
+
+      if (this.userId) {
+        // Fetch the initial wishlist
+        this.wishlistService.getWishlist(this.userId).subscribe((wishlist) => {
+          const wishlistIds = wishlist.map((product) => product._id);
+          this.wishlistService.setWishlist(wishlistIds);
+        });
+        // Subscribe to wishlist updates
+        this.wishlistService.wishlist$.subscribe((wishlist) => {
+          this.wishlist = wishlist;
+        });
+      }
     });
   }
 

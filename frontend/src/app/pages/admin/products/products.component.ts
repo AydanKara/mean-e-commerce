@@ -30,19 +30,26 @@ export class ProductsComponent implements OnInit {
 
   queryParams = new ProductQueryParams();
 
+  loading: boolean = false;
+
   ngOnInit(): void {
     this.getProducts();
   }
 
   getProducts() {
+    this.loading = true;
     this.shopService.getAllProducts(this.queryParams).subscribe({
       next: (response) => {
         this.products = response.products;
         this.currentPage = response.currentPage;
         this.totalPages = response.totalPages;
         this.totalProducts = response.totalProducts;
+        this.loading = false;
       },
-      error: (error) => console.log(error),
+      error: (error) => {
+        this.loading = false;
+        console.log(error);
+      },
     });
   }
 
