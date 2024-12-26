@@ -311,3 +311,41 @@ button {
 .mat-mdc-button {
   font-size: large !important;
 }
+
+/* shopping cart styles */
+.mat-mdc-dialog-container .mat-mdc-dialog-content {
+  padding: 0 !important;
+}
+.cart-dialog .mat-mdc-dialog-container {
+  max-width: 470px;
+  /* Ensure full height */
+  
+  /* Override Material's default */
+  height: 100vh;
+  /* Full height */
+  position: fixed;
+  top: 0;
+  right: 0;
+  border-left: 1px solid #e5e5e5;
+  padding: 0;
+  background: inherit;
+  box-shadow: -4px 0 8px rgba(0, 0, 0, 0.1);
+  animation: slideIn 0.3s ease-out !important;
+  /* Slide-in animation */
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+  }
+
+  to {
+    transform: translateX(0);
+  }
+}
+
+.mat-mdc-dialog-container {
+  overflow: hidden;
+  /* Prevent scrollbar */
+}
+

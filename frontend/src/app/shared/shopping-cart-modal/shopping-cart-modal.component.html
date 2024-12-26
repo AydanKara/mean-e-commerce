@@ -1,0 +1,127 @@
+<mat-dialog-content>
+  <div
+    class="offcanvas offcanvas-end show"
+    style="visibility: visible"
+    aria-modal="true"
+    role="dialog"
+  >
+    <!-- Close -->
+    <button
+      type="button"
+      class="btn-close"
+      (click)="closeModal()"
+      aria-label="Close"
+    ></button>
+
+    <!-- Header -->
+    <div class="offcanvas-header lh-fixed fs-lg">
+      <strong class="mx-auto">Your Cart ({{ cartItems.length }})</strong>
+    </div>
+
+    <!-- Cart Items -->
+    <div
+      *ngIf="loading"
+      class="spinner-border text-primary d-block mx-auto my-6"
+      role="status"
+    >
+      <span class="visually-hidden">Loading...</span>
+    </div>
+    <ul
+      class="list-group list-group-lg list-group-flush overflow-y-auto"
+      *ngIf="cartItems.length > 0; else emptyCart"
+    >
+      <li class="list-group-item" *ngFor="let item of cartItems">
+        <div class="row align-items-center">
+          <div class="col-4">
+            <!-- Image -->
+            <a [routerLink]="['/product', item._id]">
+              <img
+                class="img-fluid cart-img"
+                [src]="item.images"
+                [alt]="item.name"
+              />
+            </a>
+          </div>
+          <div class="col-8">
+            <!-- Title -->
+            <p class="fs-sm fw-bold mb-6">
+              <a class="text-body" [routerLink]="['/product', item._id]">
+                {{ item.name }}
+              </a>
+              <br />
+              <span class="text-muted">{{ item.price | currency }}</span>
+            </p>
+
+            <!-- Footer -->
+            <div class="d-flex align-items-center">
+              <!-- Quantity Selector -->
+              <select
+                class="form-select form-select-xxs w-auto"
+                [(ngModel)]="item.quantity"
+                (change)="updateCart(item)"
+              >
+                <option
+                  *ngFor="let qty of getAvailableQuantities(item)"
+                  [value]="qty"
+                >
+                  {{ qty }}
+                </option>
+              </select>
+
+              <!-- Remove -->
+              <a
+                class="fs-xs text-gray-400 ms-auto"
+                href="javascript:void(0)"
+                (click)="removeFromCart(item._id)"
+              >
+                <i class="fe fe-x"></i> Remove
+              </a>
+            </div>
+          </div>
+        </div>
+      </li>
+    </ul>
+
+    <!-- Footer -->
+    <div
+      *ngIf="cartItems.length > 0"
+      class="offcanvas-footer justify-between lh-fixed fs-sm bg-light mt-auto"
+    >
+      <strong>Subtotal</strong>
+      <strong class="ms-auto">{{ totalPrice | currency }}</strong>
+    </div>
+
+    <!-- Buttons -->
+    <div *ngIf="cartItems.length > 0" class="offcanvas-body">
+      <a
+        class="btn w-100 btn-dark"
+        (click)="closeModal()"
+        routerLink="/checkout"
+        >Continue to Checkout</a
+      >
+      <a
+        class="btn w-100 btn-outline-dark mt-2"
+        (click)="closeModal()"
+        routerLink="/shopping-cart"
+        >View Cart</a
+      >
+    </div>
+
+    <!-- Empty Cart -->
+    <ng-template #emptyCart>
+      <div class="offcanvas-body flex-grow-0 my-auto" *ngIf="!loading">
+        <!-- Heading -->
+        <h6 class="mb-5 text-center">Your cart is empty 😞</h6>
+
+        <!-- Button -->
+        <a
+          class="btn w-100 btn-outline-dark"
+          (click)="closeModal()"
+          routerLink="/shop"
+        >
+          Continue Shopping
+        </a>
+      </div>
+    </ng-template>
+  </div>
+</mat-dialog-content>

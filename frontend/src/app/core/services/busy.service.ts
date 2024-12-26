@@ -1,22 +1,28 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class BusyService {
-  loading = false;
+  private loadingSource = new BehaviorSubject<boolean>(false);
+  loading$ = this.loadingSource.asObservable()
   busyRequestCount = 0;
 
   busy() {
     this.busyRequestCount++;
-    this.loading = true;
+    this.setLoading(true);
   }
 
   idle() {
     this.busyRequestCount--;
     if (this.busyRequestCount <= 0) {
       this.busyRequestCount = 0;
-      this.loading = false;
+      this.setLoading(false)
     }
+  }
+
+  private setLoading(value: boolean) {
+    this.loadingSource.next(value); // Emit the new value
   }
 }

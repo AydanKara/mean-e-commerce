@@ -95,9 +95,9 @@
             <a
               class="nav-link"
               routerLinkActive="active"
-              routerLink="/shopping-cart"
               [matBadge]="totalItems"
               matBadgeSize="large"
+              (click)="openCartModal()"
             >
               <mat-icon class="material-symbols-outlined">
                 shopping_cart
@@ -113,5 +113,10 @@
 <mat-progress-bar
   class="mat-mdc-progress-bar"
   mode="indeterminate"
-  *ngIf="busyService.loading"
+  *ngIf="busyService.loading$ | async"
 ></mat-progress-bar>
+
+<app-shopping-cart-modal
+  *ngIf="isCartModalVisible"
+  (close)="toggleCartModal()"
+></app-shopping-cart-modal>
