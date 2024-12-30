@@ -114,23 +114,73 @@ export const calculateOrderSummary = async (req, res) => {
 
 export const getAllOrdersForAdmin = async (req, res) => {
   try {
-    const orders = await Order.find()
+    const {
+      search,
+      status,
+      dateRange,
+      paymentMethod,
+      page = 1,
+      limit = 10,
+    } = req.query;
+
+    const filter = {};
+
+    // Search by customer name, order ID, or product name
+    if (search) {
+      const searchRegex = new RegExp(search, "i");
+      filter.$or = [
+        { _id: search }, // Order ID
+        { "user.fullName": { $regex: searchRegex } }, // Customer name
+        { "orderItems.product.name": { $regex: searchRegex } }, // Product name
+      ];
+    }
+
+    // Filter by order status
+    if (status) {
+      filter.status = { $in: status.split(",") };
+    }
+
+    // Filter by date range
+    if (dateRange) {
+      const [startDate, endDate] = dateRange.split(",");
+      filter.createdAt = { $gte: new Date(startDate), $lte: new Date(endDate) };
+    }
+
+    // Filter by payment method
+    if (paymentMethod) {
+      filter.paymentMethod = { $in: paymentMethod.split(",") };
+    }
+
+    // Pagination
+    const pageNumber = parseInt(page, 10);
+    const pageSize = parseInt(limit, 10);
+    const skip = (pageNumber - 1) * pageSize;
+
+    // Fetch orders with filters
+    const totalOrders = await Order.countDocuments(filter);
+    const orders = await Order.find(filter)
       .populate({
         path: "orderItems.product",
         select: "_id name price stock",
       })
       .populate({
         path: "user",
-        select: "_id fullName	email phone",
+        select: "_id fullName email phone",
       })
-      .exec();
+      .skip(skip)
+      .limit(pageSize)
+      .sort({ createdAt: -1 }); // Newest first
 
-    if (!orders) {
-      return res.status(404).json({ message: "No orders found" });
-    }
+    const totalPages = Math.ceil(totalOrders / pageSize);
 
-    res.status(200).json(orders);
+    res.status(200).json({
+      success: true,
+      orders,
+      totalOrders,
+      currentPage: pageNumber,
+      totalPages,
+    });
   } catch (error) {
-    res.status(500).json({ message: "Server error", error });
+    res.status(500).json({ success: false, message: "Server error", error });
   }
 };
