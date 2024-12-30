@@ -30,6 +30,7 @@ export class CheckoutComponent implements OnInit {
   cartItems: CartItem[] = [];
   orderItems: OrderItem[] = [];
   shippingInfo = { address: '', city: '', zipCode: '', country: '' };
+  user = { _id: '', email: '', fullName: '', phone: '' };
   totalPrice = 0;
   paymentMethod = 'Credit Card';
 
@@ -67,7 +68,7 @@ export class CheckoutComponent implements OnInit {
     // Load user info
     this.userService.getAuthState().subscribe((user) => {
       if (user) {
-        const { fullName, email, shippingInfo, phone } = user;
+        const { _id, fullName, email, shippingInfo, phone } = user;
         const { address, city, zipCode, country } = shippingInfo || {};
 
         this.form.patchValue({
@@ -85,6 +86,13 @@ export class CheckoutComponent implements OnInit {
           city: city || '',
           zipCode: zipCode || '',
           country: country || '',
+        };
+
+        this.user = {
+          _id,
+          fullName: fullName || '',
+          email,
+          phone: phone || '',
         };
       }
     });
@@ -107,7 +115,7 @@ export class CheckoutComponent implements OnInit {
     if (this.checkoutForm?.valid) {
       const orderData: Order = {
         _id: '',
-        user: '',
+        user: this.user,
         orderItems: this.orderItems,
         shippingInfo: this.shippingInfo,
         paymentMethod: this.paymentMethod,

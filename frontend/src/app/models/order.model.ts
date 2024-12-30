@@ -1,6 +1,6 @@
 export interface Order {
   _id: string;
-  user: string; // User ID
+  user: User;
   orderItems: OrderItem[];
   shippingInfo: ShippingInfo;
   paymentMethod: string;
@@ -13,14 +13,7 @@ export interface Order {
 }
 
 export interface OrderItem {
-  product: {
-    _id: string;
-    name: string;
-    price: number;
-    quantity: number;
-    images: string;
-    stock: number;
-  };
+  product: Product;
   quantity: number;
   price: number;
 }
@@ -30,4 +23,20 @@ export interface ShippingInfo {
   zipCode: string;
   city: string;
   country: string;
+}
+
+interface User {
+  _id: string;
+  email: string;
+  fullName: string;
+  phone: string;
+}
+
+interface Product {
+  _id: string;
+  name: string;
+  price: number;
+  quantity: number;
+  images: string;
+  stock: number;
 }

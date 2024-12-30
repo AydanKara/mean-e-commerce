@@ -1,7 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { OrderService } from '../../../core/services/order.service';
 import { Order, OrderItem } from '../../../models/order.model';
-import { CommonModule, formatDate } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { DateFormatPipe } from '../../../pipes/date-format.pipe';
 

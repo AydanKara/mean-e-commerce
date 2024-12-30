@@ -5,6 +5,7 @@ import { environment } from '../../../environments/environment';
 import { Product } from '../../models/product.model';
 import { SnackbarService } from './snackbar.service';
 import { User } from '../../models/user.model';
+import { Order } from '../../models/order.model';
 
 @Injectable({
   providedIn: 'root',
@@ -12,8 +13,8 @@ import { User } from '../../models/user.model';
 export class AdminService {
   private http = inject(HttpClient);
   private productsUrl = `${environment.apiUrl}/products`;
-  private apiUrl = `${environment.apiUrl}/auth`;
-  private userUrl = `${environment.apiUrl}/users`;
+  private ordersUrl = `${environment.apiUrl}/orders/admin`;
+  private usersUrl = `${environment.apiUrl}/users`;
   private snackbar = inject(SnackbarService);
 
   // Create a product
@@ -56,7 +57,7 @@ export class AdminService {
   // Fetch all users
   getAllUsers(): Observable<User[]> {
     return this.http
-      .get<{ success: boolean; users: User[] }>(this.userUrl, {
+      .get<{ success: boolean; users: User[] }>(this.usersUrl, {
         withCredentials: true,
       })
       .pipe(
@@ -72,7 +73,7 @@ export class AdminService {
   updateUserAdminStatus(userId: string, isAdmin: boolean): Observable<User> {
     return this.http
       .patch<User>(
-        `${this.userUrl}/${userId}`,
+        `${this.usersUrl}/${userId}`,
         { isAdmin },
         {
           withCredentials: true,
@@ -87,5 +88,27 @@ export class AdminService {
           throw error;
         })
       );
+  }
+
+  /**
+   * Get all orders (Admin)
+   * @returns Observable<Order[]>
+   */
+  getAllOrders(): Observable<Order[]> {
+    return this.http.get<Order[]>(this.ordersUrl, { withCredentials: true });
+  }
+
+  /**
+   * Update order status (Admin)
+   * @param id - Order ID
+   * @param status - New status
+   * @returns Observable<Order>
+   */
+  updateOrderStatus(id: string, status: string): Observable<Order> {
+    return this.http.put<Order>(
+      `${this.ordersUrl}/${id}`,
+      { status },
+      { withCredentials: true }
+    );
   }
 }

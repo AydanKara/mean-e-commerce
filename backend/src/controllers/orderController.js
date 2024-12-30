@@ -111,3 +111,26 @@ export const calculateOrderSummary = async (req, res) => {
     res.status(500).json({ message: "Error calculating order summary", error });
   }
 };
+
+export const getAllOrdersForAdmin = async (req, res) => {
+  try {
+    const orders = await Order.find()
+      .populate({
+        path: "orderItems.product",
+        select: "_id name price stock",
+      })
+      .populate({
+        path: "user",
+        select: "_id fullName	email phone",
+      })
+      .exec();
+
+    if (!orders) {
+      return res.status(404).json({ message: "No orders found" });
+    }
+
+    res.status(200).json(orders);
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error });
+  }
+};
