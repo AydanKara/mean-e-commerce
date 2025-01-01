@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import Order from "../models/Order.js";
 import Product from "../models/Product.js";
 import User from "../models/User.js";
@@ -115,7 +116,7 @@ export const calculateOrderSummary = async (req, res) => {
 export const getAllOrdersForAdmin = async (req, res) => {
   try {
     const {
-      search,
+      keyword,
       status,
       dateRange,
       paymentMethod,
@@ -126,24 +127,54 @@ export const getAllOrdersForAdmin = async (req, res) => {
     const filter = {};
 
     // Search by customer name, order ID, or product name
-    if (search) {
-      const searchRegex = new RegExp(search, "i");
-      filter.$or = [
-        { _id: search }, // Order ID
-        { "user.fullName": { $regex: searchRegex } }, // Customer name
-        { "orderItems.product.name": { $regex: searchRegex } }, // Product name
-      ];
+    if (keyword && mongoose.Types.ObjectId.isValid(keyword)) {
+      filter._id = keyword; // If search is a valid ObjectId, search by _id
+    }
+
+    let userFilter = {};
+    if (keyword) {
+      userFilter = {
+        $or: [
+          { fullName: { $regex: keyword, $options: "i" } }, // Match fullName
+          { email: { $regex: keyword, $options: "i" } }, // Match email
+        ],
+      };
+
+      // Get matching users' IDs
+      const matchingUsers = await User.find(userFilter).select("_id");
+      const userIds = matchingUsers.map((user) => user._id);
+
+      if (userIds.length > 0) {
+        filter.user = { $in: userIds }; // Add user ID filter to orders
+      } else {
+        // If no matching users, return no orders
+        return res.status(200).json({
+          success: true,
+          orders: [],
+          totalOrders: 0,
+          currentPage: pageNumber,
+          totalPages: 0,
+        });
+      }
     }
 
     // Filter by order status
     if (status) {
-      filter.status = { $in: status.split(",") };
+      filter.paymentStatus = { $in: status.split(",") };
     }
 
     // Filter by date range
     if (dateRange) {
       const [startDate, endDate] = dateRange.split(",");
-      filter.createdAt = { $gte: new Date(startDate), $lte: new Date(endDate) };
+      if (
+        new Date(startDate).toString() !== "Invalid Date" &&
+        new Date(endDate).toString() !== "Invalid Date"
+      ) {
+        filter.createdAt = {
+          $gte: new Date(startDate),
+          $lte: new Date(endDate),
+        };
+      }
     }
 
     // Filter by payment method
@@ -158,6 +189,7 @@ export const getAllOrdersForAdmin = async (req, res) => {
 
     // Fetch orders with filters
     const totalOrders = await Order.countDocuments(filter);
+    
     const orders = await Order.find(filter)
       .populate({
         path: "orderItems.product",
@@ -181,6 +213,11 @@ export const getAllOrdersForAdmin = async (req, res) => {
       totalPages,
     });
   } catch (error) {
-    res.status(500).json({ success: false, message: "Server error", error });
+    console.error("Error fetching admin orders:", error); // Log full error for debugging
+    res.status(500).json({
+      success: false,
+      message: "Server error",
+      error: error.message || "Unexpected error",
+    });
   }
 };

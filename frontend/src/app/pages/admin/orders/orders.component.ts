@@ -7,18 +7,12 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { DateFormatPipe } from '../../../pipes/date-format.pipe';
 import { RouterModule } from '@angular/router';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
-import { ProductQueryParams } from '../../../models/product-query-params.model';
 import { MatIconModule } from '@angular/material/icon';
-import { MatMenuModule, MatMenuTrigger } from '@angular/material/menu';
-import { MatSelectModule } from '@angular/material/select';
-import {
-  MatListOption,
-  MatSelectionList,
-  MatSelectionListChange,
-} from '@angular/material/list';
+import { MatMenuModule } from '@angular/material/menu';
 import { FormsModule } from '@angular/forms';
-import { FilterDialogComponent } from '../../../components/filter-dialog/filter-dialog.component';
+import { FilterDialogComponent } from './filter-dialog/filter-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import { OrderQueryParams } from '../../../models/order-query-params.model';
 
 @Component({
   selector: 'app-orders',
@@ -30,9 +24,6 @@ import { MatDialog } from '@angular/material/dialog';
     MatPaginatorModule,
     MatIconModule,
     MatMenuModule,
-    MatSelectionList,
-    MatListOption,
-    MatMenuTrigger,
     FormsModule,
   ],
   templateUrl: './orders.component.html',
@@ -43,10 +34,11 @@ export class OrdersComponent implements OnInit {
   private dialogService = inject(MatDialog);
   private snackbar = inject(SnackbarService);
   orders: Order[] = [];
+  isSearchActive: boolean = false;
   loading: boolean = false;
 
   // For pagination
-  totalProducts: number = 0;
+  totalOrders: number = 0;
   currentPage: number = 1;
   totalPages: number = 1;
 
@@ -59,7 +51,7 @@ export class OrdersComponent implements OnInit {
     { name: 'Price: High-Low', value: 'price_desc' },
   ];
 
-  queryParams = new ProductQueryParams();
+  queryParams = new OrderQueryParams();
 
   ngOnInit(): void {
     this.fetchOrders();
@@ -67,11 +59,21 @@ export class OrdersComponent implements OnInit {
 
   fetchOrders() {
     this.loading = true;
-    this.adminService.getAllOrders().subscribe({
+
+    this.adminService.getAllOrders(this.queryParams).subscribe({
       next: (response) => {
         this.loading = false;
-        this.orders = response;
-        console.log(this.orders);
+        this.orders = response.orders;
+        this.currentPage = response.currentPage;
+        this.totalPages = response.totalPages;
+        this.totalOrders = response.totalOrders;
+
+        // Check for no results and search activity
+        if (this.orders.length === 0 && this.isSearchActive) {
+          this.snackbar.success(
+            'No orders found for the given search criteria.'
+          );
+        }
       },
       error: (err) => {
         this.loading = false;
@@ -85,16 +87,10 @@ export class OrdersComponent implements OnInit {
     console.log(`Order: ${orderId} updated - status: ${newStatus}`);
   }
 
-  onSearchPage() {
+  onSearchSubmit() {
+    this.isSearchActive = !!this.queryParams.searchTerm?.trim();
+    this.queryParams.page = 1; // Reset to first page
     this.fetchOrders();
-  }
-
-  onSortChange(event: MatSelectionListChange) {
-    const selectedOption = event.options[0];
-    if (selectedOption) {
-      this.queryParams.sort = selectedOption.value;
-      this.fetchOrders();
-    }
   }
 
   handlePageEvent(event: PageEvent) {
@@ -107,17 +103,16 @@ export class OrdersComponent implements OnInit {
     const dialogRef = this.dialogService.open(FilterDialogComponent, {
       maxWidth: '100%',
       data: {
-        selectedCategories: this.queryParams.categories,
-        selectedBrands: this.queryParams.brands,
-        selectedGenders: this.queryParams.genders,
+        selectedStatus: this.queryParams.status,
+        selectedPaymentMethod: this.queryParams.paymentMethod,
       },
     });
     dialogRef.afterClosed().subscribe({
       next: (result) => {
         if (result) {
-          this.queryParams.categories = result.selectedCategories;
-          this.queryParams.brands = result.selectedBrands;
-          this.queryParams.genders = result.selectedGenders;
+          this.queryParams.status = result.selectedStatus;
+          this.queryParams.paymentMethod = result.selectedPaymentMethod;
+          this.queryParams.dateRange = result.dateRange;
           this.fetchOrders();
         }
       },

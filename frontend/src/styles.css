@@ -86,7 +86,7 @@ a:hover {
 }
 
 button {
-  height: auto !important;
+  height: auto;
   border-radius: 0px !important;
 }
 

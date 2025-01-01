@@ -1,7 +1,7 @@
 import { HttpParams } from '@angular/common/http';
 
 export class OrderQueryParams {
-  search: string = ''; // Search term
+  searchTerm: string = ''; // Search term
   status: string[] = []; // Status filter
   dateRange: string = ''; // Date range filter
   paymentMethod: string[] = []; // Payment method filter
@@ -15,7 +15,7 @@ export class OrderQueryParams {
 
   toHttpParams(): HttpParams {
     let params = new HttpParams()
-      .set('search', this.search)
+      .set('keyword', this.searchTerm)
       .set('status', this.status.join(','))
       .set('dateRange', this.dateRange)
       .set('paymentMethod', this.paymentMethod.join(','))

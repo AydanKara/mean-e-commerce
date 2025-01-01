@@ -8,50 +8,44 @@
 </div>
 
 <div class="row" *ngIf="!loading">
-  <div class="col-12 d-flex justify-content-between align-items-center">
-    <mat-paginator
-      class="paginator border-2"
-      (page)="handlePageEvent($event)"
-      [length]="totalProducts"
-      [pageSize]="queryParams.limit"
-      [showFirstLastButtons]="true"
-      [pageSizeOptions]="[5, 10, 20, 30]"
-      [pageIndex]="currentPage - 1"
-      aria-label="Select page"
-    ></mat-paginator>
-    <div class="d-md-flex gap-3">
-      <form
-        #searchForm="ngForm"
-        (ngSubmit)="onSearchPage()"
-        class="d-flex"
-        role="search"
-      >
-        <input
-          type="search"
-          class="form-control me-2 rounded-0 p-3 border-black border-2"
-          placeholder="Search"
-          aria-label="Search"
-          name="keyword"
-          [(ngModel)]="queryParams.searchTerm"
-        />
-        <button type="submit" class="button-nav border-2 gap-2">
-          <span class="material-symbols-outlined d-flex"
-            ><mat-icon>search</mat-icon></span
-          >
-          Search
-        </button>
-      </form>
-      <div class="d-flex gap-3">
-        <button mat-stroked-button (click)="openFiltersDialog()">
-          <mat-icon>filter_list</mat-icon>
-          Filters
-        </button>
-        <button mat-stroked-button [matMenuTriggerFor]="sortMenu">
-          <mat-icon>swap_vert</mat-icon>
-          Sort
-        </button>
-      </div>
-    </div>
+  <div class="col-8 d-flex justify-content-between align-items-center">
+    <form
+      #searchForm="ngForm"
+      (ngSubmit)="onSearchSubmit()"
+      class="d-flex flex-grow-1"
+      role="search"
+    >
+      <input
+        type="text"
+        class="form-control me-2 rounded-0 p-3 border-black border-2"
+        placeholder="Search by Order ID, Customer Name, or Product Name"
+        title="Search by Order ID, Customer Name, or Product Name"
+        [(ngModel)]="queryParams.searchTerm"
+        name="keyword"
+      />
+      <button type="submit" class="btn btn-sm btn-outline-dark border-2 fs-5">
+        Search
+      </button>
+    </form>
+  </div>
+  <div class="col-4 d-flex justify-content-end gap-2">
+    <button
+      class="btn btn-sm w-80 btn-outline-dark border-2"
+      mat-stroked-button
+      (click)="openFiltersDialog()"
+      title="Filters"
+    >
+      <mat-icon>filter_list</mat-icon>
+      <span class="visually-hidden">Filters</span>
+    </button>
+    <button
+      mat-stroked-button
+      class="btn btn-sm w-80 btn-outline-dark border-2"
+      title="Sort"
+    >
+      <mat-icon>swap_vert</mat-icon>
+      <span class="visually-hidden">Sort</span>
+    </button>
   </div>
 </div>
 
@@ -130,17 +124,44 @@
       </div>
     </div>
   </ng-container>
+  <mat-paginator
+    *ngIf="!loading"
+    class="paginator border-2"
+    (page)="handlePageEvent($event)"
+    [length]="totalOrders"
+    [pageSize]="queryParams.limit"
+    [showFirstLastButtons]="true"
+    [pageSizeOptions]="[5, 10, 20, 30]"
+    [pageIndex]="currentPage - 1"
+    aria-label="Select page"
+  ></mat-paginator>
 </div>
 
+<!-- If no orders are found -->
 <ng-template #noOrders>
-  <div class="text-start mt-5 pt-4" *ngIf="!loading">
-    <h4>No Orders yet!</h4>
-    <p class="text-muted">You haven't added any orders to your account yet.</p>
-    <a routerLink="/shop" class="btn btn-sm btn-outline-dark">Start Shopping</a>
+  <div class="text-start my-5 pt-4" *ngIf="!loading">
+    <ng-container *ngIf="isSearchActive; else noOrdersDefault">
+      <!-- Search-specific no orders message -->
+      <h4>No Orders Found!</h4>
+      <p class="text-muted">No orders match your search criteria.</p>
+      <button class="btn btn-sm btn-outline-dark" (click)="onSearchSubmit()">
+        Try Again
+      </button>
+    </ng-container>
+    <!-- Default no orders message -->
+    <ng-template #noOrdersDefault>
+      <h4>No Orders yet!</h4>
+      <p class="text-muted">
+        You haven't added any orders to your account yet.
+      </p>
+      <a routerLink="/shop" class="btn btn-sm btn-outline-dark"
+        >Start Shopping</a
+      >
+    </ng-template>
   </div>
 </ng-template>
 
-<mat-menu #sortMenu="matMenu">
+<!-- <mat-menu #sortMenu="matMenu">
   <mat-selection-list
     [multiple]="false"
     (selectionChange)="onSortChange($event)"
@@ -153,4 +174,4 @@
     >
     }
   </mat-selection-list>
-</mat-menu>
+</mat-menu> -->

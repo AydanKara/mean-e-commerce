@@ -1,11 +1,12 @@
 import { inject, Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { catchError, map, Observable, of, tap } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { Product } from '../../models/product.model';
 import { SnackbarService } from './snackbar.service';
 import { User } from '../../models/user.model';
 import { Order } from '../../models/order.model';
+import { OrderQueryParams } from '../../models/order-query-params.model';
 
 @Injectable({
   providedIn: 'root',
@@ -94,8 +95,24 @@ export class AdminService {
    * Get all orders (Admin)
    * @returns Observable<Order[]>
    */
-  getAllOrders(): Observable<Order[]> {
-    return this.http.get<Order[]>(this.ordersUrl, { withCredentials: true });
+  getAllOrders(queryParams?: OrderQueryParams): Observable<{
+    orders: Order[];
+    currentPage: number;
+    totalPages: number;
+    totalOrders: number;
+  }> {
+    const params = queryParams?.toHttpParams();
+    return this.http
+      .get<{
+        orders: Order[];
+        currentPage: number;
+        totalPages: number;
+        totalOrders: number;
+      }>(this.ordersUrl, {
+        params,
+        withCredentials: true,
+      })
+      .pipe(map((response) => response));
   }
 
   /**
