@@ -5,6 +5,7 @@ export class OrderQueryParams {
   status: string[] = []; // Status filter
   dateRange: string = ''; // Date range filter
   paymentMethod: string[] = []; // Payment method filter
+  sort: string = 'order date'; // Sort options
   page: number = 1; // Pagination
   limit: number = 10; // Items per page
 
@@ -19,6 +20,7 @@ export class OrderQueryParams {
       .set('status', this.status.join(','))
       .set('dateRange', this.dateRange)
       .set('paymentMethod', this.paymentMethod.join(','))
+      .set('sort', this.sort)
       .set('page', this.page.toString())
       .set('limit', this.limit.toString());
 

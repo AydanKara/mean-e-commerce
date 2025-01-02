@@ -35,11 +35,15 @@
         </button>
       </form>
       <div class="d-flex gap-3">
-        <button mat-stroked-button (click)="openFiltersDialog()">
+        <button mat-stroked-button class="h-auto" (click)="openFiltersDialog()">
           <mat-icon>filter_list</mat-icon>
           Filters
         </button>
-        <button mat-stroked-button [matMenuTriggerFor]="sortMenu">
+        <button
+          mat-stroked-button
+          class="h-auto"
+          [matMenuTriggerFor]="sortMenu"
+        >
           <mat-icon>swap_vert</mat-icon>
           Sort
         </button>
@@ -91,4 +95,3 @@
     }
   </mat-selection-list>
 </mat-menu>
-

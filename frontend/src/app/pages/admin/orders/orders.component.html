@@ -42,6 +42,7 @@
       mat-stroked-button
       class="btn btn-sm w-80 btn-outline-dark border-2"
       title="Sort"
+      [matMenuTriggerFor]="sortMenu"
     >
       <mat-icon>swap_vert</mat-icon>
       <span class="visually-hidden">Sort</span>
@@ -161,7 +162,7 @@
   </div>
 </ng-template>
 
-<!-- <mat-menu #sortMenu="matMenu">
+<mat-menu #sortMenu="matMenu">
   <mat-selection-list
     [multiple]="false"
     (selectionChange)="onSortChange($event)"
@@ -174,4 +175,4 @@
     >
     }
   </mat-selection-list>
-</mat-menu> -->
+</mat-menu>

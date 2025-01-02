@@ -120,11 +120,27 @@ export const getAllOrdersForAdmin = async (req, res) => {
       status,
       dateRange,
       paymentMethod,
+      sort,
       page = 1,
       limit = 10,
     } = req.query;
 
     const filter = {};
+
+    // Pagination
+    const pageNumber = parseInt(page, 10);
+    const pageSize = parseInt(limit, 10);
+    const skip = (pageNumber - 1) * pageSize;
+
+    // Sort by price, rating, or relevance
+    const sortQuery = {};
+    if (sort === "order date") {
+      sortQuery.createdAt = -1; // Sort by relevance (newest first)
+    } else if (sort === "amount_desc") {
+      sortQuery.totalPrice = -1; // Descending order
+    } else if (sort === "amount_asc") {
+      sortQuery.totalPrice = 1; // Sort by ratings in descending order
+    }
 
     // Search by customer name, order ID, or product name
     if (keyword && mongoose.Types.ObjectId.isValid(keyword)) {
@@ -142,6 +158,7 @@ export const getAllOrdersForAdmin = async (req, res) => {
 
       // Get matching users' IDs
       const matchingUsers = await User.find(userFilter).select("_id");
+
       const userIds = matchingUsers.map((user) => user._id);
 
       if (userIds.length > 0) {
@@ -182,14 +199,9 @@ export const getAllOrdersForAdmin = async (req, res) => {
       filter.paymentMethod = { $in: paymentMethod.split(",") };
     }
 
-    // Pagination
-    const pageNumber = parseInt(page, 10);
-    const pageSize = parseInt(limit, 10);
-    const skip = (pageNumber - 1) * pageSize;
-
     // Fetch orders with filters
     const totalOrders = await Order.countDocuments(filter);
-    
+
     const orders = await Order.find(filter)
       .populate({
         path: "orderItems.product",
@@ -201,7 +213,7 @@ export const getAllOrdersForAdmin = async (req, res) => {
       })
       .skip(skip)
       .limit(pageSize)
-      .sort({ createdAt: -1 }); // Newest first
+      .sort(sortQuery);
 
     const totalPages = Math.ceil(totalOrders / pageSize);
 

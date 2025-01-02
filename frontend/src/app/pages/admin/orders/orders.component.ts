@@ -8,11 +8,12 @@ import { DateFormatPipe } from '../../../pipes/date-format.pipe';
 import { RouterModule } from '@angular/router';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatIconModule } from '@angular/material/icon';
-import { MatMenuModule } from '@angular/material/menu';
+import { MatMenu, MatMenuModule } from '@angular/material/menu';
 import { FormsModule } from '@angular/forms';
 import { FilterDialogComponent } from './filter-dialog/filter-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { OrderQueryParams } from '../../../models/order-query-params.model';
+import { MatListOption, MatSelectionList, MatSelectionListChange } from '@angular/material/list';
 
 @Component({
   selector: 'app-orders',
@@ -21,6 +22,9 @@ import { OrderQueryParams } from '../../../models/order-query-params.model';
     MatTooltipModule,
     DateFormatPipe,
     RouterModule,
+    MatMenu,
+    MatSelectionList,
+    MatListOption,
     MatPaginatorModule,
     MatIconModule,
     MatMenuModule,
@@ -44,11 +48,9 @@ export class OrdersComponent implements OnInit {
 
   // Sort options
   sortOptions = [
-    { name: 'Relevance', value: 'relevance' },
-    { name: 'Name: A-Z', value: 'name_asc' },
-    { name: 'Name: Z-A', value: 'name_desc' },
-    { name: 'Price: Low-High', value: 'price_asc' },
-    { name: 'Price: High-Low', value: 'price_desc' },
+    { name: 'Order Date', value: 'order date' },
+    { name: 'Amount: Low-High', value: 'amount_asc' },
+    { name: 'Amount: High-Low', value: 'amount_desc' },
   ];
 
   queryParams = new OrderQueryParams();
@@ -91,6 +93,14 @@ export class OrdersComponent implements OnInit {
     this.isSearchActive = !!this.queryParams.searchTerm?.trim();
     this.queryParams.page = 1; // Reset to first page
     this.fetchOrders();
+  }
+
+  onSortChange(event: MatSelectionListChange) {
+    const selectedOption = event.options[0];
+    if (selectedOption) {
+      this.queryParams.sort = selectedOption.value;
+      this.fetchOrders();
+    }
   }
 
   handlePageEvent(event: PageEvent) {
