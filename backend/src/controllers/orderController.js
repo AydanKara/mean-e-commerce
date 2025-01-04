@@ -25,9 +25,12 @@ export const getAllOrders = async (req, res) => {
 // Get a single order by ID
 export const getOrderById = async (req, res) => {
   try {
-    const order = await Order.findById(req.params.id).populate(
-      "orderItems.product"
-    );
+    const order = await Order.findById(req.params.id)
+      .populate("orderItems.product")
+      .populate({
+        path: "user",
+        select: "_id fullName email phone",
+      });
     if (!order) {
       return res.status(404).json({ message: "Order not found" });
     }
@@ -64,7 +67,7 @@ export const updateOrderStatus = async (req, res) => {
     const { status } = req.body;
     const order = await Order.findByIdAndUpdate(
       req.params.id,
-      { paymentStatus: status },
+      { orderStatus: status },
       { new: true }
     );
     if (!order) {
@@ -177,7 +180,7 @@ export const getAllOrdersForAdmin = async (req, res) => {
 
     // Filter by order status
     if (status) {
-      filter.paymentStatus = { $in: status.split(",") };
+      filter.orderStatus = { $in: status.split(",") };
     }
 
     // Filter by date range

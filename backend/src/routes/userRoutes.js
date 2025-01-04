@@ -3,6 +3,7 @@ import {
   addToWishlist,
   createUser,
   getAllUsers,
+  getUserById,
   getWishlist,
   removeFromWishlist,
   toggleAdminStatus,
@@ -23,6 +24,9 @@ router
 
 // Get all users and toggle admin status (Admin only)
 router.get("/", protect, admin, getAllUsers);
-router.patch("/:userId", protect, admin, toggleAdminStatus);
+router
+  .route("/:userId")
+  .get(protect, admin, getUserById)
+  .patch(protect, admin, toggleAdminStatus);
 
 export default router;

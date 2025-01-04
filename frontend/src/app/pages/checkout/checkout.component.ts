@@ -121,6 +121,7 @@ export class CheckoutComponent implements OnInit {
         paymentMethod: this.paymentMethod,
         totalPrice: this.totalPrice,
         paymentStatus: 'Pending', // Assuming "Pending" status initially
+        orderStatus: 'Processing', // Assuming "Processing" status Initially
         isDelivered: false, // Initially not delivered
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),

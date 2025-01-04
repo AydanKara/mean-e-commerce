@@ -188,6 +188,22 @@ export const getAllUsers = async (req, res) => {
   }
 };
 
+// Get user by id
+export const getUserById = async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: "User not found." });
+    }
+    res.status(200).json({ success: true, user });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ success: false, message: "Failed to retrieve user", error });
+  }
+};
+
 // Toggle Admin status
 export const toggleAdminStatus = async (req, res) => {
   try {

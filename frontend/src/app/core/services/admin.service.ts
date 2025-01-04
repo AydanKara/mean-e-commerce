@@ -70,6 +70,14 @@ export class AdminService {
       );
   }
 
+  getUserById(userId: string): Observable<User | null> {
+    return this.http
+      .get<{ success: boolean; user: User }>(`${this.usersUrl}/${userId}`, {
+        withCredentials: true,
+      })
+      .pipe(map((response) => (response.success ? response.user : null)));
+  }
+
   // Update the admin status of a user
   updateUserAdminStatus(userId: string, isAdmin: boolean): Observable<User> {
     return this.http
@@ -121,7 +129,7 @@ export class AdminService {
    * @param status - New status
    * @returns Observable<Order>
    */
-  updateOrderStatus(id: string, status: string): Observable<Order> {
+  updateOrderStatus(id: string | undefined, status: string): Observable<Order> {
     return this.http.put<Order>(
       `${this.ordersUrl}/${id}`,
       { status },

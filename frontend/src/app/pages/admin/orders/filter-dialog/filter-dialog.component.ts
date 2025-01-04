@@ -40,7 +40,7 @@ import { CommonModule } from '@angular/common';
 export class FilterDialogComponent {
   filterForm: FormGroup;
 
-  statusOptions = ['Pending', 'Shipped', 'Delivered', 'Cancelled'];
+  statusOptions = ['Processing', 'Shipped', 'Delivered', 'Cancelled'];
   paymentMethodOptions = ['Credit Card', 'PayPal', 'Cash on Delivery'];
 
   readonly range = new FormGroup({

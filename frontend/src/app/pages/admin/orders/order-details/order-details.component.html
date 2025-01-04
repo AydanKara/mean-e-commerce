@@ -34,9 +34,33 @@
             <div class="col-6 col-lg-3">
               <!-- Heading -->
               <h6 class="heading-xxxs text-muted">Order status:</h6>
-
               <!-- Text -->
               <p class="mb-0 fs-sm fw-bold">{{ order?.orderStatus }}</p>
+              <!-- Dropdown to change status -->
+              <div class="mt-3 d-flex align-items-center">
+                <button
+                  type="button"
+                  class="btn btn-sm btn-outline-dark"
+                  (click)="toggleStatusDropdown()"
+                >
+                  Change Status
+                </button>
+              </div>
+              <div
+                *ngIf="showStatusDropdown"
+                class="dropdown-menu d-block mt-2"
+                style="position: absolute; z-index: 1000"
+              >
+                <button
+                  *ngFor="let status of statusOptions"
+                  type="button"
+                  class="dropdown-item"
+                  [class.active]="status === order?.orderStatus"
+                  (click)="updateOrderStatus(status)"
+                >
+                  {{ status }}
+                </button>
+              </div>
             </div>
             <div class="col-6 col-lg-3">
               <!-- Heading -->
@@ -132,7 +156,7 @@
           <p class="mb-2 fw-bold">Billing Address:</p>
 
           <p class="mb-2 mb-md-0 text-gray-500">
-            {{ userName }}, <br />
+            {{ order?.user?.fullName }}, <br />
             {{ order?.shippingInfo?.address }}, <br />
             {{ order?.shippingInfo?.city }}, {{ order?.shippingInfo?.zipCode }},
             <br />
@@ -144,7 +168,7 @@
           <p class="mb-2 fw-bold">Shipping Address:</p>
 
           <p class="mb-2 mb-md-0 text-gray-500">
-            {{ userName }}, <br />
+            {{ order?.user?.fullName }}, <br />
             {{ order?.shippingInfo?.address }}, <br />
             {{ order?.shippingInfo?.city }}, {{ order?.shippingInfo?.zipCode }},
             <br />

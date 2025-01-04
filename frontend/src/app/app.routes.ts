@@ -63,6 +63,13 @@ export const routes: Routes = [
             (m) => m.OrdersComponent
           ),
       },
+      {
+        path: 'order-details/:id',
+        loadComponent: () =>
+          import(
+            './pages/admin/orders/order-details/order-details.component'
+          ).then((m) => m.OrderDetailsComponent),
+      },
     ],
   },
   {

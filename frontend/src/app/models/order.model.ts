@@ -4,7 +4,8 @@ export interface Order {
   orderItems: OrderItem[];
   shippingInfo: ShippingInfo;
   paymentMethod: string;
-  paymentStatus: string; // Example: "Pending", "Shipped", "Delivered"
+  paymentStatus: string; // Example: "Pending", "Paid", "Refunded"
+  orderStatus: string; // Example: "Processing", "Shipped", "Delivered", "Cancelled"
   totalPrice: number;
   isDelivered: boolean;
   deliveredAt?: Date;
