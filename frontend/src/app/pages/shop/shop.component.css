@@ -1,3 +1,8 @@
+.loading-container {
+    display: flex;
+    justify-content: center;
+    height: calc(100vh - 36rem);
+}
 .mdc-text-field {
     border-radius: unset !important;
 }
@@ -7,12 +12,19 @@ button {
     align-items: center;
 }
 
+.form-control {
+    min-width: 23rem;
+}
+
+.filter-sort-btn {
+    height: 3.75rem;
+}
+
 .mdc-button {
     border: 0.125rem solid !important;
     font-family: inherit;
     letter-spacing: 0.1rem;
     font-weight: 700;
-    border: 0.125rem solid !important;
 }
 
 .no-products-container {
@@ -46,6 +58,10 @@ button {
     color: #6c757d;
     /* Bootstrap muted text */
     font-size: 16px;
+}
+
+.paginator {
+    margin-top: 2rem;
 }
 
 

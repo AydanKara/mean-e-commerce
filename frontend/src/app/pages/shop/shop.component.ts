@@ -5,8 +5,7 @@ import { ProductItemComponent } from '../../components/product-item/product-item
 
 import { MatDialog } from '@angular/material/dialog';
 import { FilterDialogComponent } from '../../components/filter-dialog/filter-dialog.component';
-import { MatIcon, MatIconModule } from '@angular/material/icon';
-import { MatButton, MatIconButton } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 import { MatMenu, MatMenuTrigger } from '@angular/material/menu';
 import {
   MatListOption,
@@ -26,7 +25,6 @@ import { CommonModule } from '@angular/common';
     ProductItemComponent,
     FeaturesComponent,
     MatIconModule,
-    MatButton,
     MatMenu,
     MatSelectionList,
     MatListOption,

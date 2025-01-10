@@ -316,10 +316,11 @@ button {
 .mat-mdc-dialog-container .mat-mdc-dialog-content {
   padding: 0 !important;
 }
+
 .cart-dialog .mat-mdc-dialog-container {
   max-width: 470px;
   /* Ensure full height */
-  
+
   /* Override Material's default */
   height: 100vh;
   /* Full height */
@@ -348,4 +349,3 @@ button {
   overflow: hidden;
   /* Prevent scrollbar */
 }
-

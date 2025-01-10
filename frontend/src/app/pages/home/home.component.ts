@@ -44,11 +44,11 @@ export class HomeComponent implements OnInit {
 
   slides = [
     {
-      image: 'assets/cover-23.jpg',
+      image: 'assets/cover-3.jpg',
       content: `
         <div class="container d-flex flex-column">
-            <div class="row align-items-center justify-content-end py-5" style="min-height: 550px;">
-              <div class="col-12 col-md-6 col-lg-5 col-xl-4 mx-5 text-black text-start">
+            <div class="row justify-content-end" style="min-height: 550px;">
+              <div class="col-12 col-md-6 col-lg-5 col-xl-4 mx-lg-5 text-md-black text-sm-center text-lg-end pb-5">
 
                 <!-- Heading -->
                 <h1 class="mb-4">Summer Collection</h1>
@@ -70,7 +70,7 @@ export class HomeComponent implements OnInit {
       `,
     },
     {
-      image: 'assets/cover-5.jpg',
+      image: 'assets/cover-tudor.jpg',
       content: `
         <div class='container d-flex flex-column'>
           <div class='row align-items-center py-5' style='min-height: 550px;'>
@@ -85,7 +85,7 @@ export class HomeComponent implements OnInit {
       `,
     },
     {
-      image: 'assets/cover-16.jpg',
+      image: 'assets/cover-chanel.jpg',
       content: `
         <div class="bg-dark-20">
             <div class="container d-flex flex-column">

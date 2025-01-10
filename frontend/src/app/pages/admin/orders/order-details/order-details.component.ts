@@ -6,10 +6,11 @@ import { Order } from '../../../../models/order.model';
 import { CommonModule } from '@angular/common';
 import { DateFormatPipe } from '../../../../pipes/date-format.pipe';
 import { AdminService } from '../../../../core/services/admin.service';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
   selector: 'app-order-details',
-  imports: [CommonModule, RouterModule, DateFormatPipe],
+  imports: [CommonModule, RouterModule, DateFormatPipe, MatTooltipModule],
   templateUrl: './order-details.component.html',
   styleUrl: './order-details.component.css',
 })

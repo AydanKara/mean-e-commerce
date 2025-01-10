@@ -32,6 +32,13 @@ hr:not([size]) {
     height: 1px;
 }
 
+.list-group {
+    max-height: 38rem;
+    overflow-y: auto;
+    overflow-x: hidden;
+    border-radius: 0;
+}
+
 .list-group-item {
     border: 1px solid #e5e5e5;
     display: block;
