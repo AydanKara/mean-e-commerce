@@ -3,14 +3,30 @@
     <div class="container">
       <!-- Home Link -->
       <a class="navbar-brand" routerLink="/home">AuraLux.</a>
-      <div class="collapse navbar-collapse" id="navbarCollapse">
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="offcanvas"
+        data-bs-target="#navbarCollapse"
+        aria-controls="navbarCollapse"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div
+        class="collapse navbar-collapse offcanvas offcanvas-top flex-column flex-lg-row py-4 py-lg-0"
+        id="navbarCollapse"
+      >
         <!-- Nav -->
-        <ul class="navbar-nav mx-auto" *ngIf="!isLoading">
+
+        <ul class="navbar-nav mx-auto gap-4 gap-lg-0" *ngIf="!isLoading">
           <li>
             <a
               class="link-underline"
               routerLink="/home"
               routerLinkActive="active"
+              data-bs-dismiss="offcanvas"
               >Home</a
             >
           </li>
@@ -19,6 +35,7 @@
               class="link-underline"
               routerLink="/shop"
               routerLinkActive="active"
+              data-bs-dismiss="offcanvas"
               >Shop</a
             >
           </li>
@@ -29,11 +46,17 @@
                 class="link-underline"
                 routerLink="/admin/dashboard"
                 routerLinkActive="active"
+                data-bs-dismiss="offcanvas"
                 >Admin Dashboard</a
               >
             </li>
             <li>
-              <a class="link-underline" (click)="onLogout()">Logout</a>
+              <a
+                class="link-underline"
+                data-bs-dismiss="offcanvas"
+                (click)="onLogout()"
+                >Logout</a
+              >
             </li>
           </ng-container>
 
@@ -45,11 +68,17 @@
                   class="link-underline"
                   routerLink="/profile"
                   routerLinkActive="active"
+                  data-bs-dismiss="offcanvas"
                   >Profile</a
                 >
               </li>
               <li class="nav-item">
-                <a class="link-underline" (click)="onLogout()">Logout</a>
+                <a
+                  class="link-underline"
+                  data-bs-dismiss="offcanvas"
+                  (click)="onLogout()"
+                  >Logout</a
+                >
               </li>
             </ng-container>
           </ng-template>
@@ -61,6 +90,7 @@
                 class="link-underline"
                 routerLink="/login"
                 routerLinkActive="active"
+                data-bs-dismiss="offcanvas"
                 >Login</a
               >
             </li>
@@ -69,6 +99,7 @@
                 class="link-underline"
                 routerLink="/register"
                 routerLinkActive="active"
+                data-bs-dismiss="offcanvas"
                 >Register</a
               >
             </li>
@@ -76,9 +107,15 @@
         </ul>
 
         <!-- Nav -->
-        <ul class="navbar-nav flex-row">
+        <ul
+          class="navbar-nav flex-row gap-4 gap-lg-0 justify-content-center mt-4 mt-lg-0"
+        >
           <li class="nav-item ms-lg-n4">
-            <a class="nav-link" routerLink="/profile">
+            <a
+              class="nav-link"
+              data-bs-dismiss="offcanvas"
+              routerLink="/profile"
+            >
               <mat-icon class="material-symbols-outlined"> person </mat-icon>
             </a>
           </li>
@@ -87,6 +124,7 @@
               class="nav-link"
               routerLink="/profile/account-wishlist"
               routerLinkActive="active"
+              data-bs-dismiss="offcanvas"
             >
               <mat-icon class="material-symbols-outlined"> favorite </mat-icon>
             </a>
@@ -97,6 +135,7 @@
               routerLinkActive="active"
               [matBadge]="totalItems"
               matBadgeSize="large"
+              data-bs-dismiss="offcanvas"
               (click)="openCartModal()"
             >
               <mat-icon class="material-symbols-outlined">
@@ -105,6 +144,14 @@
             </a>
           </li>
         </ul>
+
+        <!-- Close -->
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="offcanvas"
+          aria-label="Close"
+        ></button>
       </div>
     </div>
   </nav>

@@ -7,6 +7,10 @@ header {
     z-index: 3;
 }
 
+.offcanvas.offcanvas-top {
+    height: 18rem;
+}
+
 .navbar-brand {
     font-size: 1.75rem;
     margin-right: 1rem;
@@ -41,4 +45,16 @@ header {
     background-color: var(--mat-badge-background-color, var(--mat-sys-error));
 }
 
+.btn-close {
+    display: none;
+}
 
+@media (max-width: 990px) {
+    .btn-close {
+        display: block;
+        padding: 2rem;
+        position: absolute;
+        top: 0;
+        right: 0;
+    }
+}
