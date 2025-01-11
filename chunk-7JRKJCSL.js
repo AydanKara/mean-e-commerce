@@ -1,1 +1,0 @@
-import{j as n}from"./chunk-RRDE5Q37.js";import{pb as i}from"./chunk-A5AGJRWB.js";var m=class e{transform(r,t="dd MMM, yyyy",a="en-US",o){return r?n(r,t,a,o):""}static \u0275fac=function(t){return new(t||e)};static \u0275pipe=i({name:"formatDate",type:e,pure:!0})};export{m as a};
