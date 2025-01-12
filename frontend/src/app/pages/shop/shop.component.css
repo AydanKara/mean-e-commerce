@@ -3,6 +3,7 @@
     justify-content: center;
     height: calc(100vh - 36rem);
 }
+
 .mdc-text-field {
     border-radius: unset !important;
 }
@@ -42,7 +43,7 @@ button {
 }
 
 .media {
-    
+
     margin-bottom: 15px;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -64,6 +65,8 @@ button {
     margin-top: 2rem;
 }
 
-
-
-
+@media (max-width: 600px) {
+    .form-control {
+        min-width: 18.5rem;
+    }
+}
