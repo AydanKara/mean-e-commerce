@@ -2,9 +2,10 @@
   <nav class="navbar navbar-expand-lg navbar-light">
     <div class="container">
       <!-- Home Link -->
-      <a class="navbar-brand" routerLink="/home">AuraLux.</a>
+      <a class="navbar-brand order-2 order-lg-1" routerLink="/home">AuraLux.</a>
+
       <button
-        class="navbar-toggler"
+        class="navbar-toggler fs-6 order-3"
         type="button"
         data-bs-toggle="offcanvas"
         data-bs-target="#navbarCollapse"
@@ -14,13 +15,17 @@
       >
         <span class="navbar-toggler-icon"></span>
       </button>
+
       <div
-        class="collapse navbar-collapse offcanvas offcanvas-top flex-column flex-lg-row py-4 py-lg-0"
+        class="offcanvas offcanvas-top flex-column flex-lg-row py-4 py-lg-0 order-2"
         id="navbarCollapse"
       >
         <!-- Nav -->
 
-        <ul class="navbar-nav mx-auto gap-4 gap-lg-0" *ngIf="!isLoading">
+        <ul
+          class="navbar-nav mx-auto gap-4 gap-lg-0 align-items-center"
+          *ngIf="!isLoading"
+        >
           <li>
             <a
               class="link-underline"
@@ -105,10 +110,9 @@
             </li>
           </ng-template>
         </ul>
-
-        <!-- Nav -->
+        <!-- Personal Nav -->
         <ul
-          class="navbar-nav flex-row gap-4 gap-lg-0 justify-content-center mt-4 mt-lg-0"
+          class="navbar-nav flex-row gap-4 gap-lg-0 justify-content-center order-lg-3 order-1 mt-4 mt-lg-0 d-lg-none"
         >
           <li class="nav-item ms-lg-n4">
             <a
@@ -135,7 +139,6 @@
               routerLinkActive="active"
               [matBadge]="totalItems"
               matBadgeSize="large"
-              data-bs-dismiss="offcanvas"
               (click)="openCartModal()"
             >
               <mat-icon class="material-symbols-outlined">
@@ -144,7 +147,6 @@
             </a>
           </li>
         </ul>
-
         <!-- Close -->
         <button
           type="button"
@@ -153,6 +155,38 @@
           aria-label="Close"
         ></button>
       </div>
+      <!-- Personal Nav -->
+      <ul
+        class="navbar-nav flex-row gap-4 gap-lg-0 justify-content-center order-lg-3 order-1"
+      >
+        <li class="nav-item ms-lg-n4">
+          <a class="nav-link" routerLink="/profile">
+            <mat-icon class="material-symbols-outlined"> person </mat-icon>
+          </a>
+        </li>
+        <li class="nav-item ms-lg-n4">
+          <a
+            class="nav-link"
+            routerLink="/profile/account-wishlist"
+            routerLinkActive="active"
+          >
+            <mat-icon class="material-symbols-outlined"> favorite </mat-icon>
+          </a>
+        </li>
+        <li class="nav-item ms-lg-n4">
+          <a
+            class="nav-link"
+            routerLinkActive="active"
+            [matBadge]="totalItems"
+            matBadgeSize="large"
+            (click)="openCartModal()"
+          >
+            <mat-icon class="material-symbols-outlined">
+              shopping_cart
+            </mat-icon>
+          </a>
+        </li>
+      </ul>
     </div>
   </nav>
 </header>

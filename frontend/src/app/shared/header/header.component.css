@@ -27,6 +27,10 @@ header {
     color: #fff !important;
 }
 
+.cart-icon {
+
+}
+
 .mat-badge {
     position: relative
 }
@@ -47,6 +51,11 @@ header {
 
 .btn-close {
     display: none;
+}
+
+.navbar-toggler:focus,
+.btn-close:focus {
+    box-shadow: unset;
 }
 
 @media (max-width: 990px) {
