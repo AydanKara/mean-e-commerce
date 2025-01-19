@@ -4,6 +4,7 @@ import { BehaviorSubject, catchError, map, Observable, of, tap } from 'rxjs';
 import { User } from '../../models/user.model';
 import { environment } from '../../../environments/environment';
 import { SnackbarService } from './snackbar.service';
+import { CartService } from './cart.service';
 
 @Injectable({
   providedIn: 'root',
@@ -12,6 +13,7 @@ export class UserService {
   private apiUrl = `${environment.apiUrl}/auth`;
   private userUrl = `${environment.apiUrl}/users`;
   private snackbar = inject(SnackbarService);
+  private cartService = inject(CartService);
   // Track authentication state
   private authState = new BehaviorSubject<User | null>(null);
   private loading = new BehaviorSubject<boolean>(true);
@@ -57,7 +59,13 @@ export class UserService {
       .pipe(
         map((response) => response.user),
         tap(() => {
-          this.getCurrentUser().subscribe((user) => this.setAuthState(user));
+          this.getCurrentUser().subscribe((user) => {
+            this.setAuthState(user);
+            // After setting auth state, load the cart from the backend
+            if (user) {
+              this.cartService.loadCartFromBackend();
+            }
+          });
         })
       );
   }

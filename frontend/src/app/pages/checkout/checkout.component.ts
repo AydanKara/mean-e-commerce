@@ -1,32 +1,32 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnInit, ViewChild } from '@angular/core';
+import { Component, inject, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
   FormsModule,
-  FormSubmittedEvent,
   NgForm,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { CartService } from '../../core/services/cart.service';
-import { Cart, CartItem } from '../../models/cart.model';
+import { CartItem } from '../../models/cart.model';
 import { SnackbarService } from '../../core/services/snackbar.service';
 import { Order, OrderItem } from '../../models/order.model';
 import { UserService } from '../../core/services/user.service';
 import { OrderService } from '../../core/services/order.service';
+import { Subscription, combineLatest } from 'rxjs';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-checkout',
   imports: [CommonModule, RouterModule, FormsModule, ReactiveFormsModule],
   templateUrl: './checkout.component.html',
-  styleUrl: './checkout.component.css',
+  styleUrls: ['./checkout.component.css'],
 })
-export class CheckoutComponent implements OnInit {
-  @ViewChild('checkoutForm', { static: false }) checkoutForm:
-    | NgForm
-    | undefined;
+export class CheckoutComponent implements OnInit, OnDestroy {
+  @ViewChild('checkoutForm', { static: false }) checkoutForm?: NgForm;
+
   cartItems: CartItem[] = [];
   orderItems: OrderItem[] = [];
   shippingInfo = { address: '', city: '', zipCode: '', country: '' };
@@ -37,11 +37,12 @@ export class CheckoutComponent implements OnInit {
   private cartService = inject(CartService);
   private orderService = inject(OrderService);
   private userService = inject(UserService);
-  private snackBar = inject(SnackbarService);
+  private snackbar = inject(SnackbarService);
   private router = inject(Router);
 
   form: FormGroup;
   errorMessage: string = '';
+  private subscriptions: Subscription = new Subscription();
 
   constructor(private fb: FormBuilder) {
     this.form = this.fb.group({
@@ -56,63 +57,68 @@ export class CheckoutComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const cart = this.cartService.getCart();
-    this.cartItems = cart.items;
-    this.orderItems = cart.items.map((item) => ({
-      product: item,
-      quantity: item.quantity,
-      price: item.price,
-    }));
-    this.totalPrice = cart.totalPrice;
+    // Subscribe to cart and user data using `combineLatest`
+    this.subscriptions.add(
+      combineLatest([
+        this.cartService.getCartObservable(),
+        this.userService.getAuthState().pipe(filter((user) => !!user)),
+      ]).subscribe({
+        next: ([cart, user]) => {
+          this.cartItems = cart.items || [];
+          this.orderItems = this.cartItems.map((item) => ({
+            product: item,
+            quantity: item.quantity,
+            price: item.price,
+          }));
+          this.totalPrice = cart.totalPrice;
 
-    // Load user info
-    this.userService.getAuthState().subscribe((user) => {
-      if (user) {
-        const { _id, fullName, email, shippingInfo, phone } = user;
-        const { address, city, zipCode, country } = shippingInfo || {};
+          const { _id, fullName, email, shippingInfo, phone } = user || {};
+          const {
+            address = '',
+            city = '',
+            zipCode = '',
+            country = '',
+          } = shippingInfo || {};
 
-        this.form.patchValue({
-          fullName: fullName || '',
-          email: email || '',
-          address: address || '',
-          city: city || '',
-          zipCode: zipCode || '',
-          country: country || '',
-          phone: phone || '',
-        });
+          this.form.patchValue({
+            fullName: fullName || '',
+            email: email || '',
+            address,
+            city,
+            zipCode,
+            country,
+            phone: phone || '',
+          });
 
+          this.shippingInfo = { address, city, zipCode, country };
+          this.user = {
+            _id,
+            fullName: fullName || '',
+            email,
+            phone: phone || '',
+          };
+        },
+        error: () => {
+          this.snackbar.error('Error loading cart or user data.');
+        },
+      })
+    );
+
+    // Sync form changes with shippingInfo
+    this.subscriptions.add(
+      this.form.valueChanges.subscribe((values) => {
         this.shippingInfo = {
-          address: address || '',
-          city: city || '',
-          zipCode: zipCode || '',
-          country: country || '',
+          address: values.address,
+          city: values.city,
+          zipCode: values.zipCode,
+          country: values.country,
         };
-
-        this.user = {
-          _id,
-          fullName: fullName || '',
-          email,
-          phone: phone || '',
-        };
-      }
-    });
-
-    // Patch shippingInfo into the form on init
-    this.form.patchValue(this.shippingInfo);
-
-    // Sync form values with shippingInfo
-    this.form.valueChanges.subscribe((values) => {
-      this.shippingInfo = {
-        address: values.address,
-        city: values.city,
-        zipCode: values.zipCode,
-        country: values.country,
-      };
-    });
+      })
+    );
   }
 
-  onSubmit() {
-    if (this.checkoutForm?.valid) {
+  onSubmit(): void {
+    if (this.form.valid) {
       const orderData: Order = {
         _id: '',
         user: this.user,
@@ -120,25 +126,33 @@ export class CheckoutComponent implements OnInit {
         shippingInfo: this.shippingInfo,
         paymentMethod: this.paymentMethod,
         totalPrice: this.totalPrice,
-        paymentStatus: 'Pending', // Assuming "Pending" status initially
-        orderStatus: 'Processing', // Assuming "Processing" status Initially
-        isDelivered: false, // Initially not delivered
+        paymentStatus: 'Pending',
+        orderStatus: 'Processing',
+        isDelivered: false,
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
       };
 
       this.orderService.createOrder(orderData).subscribe({
         next: (res) => {
-          this.snackBar.success(res.message);
+          this.snackbar.success(res.message);
           this.cartService.clearCart();
           this.orderService.setOrderPlaced(true);
           this.router.navigate(['/order-confirmation', res.order._id]);
         },
         error: (error) => {
-          this.snackBar.error(error.error.message);
-          this.errorMessage = error.error.message;
+          this.snackbar.error(
+            error.error.message || 'Order submission failed.'
+          );
+          this.errorMessage = error.error.message || 'Unknown error occurred.';
         },
       });
+    } else {
+      this.snackbar.error('Please fill in all required fields correctly.');
     }
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe(); // Clean up all subscriptions
   }
 }

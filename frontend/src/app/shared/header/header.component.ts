@@ -1,5 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectorRef, Component, inject } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  inject,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { UserService } from '../../core/services/user.service';
 import { Router, RouterModule } from '@angular/router';
 import { User } from '../../models/user.model';
@@ -10,6 +16,7 @@ import { BusyService } from '../../core/services/busy.service';
 import { CartService } from '../../core/services/cart.service';
 import { ShoppingCartModalComponent } from '../shopping-cart-modal/shopping-cart-modal.component';
 import { MatDialog } from '@angular/material/dialog';
+import { BehaviorSubject, combineLatest, Subscription, tap } from 'rxjs';
 
 @Component({
   selector: 'app-header',
@@ -24,32 +31,40 @@ import { MatDialog } from '@angular/material/dialog';
   templateUrl: './header.component.html',
   styleUrl: './header.component.css',
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit, OnDestroy {
   private userService = inject(UserService);
   private router = inject(Router);
-  private cartService = inject(CartService);
+  public cartService = inject(CartService);
   private dialog = inject(MatDialog);
   private cdr = inject(ChangeDetectorRef);
   busyService = inject(BusyService);
-  currentUser: User | null = null;
   isLoading: boolean = true;
-  totalItems: number = 0;
+
+  currentUser$ = new BehaviorSubject<User | null>(null);
+  totalItems$ = new BehaviorSubject<number>(0);
+  isLoading$ = this.userService.getLoadingState();
+
+  private subscriptions = new Subscription();
+
   isCartModalVisible: boolean = false;
 
   ngOnInit(): void {
-    this.userService.getLoadingState().subscribe((loading) => {
-      this.isLoading = loading;
-    });
-
-    this.userService.getAuthState().subscribe((user) => {
-      this.currentUser = user;
-      this.userService.setLoadingState(false); // Stop loading when auth state is resolved
-    });
-
-    this.cartService.getTotalQuantityObservable().subscribe((total) => {
-      this.totalItems = Number(total);
-    });
-
+    this.subscriptions.add(
+      combineLatest([
+        this.userService.getAuthState().pipe(
+          tap((user) => this.currentUser$.next(user)),
+          tap(() => {
+            this.isLoading = false;
+            this.userService.setLoadingState(false);
+          }) // Stop loading after auth state is resolved
+        ),
+        this.cartService.getTotalQuantityObservable().pipe(
+          tap((total) => {
+            this.totalItems$.next(Number(total));
+          })
+        ),
+      ]).subscribe()
+    );
   }
 
   toggleCartModal() {
@@ -69,9 +84,14 @@ export class HeaderComponent {
     this.userService.logout().subscribe(() => {
       // Clear auth state
       this.userService.setAuthState(null);
+      this.isLoading = true;
       // Clear cart
-      this.cartService.clearCart();
+      this.cartService.resetCartState();
       this.router.navigate(['/home']);
     });
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe(); // Clean up subscriptions to avoid memory leaks
   }
 }

@@ -6,14 +6,16 @@ export interface User {
   fullName?: string;
   isAdmin: boolean;
   phone?: string;
-  shippingInfo?: {
-    address?: string;
-    zipCode?: string;
-    city?: string;
-    country?: string;
-  };
+  shippingInfo?: ShippingInfo;
   avatar?: string;
   wishlist?: string[]; // Representing wishlist as an array of product IDs
   createdAt?: string; // Optional (from timestamps)
   updatedAt?: string; // Optional (from timestamps)
+}
+
+interface ShippingInfo {
+  address?: string;
+  zipCode?: string;
+  city?: string;
+  country?: string;
 }

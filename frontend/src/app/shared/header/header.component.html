@@ -2,7 +2,11 @@
   <nav class="navbar navbar-expand-lg navbar-light">
     <div class="container">
       <!-- Home Link -->
-      <a class="navbar-brand order-2 order-lg-1 d-none d-sm-block" routerLink="/home">AuraLux.</a>
+      <a
+        class="navbar-brand order-2 order-lg-1 d-none d-sm-block"
+        routerLink="/home"
+        >AuraLux.</a
+      >
 
       <button
         class="navbar-toggler fs-6 order-3"
@@ -24,7 +28,7 @@
 
         <ul
           class="navbar-nav mx-auto gap-4 gap-lg-0 align-items-center"
-          *ngIf="!isLoading"
+          *ngIf="!(isLoading$ | async)"
         >
           <li>
             <a
@@ -45,7 +49,9 @@
             >
           </li>
           <!-- Admin Links -->
-          <ng-container *ngIf="currentUser?.isAdmin; else nonAdminLinks">
+          <ng-container
+            *ngIf="(currentUser$ | async)?.isAdmin; else nonAdminLinks"
+          >
             <li>
               <a
                 class="link-underline"
@@ -67,7 +73,7 @@
 
           <!-- Non-Admin (Regular User) Links -->
           <ng-template #nonAdminLinks>
-            <ng-container *ngIf="currentUser; else guestLinks">
+            <ng-container *ngIf="(currentUser$ | async); else guestLinks">
               <li class="nav-item">
                 <a
                   class="link-underline"
@@ -137,7 +143,7 @@
             <a
               class="nav-link"
               routerLinkActive="active"
-              [matBadge]="totalItems"
+              matBadge="{{ totalItems$ | async }}"
               matBadgeSize="large"
               (click)="openCartModal()"
             >
@@ -177,7 +183,7 @@
           <a
             class="nav-link"
             routerLinkActive="active"
-            [matBadge]="totalItems"
+            matBadge="{{ totalItems$ | async }}"
             matBadgeSize="large"
             (click)="openCartModal()"
           >
