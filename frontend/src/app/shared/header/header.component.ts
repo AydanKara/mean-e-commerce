@@ -10,7 +10,7 @@ import { UserService } from '../../core/services/user.service';
 import { Router, RouterModule } from '@angular/router';
 import { User } from '../../models/user.model';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { MatIcon, MatIconModule } from '@angular/material/icon';
+import { MatIconModule } from '@angular/material/icon';
 import { MatBadgeModule } from '@angular/material/badge';
 import { BusyService } from '../../core/services/busy.service';
 import { CartService } from '../../core/services/cart.service';
@@ -58,6 +58,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
             this.userService.setLoadingState(false);
           }) // Stop loading after auth state is resolved
         ),
+
         this.cartService.getTotalQuantityObservable().pipe(
           tap((total) => {
             this.totalItems$.next(Number(total));

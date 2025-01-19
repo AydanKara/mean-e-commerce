@@ -1,10 +1,14 @@
 footer {
-    background-color: #efedf0 !important;
     padding: 1.5rem !important;
     text-align: center;
     box-shadow: rgba(0, 0, 0, 0.2) 0px 6px 24px 0px, rgba(0, 0, 0, 0.2) 0px 6px 24px 0px;
 }
 
-footer p {
-    color: black;
+.text-muted {
+    color: #767676 !important;
+}
+
+.footer-payment {
+    height: 1.5rem;
+    width: auto;
 }
