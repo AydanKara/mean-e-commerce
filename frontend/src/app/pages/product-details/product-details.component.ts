@@ -200,6 +200,10 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
     }
   }
   addToCart() {
+    if (!this.userId) {
+      this.snackbar.error('Please log in to manage your cart.');
+      return;
+    }
     if (!this.product || this.selectedQuantity > this.product.stock) {
       this.snackbar.error('Cannot add more than available stock!');
       return;

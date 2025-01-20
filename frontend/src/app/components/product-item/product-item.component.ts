@@ -44,6 +44,10 @@ export class ProductItemComponent implements OnInit {
 
   addToCart() {
     if (!this.product) return;
+    if (!this.userId) {
+      this.snackbar.error('Please log in to manage your cart.');
+      return;
+    }
 
     const cartItem = {
       _id: this.product._id,

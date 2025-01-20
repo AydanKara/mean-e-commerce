@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -6,7 +6,7 @@ import {
   Validators,
 } from '@angular/forms';
 
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { UserService } from '../../core/services/user.service';
 import { FeaturesComponent } from '../../shared/features/features.component';
@@ -17,14 +17,17 @@ import { FeaturesComponent } from '../../shared/features/features.component';
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   errorMessage: string = '';
+
+  returnUrl: string | '' = '';
 
   constructor(
     private fb: FormBuilder,
     private userService: UserService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -32,6 +35,9 @@ export class LoginComponent {
     });
   }
 
+  ngOnInit(): void {
+    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+  }
   onSubmit() {
     if (this.loginForm.invalid) return;
 
@@ -43,7 +49,7 @@ export class LoginComponent {
         } else {
           // Update auth state
           this.userService.setAuthState(user);
-          this.router.navigate(['/home']);
+          this.router.navigateByUrl(this.returnUrl, { replaceUrl: true });
         }
       },
       error: (err) => (this.errorMessage = err.error.message || 'Login failed'),
