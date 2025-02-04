@@ -3,13 +3,14 @@ import { ActivatedRoute, RouterModule } from '@angular/router';
 import { switchMap } from 'rxjs';
 import { OrderService } from '../../../../core/services/order.service';
 import { Order } from '../../../../models/order.model';
-import { CommonModule, formatDate } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { UserService } from '../../../../core/services/user.service';
 import { DateFormatPipe } from '../../../../pipes/date-format.pipe';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
   selector: 'app-order-details',
-  imports: [CommonModule, RouterModule, DateFormatPipe],
+  imports: [CommonModule, RouterModule, DateFormatPipe, MatTooltipModule],
   templateUrl: './order-details.component.html',
   styleUrl: './order-details.component.css',
 })

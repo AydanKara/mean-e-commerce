@@ -10,50 +10,66 @@
       <div class="col-12 col-md-3">
         <!-- Nav -->
         <nav class="mb-4 mb-md-0">
+          <!-- Mobile Menu Button with Selected Item -->
           <div
-            class="list-group list-group-sm list-group-strong list-group-flush-x"
+            class="d-flex align-items-center justify-content-between d-md-none"
           >
-            <a
-              class="list-group-item list-group-item-action dropend-toggle"
-              routerLink="account-orders"
-              routerLinkActive="active"
+            <button
+              class="btn btn-outline-dark d-md-none mb-2 me-2"
+              type="button"
+              (click)="toggleMenu()"
             >
-              Orders
-            </a>
-            <a
-              class="list-group-item list-group-item-action dropend-toggle"
-              routerLink="account-wishlist"
-              routerLinkActive="active"
+              <mat-icon class="material-symbols-outlined"> menu </mat-icon>
+              Menu
+            </button>
+            <span *ngIf="selectedItem" class="fw-bold">{{ selectedItem }}</span>
+          </div>
+
+          <div [class.collapse]="!isMenuOpen" class="d-md-block">
+            <div
+              class="list-group list-group-sm list-group-strong list-group-flush-x"
             >
-              Wishlist
-            </a>
-            <a
-              class="list-group-item list-group-item-action dropend-toggle"
-              routerLink="account-personal-info"
-              routerLinkActive="active"
-            >
-              Personal Info
-            </a>
-            <a
-              class="list-group-item list-group-item-action dropend-toggle"
-              routerLink="account-address"
-              routerLinkActive="active"
-            >
-              Addresses
-            </a>
-            <a
-              class="list-group-item list-group-item-action dropend-toggle"
-              routerLink="account-payment"
-              routerLinkActive="active"
-            >
-              Payment Methods
-            </a>
-            <a
-              class="list-group-item list-group-item-action dropend-toggle"
-              (click)="onLogout()"
-            >
-              Logout
-            </a>
+              <a
+                class="list-group-item list-group-item-action dropend-toggle"
+                routerLink="account-orders"
+                routerLinkActive="active"
+                (click)="selectMenuItem('Orders')"
+                >Orders</a
+              >
+              <a
+                class="list-group-item list-group-item-action dropend-toggle"
+                routerLink="account-wishlist"
+                routerLinkActive="active"
+                (click)="selectMenuItem('Wishlist')"
+                >Wishlist</a
+              >
+              <a
+                class="list-group-item list-group-item-action dropend-toggle"
+                routerLink="account-personal-info"
+                routerLinkActive="active"
+                (click)="selectMenuItem('Personal Info')"
+                >Personal Info</a
+              >
+              <a
+                class="list-group-item list-group-item-action dropend-toggle"
+                routerLink="account-address"
+                routerLinkActive="active"
+                (click)="selectMenuItem('Addresses')"
+                >Addresses</a
+              >
+              <a
+                class="list-group-item list-group-item-action dropend-toggle"
+                routerLink="account-payment"
+                routerLinkActive="active"
+                (click)="selectMenuItem('Payment Methods')"
+                >Payment Methods</a
+              >
+              <a
+                class="list-group-item list-group-item-action dropend-toggle"
+                (click)="onLogout()"
+                >Logout</a
+              >
+            </div>
           </div>
         </nav>
       </div>

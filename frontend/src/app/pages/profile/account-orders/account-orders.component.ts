@@ -4,10 +4,11 @@ import { Order, OrderItem } from '../../../models/order.model';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { DateFormatPipe } from '../../../pipes/date-format.pipe';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
   selector: 'app-account-orders',
-  imports: [CommonModule, RouterModule, DateFormatPipe],
+  imports: [CommonModule, RouterModule, DateFormatPipe, MatTooltipModule],
   templateUrl: './account-orders.component.html',
   styleUrl: './account-orders.component.css',
 })

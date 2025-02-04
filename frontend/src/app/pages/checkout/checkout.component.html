@@ -235,7 +235,7 @@
           </div>
         </form>
       </div>
-      <div class="col-12 col-md-5 col-lg-4 offset-lg-1">
+      <div class="col-12 col-md-5 col-lg-4 offset-lg-1 mt-md-0 mt-5">
         <!-- Heading -->
         <h6 class="mb-4">Order Items ({{ orderItems.length }})</h6>
 
@@ -248,7 +248,7 @@
         >
           <li class="list-group-item" *ngFor="let item of cartItems">
             <div class="row align-items-center">
-              <div class="col-4" style="height: 6rem">
+              <div class="col-4">
                 <!-- Image -->
                 <a routerLink="/product/{{ item._id }}">
                   <img

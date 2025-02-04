@@ -25,8 +25,8 @@
             *ngFor="let item of cartItems"
           >
             <li class="list-group-item">
-              <div class="row align-items-center pe-4">
-                <div class="col-3">
+              <div class="row align-items-center pe-sm-4 pe-0">
+                <div class="col-sm-3 col-4">
                   <!-- Image -->
                   <a routerLink="/product/{{ item._id }}" class="docs-creator">
                     <img
@@ -88,13 +88,13 @@
 
         <!-- Footer -->
         <div class="row align-items-end justify-content-between mb-5 mb-md-0">
-          <div class="col-12 col-md-7">
+          <div class="col-12 col-lg-7">
             <!-- Coupon -->
-            <form class="mb-3 mb-md-0">
+            <form class="mb-3 mb-lg-0">
               <label class="form-label fs-sm fw-bold" for="cartCouponCode">
                 Coupon code:
               </label>
-              <div class="row row gx-5">
+              <div class="row">
                 <div class="col">
                   <!-- Input -->
                   <input
