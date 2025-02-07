@@ -119,8 +119,8 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
     // Use a small timeout to ensure DOM is updated
     setTimeout(() => {
       this.thumbSwiper = new Swiper('.thumbnail-slider', {
-        slidesPerView: 4,
-        spaceBetween: 10,
+        slidesPerView: 3,
+        spaceBetween: 5,
         watchSlidesProgress: true,
       });
 

@@ -88,6 +88,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
       this.isLoading = true;
       // Clear cart
       this.cartService.resetCartState();
+      localStorage.removeItem('selectedMenuItem');
       this.router.navigate(['/home']);
     });
   }

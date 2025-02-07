@@ -11,12 +11,4 @@ import { UserService } from './core/services/user.service';
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
-export class AppComponent implements OnInit {
-  isLoading: boolean = true;
-
-  constructor(private userService: UserService, private router: Router) {}
-
-  ngOnInit(): void {
-    
-  }
-}
+export class AppComponent {}

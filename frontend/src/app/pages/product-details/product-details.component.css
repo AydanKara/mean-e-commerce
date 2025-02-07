@@ -87,4 +87,14 @@ button {
     .main-slider .swiper-slide {
         height: 35rem !important;
     }
+
+    .thumbnail-slider .swiper-slide {
+        width: 6.75rem !important;
+    }
+}
+
+@media screen and (max-width: 365px) {
+    .thumbnail-slider .swiper-slide {
+        width: 6.35rem !important;
+    }
 }
