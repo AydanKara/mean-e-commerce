@@ -2,42 +2,44 @@
 
 <div
   *ngIf="loading"
-  class="spinner-border text-primary d-block mt-5"
+  class="spinner-border text-primary d-block my-5"
   role="status"
 >
   <span class="visually-hidden">Loading...</span>
 </div>
 
-<table *ngIf="!loading" class="table">
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Email</th>
-      <th>Admin Status</th>
-      <th>Actions</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let user of users">
-      <td>{{ user.fullName }}</td>
-      <td>{{ user.email }}</td>
-      <td>{{ user.isAdmin ? "Admin" : "User" }}</td>
-      <td>
-        <button
-          *ngIf="!user.isAdmin"
-          class="btn btn-dark w-100"
-          (click)="toggleAdminStatus(user)"
-        >
-          Make Admin
-        </button>
-        <button
-          *ngIf="user.isAdmin"
-          class="btn btn-outline-secondary w-100"
-          (click)="toggleAdminStatus(user)"
-        >
-          Revoke Admin
-        </button>
-      </td>
-    </tr>
-  </tbody>
-</table>
+<div class="table-responsive">
+  <table *ngIf="!loading" class="table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of users">
+        <td>{{ user.fullName }}</td>
+        <td>{{ user.email }}</td>
+        <td>{{ user.isAdmin ? "Admin" : "User" }}</td>
+        <td>
+          <button
+            *ngIf="!user.isAdmin"
+            class="btn btn-dark w-100"
+            (click)="toggleAdminStatus(user)"
+          >
+            Make Admin
+          </button>
+          <button
+            *ngIf="user.isAdmin"
+            class="btn btn-outline-secondary w-100"
+            (click)="toggleAdminStatus(user)"
+          >
+            Revoke Admin
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

@@ -85,26 +85,38 @@
     color: #1a1a1a;
 }
 
-@media  (max-width: 1399px) {
+@media (max-width: 1399px) {
     .card-img {
         height: 20rem;
-    }    
+    }
 }
 
-@media  (max-width: 1199px) {
+@media (max-width: 1199px) {
     .card-img {
         height: 17rem;
-    }    
+    }
 }
 
-@media  (max-width: 990px) {
+@media (max-width: 990px) {
     .card-img {
         height: 13rem;
-    }    
+    }
 }
 
-@media  (max-width: 768px) {
+@media (max-width: 767.9px) {
     .card-img {
         height: 20.5rem;
-    }    
+    }
+}
+
+@media (max-width: 576px) {
+    .card-img {
+        height: 25.5rem;
+    }
+}
+
+@media (max-width: 375px) {
+    .card-img {
+        height: 20.5rem;
+    }
 }
