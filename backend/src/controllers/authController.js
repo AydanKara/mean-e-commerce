@@ -4,7 +4,7 @@ const cookieOptions = {
   httpOnly: true, // Prevent JavaScript access
   secure: process.env.NODE_ENV === "production", // Enable in production
   sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
-  maxAge: 120 * 120 * 1000, // 3 hour
+  /* maxAge: 120 * 120 * 1000, 3 hour */
 };
 
 // Register a new user
