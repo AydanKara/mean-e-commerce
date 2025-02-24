@@ -1,6 +1,6 @@
 # AuraLux E-Commerce Platform
 
-![](/assets/.desktop-preview.png)
+![](/frontend/public/assets/desktop-preview.png)
 
 <p>AuraLux is an e-commerce platform where users can browse and purchase various products such as perfumes, bags, watches, shoes, and more. Users can register, manage their profiles, add products to their cart, place orders, and mark products as favorites. The project also has admin functionality to manage products and users.</p>
 
@@ -25,9 +25,9 @@
 
 ### Application structure
 
-  - Public part (accessible without authentication)
-  - Private part (available for registered users)
-  - Admin part (available for admin users)
+- Public part (accessible without authentication)
+- Private part (available for registered users)
+- Admin part (available for admin users)
 
 ### The challenge
 
@@ -48,7 +48,7 @@ Private part(Registered users):
   - Adding Payment information
 - Add/Remove products from the cart
 - Edit product quantities in the cart
-- See an order confirmation modal after checking out with an order summary
+- See an order confirmation page after checking out
 
 Admin part(Admin users):
 
@@ -60,35 +60,32 @@ Admin part(Admin users):
 
 ### Screenshot
 
-
-
-Add a screenshot of your solution. The easiest way to do this is to use Firefox to view your project, right-click the page and select "Take a Screenshot". You can choose either a full-height screenshot or a cropped one based on how long the page is. If it's very long, it might be best to crop it.
-
-Alternatively, you can use a tool like [FireShot](https://getfireshot.com/) to take the screenshot. FireShot has a free option, so you don't need to purchase it. 
-
-Then crop/optimize/edit your image however you like, add it to your project, and update the file path in the image above.
-
-**Note: Delete this note and the paragraphs above when you add your screenshot. If you prefer not to add a screenshot, feel free to remove this entire section.**
+![](/frontend/public/assets/screens.png)
 
 ### Links
 
-- Solution URL: [Add solution URL here](https://your-solution-url.com)
-- Live Site URL: [Add live site URL here](https://your-live-site-url.com)
+- Live Site URL: [AuraLux: Where Style Meets Elegance](https://aydankara.github.io/mean-e-commerce/home)
 
 ## My process
 
 ### Built with
 
-- Semantic HTML5 markup
-- CSS custom properties
-- Flexbox
-- CSS Grid
-- Mobile-first workflow
-- [React](https://reactjs.org/) - JS library
-- [Next.js](https://nextjs.org/) - React framework
-- [Styled Components](https://styled-components.com/) - For styles
+### Frontend
 
-**Note: These are just examples. Delete this note and replace the list above with your own choices**
+- [Bootstrap v5.3](https://getbootstrap.com/) - Powerful, extensible, and feature-packed frontend toolkit.
+- [Angular v19](https://angular.dev/) - A platform for building scalable web applications.
+- [Angular Material](https://material.angular.io/) - A UI component library for Angular that provides pre-built components like buttons, forms, etc.
+- [RxJS](https://rxjs.dev/): A library for reactive programming that handles asynchronous data streams in Angular.
+
+### Backend
+
+- [Express](https://expressjs.com/) - A minimal and flexible Node.js web application framework that provides a robust set of features for building web and mobile applications.
+- [Node.js](https://nodejs.org/) - A JavaScript runtime built on Chrome's V8 engine that allows server-side scripting using JavaScript.
+- [MongoDB](https://www.mongodb.com/) - A NoSQL database that stores data in flexible, JSON-like documents.
+
+### Authentication
+
+- [JWT (JSON Web Tokens)](https://jwt.io/) - For secure user authentication and maintaining sessions.
 
 ### What I learned
 
@@ -99,15 +96,17 @@ To see how you can add code snippets, see below:
 ```html
 <h1>Some HTML code I'm proud of</h1>
 ```
+
 ```css
 .proud-of-this-css {
   color: papayawhip;
 }
 ```
+
 ```js
 const proudOfThisFunc = () => {
-  console.log('🎉')
-}
+  console.log("🎉");
+};
 ```
 
 If you want more help with writing markdown, we'd recommend checking out [The Markdown Guide](https://www.markdownguide.org/) to learn more.
