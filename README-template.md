@@ -1,5 +1,7 @@
 # AuraLux E-Commerce Platform
 
+![](/assets/.desktop-preview.png)
+
 <p>AuraLux is an e-commerce platform where users can browse and purchase various products such as perfumes, bags, watches, shoes, and more. Users can register, manage their profiles, add products to their cart, place orders, and mark products as favorites. The project also has admin functionality to manage products and users.</p>
 
 ## Table of contents
@@ -29,23 +31,36 @@
 
 ### The challenge
 
-Users should be able to:
+Public part(Guest users):
 
 - View the optimal layout for the app depending on their device's screen size
 - See hover states for all interactive elements on the page
+- See the all products in Shop page
+- Receive form validations if fields are missed or incorrect at Login or Register pages
+
+Private part(Registered users):
+
+- Have a personal area in the web application
+- Have access to user's profiles management functionality
+  - Orders management
+  - Wishlist management
+  - Adding Personal Info and Addresses
+  - Adding Payment information
 - Add/Remove products from the cart
 - Edit product quantities in the cart
-- Fill in all fields in the checkout
-- Receive form validations if fields are missed or incorrect during checkout
-- See correct checkout totals depending on the products in the cart
-  - Shipping always adds $50 to the order
-  - VAT is calculated as 20% of the product total, excluding shipping
 - See an order confirmation modal after checking out with an order summary
-- **Bonus**: Keep track of what's in the cart, even after refreshing the browser (`localStorage` could be used for this if you're not building out a full-stack app)
+
+Admin part(Admin users):
+
+- Have a personal area in the web application - Admin Dashboard
+- Have access to create, edit and delete products
+- HAve access to create, edit and delete categories
+- Manage user orders
+- Have access to Users List in the Database and change their status
 
 ### Screenshot
 
-![](./screenshot.jpg)
+
 
 Add a screenshot of your solution. The easiest way to do this is to use Firefox to view your project, right-click the page and select "Take a Screenshot". You can choose either a full-height screenshot or a cropped one based on how long the page is. If it's very long, it might be best to crop it.
 
