@@ -1,123 +1,96 @@
-<h1>AuraLux E-Commerce Platform</h1>
+# AuraLux E-Commerce Platform
+
+![](/frontend/public/assets/desktop-preview.png)
+
 <p>AuraLux is an e-commerce platform where users can browse and purchase various products such as perfumes, bags, watches, shoes, and more. Users can register, manage their profiles, add products to their cart, place orders, and mark products as favorites. The project also has admin functionality to manage products and users.</p>
-<br>
 
-<h2>Tech Stack</h2>
-<h3>Frontend:</h3>
-<li>Angular 19: A platform for building scalable web applications.</li>
-<li>Angular Material: A UI component library for Angular that provides pre-built components like buttons, forms, etc.</li>
-<li>RxJS: A library for reactive programming that handles asynchronous data streams in Angular.</li>
+## Table of contents
 
-<h3>Backend:</h3>
-<li>Express: A minimal and flexible Node.js web application framework that provides a robust set of features for building web and mobile applications.</li>
-<li>Node.js: A JavaScript runtime built on Chrome's V8 engine that allows server-side scripting using JavaScript.</li>
-<li>MongoDB: A NoSQL database that stores data in flexible, JSON-like documents.</li>
+- [Overview](#overview)
+  - [Application structure](#application-structure)
+  - [The challenge](#the-challenge)
+  - [Screenshot](#screenshot)
+  - [Links](#links)
+- [My process](#my-process)
+  - [Built with](#built-with)
+  - [Useful resources](#useful-resources)
+- [Author](#author)
 
-<h3>Authentication:</h3>
-<li>JWT (JSON Web Tokens): For secure user authentication and maintaining sessions.</li>
+## Overview
 
-<h3>State Management:</h3>
-<li>RxJS BehaviorSubjects: Used for handling authentication state and loading indicators in the frontend.</li>
+### Application structure
 
-<br>
+- Public part (accessible without authentication)
+- Private part (available for registered users)
+- Admin part (available for admin users)
 
-<h2>Functionality</h2>
+### The challenge
 
-<h3>User Features</h3>
-<p>:heavy_check_mark: Browse Products: Users can browse through a variety of products, including perfumes, bags, watches, and shoes.</p>
-<p>:heavy_check_mark: Register/Login: Users can create an account, log in, and manage their profiles.</p>
-<p>:heavy_check_mark: Add to Cart: Users can add products to their cart and proceed to place an order.</p>
-<p>:heavy_check_mark: Manage Profile: Users have a personal profile where they can:</p>
-	<li>Edit personal details such as name, email, and phone number.</li>
-	<li>View and manage their wishlist and order history.</li>
-	<li>Add shipping address information.</li>
+#### Public part(Guest users):
 
-<br>
+- View the optimal layout for the app depending on their device's screen size
+- See hover states for all interactive elements on the page
+- See the all products in Shop page
+- Receive form validations if fields are missed or incorrect at Login or Register pages
 
-<h3>Admin Features</h3>
-<p>:heavy_check_mark: Manage Products: Admin users can create, update, or delete products.</p>
-<p>:heavy_check_mark: Manage Users: Admins can view and manage all users, including promoting or demoting users to/from admin status.</p>
-<p>:heavy_check_mark: Manage Categories: Admin users can create, update, or delete categories.</p>
-<br>
-<br>
-<h2>Starting the app locally</h2>
+#### Private part(Registered users):
 
-<h3>To run the application on your local machine, follow these steps:</h3>
+- Have a personal area in the web application
+- Have access to user's profiles management functionality
+  - Orders management
+  - Wishlist management
+  - Adding Personal Info and Addresses
+  - Adding Payment information
+- Add/Remove products from the cart
+- Edit product quantities in the cart
+- See an order confirmation page after checking out
 
-1. Clone the repository:
+#### Admin part(Admin users):
 
-```bash
-git clone https://github.com/AydanKara/mean-e-commerce.git
-```
+- Have a personal area in the web application - Admin Dashboard
+- Have access to create, edit and delete products
+- Have access to create, edit and delete categories
+- Manage user orders
+- Have access to Users List in the Database and change their status
 
-2. Start the Backend Server: <br>
-   2.1 Open a terminal and navigate to the server directory /backend
+### Screenshot
 
-   ```bash
-   cd .\mean-e-commerce\backend\
-   ```
+![](/frontend/public/assets/screens.png)
 
-   2.2 Instal dependencies
+### Links
 
-   ```bash
-   npm install
-   ```
+- Live Site URL: [AuraLux: Where Style Meets Elegance](https://aydankara.github.io/mean-e-commerce/home)
 
-   2.3 Create .env file in the backend folder and copy these variables into the file:
+## My process
 
-   ```bash
-   NODE_ENV=development
-   MONGO_URI=mongodb://localhost:27017/mean-ecommerce
-   PORT=5500
-   JWT_SECRET=your_jwt_secret_key
-   FRONT_END_URL=http://localhost:4200
-   ```
+### Built with
 
-   2.4 Start the server
+#### Frontend
 
-   ```bash
-   npm run dev
-   ```
+- [Bootstrap v5.3](https://getbootstrap.com/) - Powerful, extensible, and feature-packed frontend toolkit.
+- [Angular v19](https://angular.dev/) - A platform for building scalable web applications.
+- [Angular Material](https://material.angular.io/) - A UI component library for Angular that provides pre-built components like buttons, forms, etc.
+- [RxJS](https://rxjs.dev/): A library for reactive programming that handles asynchronous data streams in Angular.
 
-3. Start the Frontend: <br>
-   3.1 Open another terminal and navigate to the frontend directory
+#### Backend
 
-   ```bash
-   cd .\mean-e-commerce\frontend\
-   ```
+- [Express](https://expressjs.com/) - A minimal and flexible Node.js web application framework that provides a robust set of features for building web and mobile applications.
+- [Node.js](https://nodejs.org/) - A JavaScript runtime built on Chrome's V8 engine that allows server-side scripting using JavaScript.
+- [MongoDB](https://www.mongodb.com/) - A NoSQL database that stores data in flexible, JSON-like documents.
 
-   3.2 Install dependencies
+#### Authentication
 
-   ```bash
-   npm install
-   ```
+- [JWT (JSON Web Tokens)](https://jwt.io/) - For secure user authentication and maintaining sessions.
 
-   3.3 Create environments folder in /frontend/src/
+### Useful resources
 
-   3.4 Add two files into this folder
+- [SoftUni](https://softuni.bg/) - The project was prepared during my studies at SoftUni. SoftUni is the largest and most respected educational IT institution in Bulgaria, providing training and career assistance in the fields of software engineering, digital marketing and design.
+- [Pexels](https://www.pexels.com/) - Pexels provides high quality and completely free stock photos licensed under the Pexels license.
 
-   ```bash
-   /frontend/src/environments
-     1. environment.prod.ts
-       export const environment = {
-         production: true,
-         apiUrl: 'https://api.yourdomain.com/api',
-       };
+## Author
 
-     2. environment.ts
-       export const environment = {
-         production: false,
-         apiUrl: 'http://localhost:5500/api',
-       };
-   ```
+- Website - [Aydan Karamehmed](https://github.com/AydanKara)
 
-   3.4 Start the development server
 
-   ```bash
-   ng serve
-   ```
-
-<h3>And you are ready to go!</h3>
-
-<h2>Conclusion</h2>
+## Conclusion
 <p>AuraLux is a full-stack e-commerce application where users can browse products, manage their profiles, and place orders. Admin users have additional privileges for managing products and users. The project uses Angular for the frontend, Express.js for the backend, and MongoDB for data storage.</p>
