@@ -13,13 +13,8 @@
   - [Links](#links)
 - [My process](#my-process)
   - [Built with](#built-with)
-  - [What I learned](#what-i-learned)
-  - [Continued development](#continued-development)
   - [Useful resources](#useful-resources)
 - [Author](#author)
-- [Acknowledgments](#acknowledgments)
-
-**Note: Delete this note and update the table of contents based on what sections you keep.**
 
 ## Overview
 
@@ -87,4 +82,11 @@
 
 - [JWT (JSON Web Tokens)](https://jwt.io/) - For secure user authentication and maintaining sessions.
 
+### Useful resources
 
+- [SoftUni](https://softuni.bg/) - The project was prepared during my studies at SoftUni. SoftUni is the largest and most respected educational IT institution in Bulgaria, providing training and career assistance in the fields of software engineering, digital marketing and design.
+- [Pexels](https://www.pexels.com/) - Pexels provides high quality and completely free stock photos licensed under the Pexels license.
+
+## Author
+
+- Website - [Aydan Karamehmed](https://github.com/AydanKara)
