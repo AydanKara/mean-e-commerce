@@ -1,4 +1,6 @@
-# AuraLux E-Commerce Platform | ![Angular](https://img.shields.io/badge/Angular-v19-red) ![Bootstrap](https://img.shields.io/badge/Bootstrap-5.3-blue) ![Node.js](https://img.shields.io/badge/Node.js-20-green) ![Express](https://img.shields.io/badge/Express-v4-black) ![MongoDB](https://img.shields.io/badge/MongoDB-v7-00ED64)
+# AuraLux E-Commerce Platform
+
+![Angular](https://img.shields.io/badge/Angular-v19-red) ![Bootstrap](https://img.shields.io/badge/Bootstrap-5.3-blue) ![Node.js](https://img.shields.io/badge/Node.js-20-green) ![Express](https://img.shields.io/badge/Express-v4-black) ![MongoDB](https://img.shields.io/badge/MongoDB-v7-00ED64)
 
 <p>AuraLux is an e-commerce platform where users can browse and purchase various products such as perfumes, bags, watches, shoes, and more. Users can register, manage their profiles, add products to their cart, place orders, and mark products as favorites. The project also has admin functionality to manage products and users.</p>
 
